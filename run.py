@@ -10,8 +10,8 @@ BASE_URL = "https://api.deepseek.com"
 def main():
     # to define parameters.
     parser = argparse.ArgumentParser()
-    parser.add_argument("--docs_path", type=str, default="data/train/docs.json")
-    parser.add_argument("--questions_path", type=str, default="data/train/questions.jsonl")
+    parser.add_argument("--docs_path", type=str, default="data/dev/docs.json")
+    parser.add_argument("--questions_path", type=str, default="data/dev/questions.jsonl")
     parser.add_argument("--limit", type=int, default=2, help="Run the first 2 events to test.")
     args = parser.parse_args()
 
