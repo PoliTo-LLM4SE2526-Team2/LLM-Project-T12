@@ -3,17 +3,18 @@ from dataclasses import dataclass
 from typing import List
 
 @dataclass
-class aerItem:
+class AERItem:
     """
     A customized data type class.
     """
     id: int
     event: str
+    event_uuid: str
     documents: List[str]
     options: List[str]
     answer: str
 
-class dataLoader:
+class DataLoader:
     """
     The main class for data loader.
     """
@@ -49,9 +50,10 @@ class dataLoader:
                     continue
                 topic_id = line["topic_id"]
                 documents = docs_dict.get(topic_id, [])
-                aer_item = aerItem(
+                aer_item = AERItem(
                     id = topic_id,
                     event = line["target_event"],
+                    event_uuid = line["uuid"],
                     documents = documents,
                     options = [line[f"option_{i}"] for i in ["A", "B", "C", "D"]],
                     answer = line['golden_answer']

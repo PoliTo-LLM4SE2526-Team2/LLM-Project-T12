@@ -1,7 +1,7 @@
 import argparse
-from src.dataloader import dataLoader
-from src.llm import chatLLM
-from src.solvers import baselineSolver
+from src.dataloader import DataLoader
+from src.llm import ChatLLM
+from src.solvers import BaselineSolver
 
 MODEL_NAME = "deepseek-reasoner"
 API_KEY = "sk-6d964559089a47c488dde2fcb7e3b6fe"
@@ -15,13 +15,17 @@ def main():
     parser.add_argument("--limit", type=int, default=2, help="Run the first 2 events to test.")
     args = parser.parse_args()
 
-    llm = chatLLM(model_name=MODEL_NAME, api_key=API_KEY, base_url=BASE_URL)
-    solver = baselineSolver(llm)
-    loader = dataLoader(args.docs_path, args.questions_path)
+    # initialize components
+    # we use Deepseek api right now, just modify parameters of chatLLM() if we want ChatGPT instead
+    # we firstly use the baseline model to solve, for details please refer to "src/solvers.py"
+    llm = ChatLLM(model_name=MODEL_NAME, api_key=API_KEY, base_url=BASE_URL)
+    solver = BaselineSolver(llm)
+    loader = DataLoader(args.docs_path, args.questions_path)
 
     print(f"Running experiment with {solver.__class__.__name__}...\n")
 
     correct_count = 0
+    bad_cases = [] # include all uuid of incorrectly predicted events
     for i, event in enumerate(loader.load()):
         if i <= args.limit - 1:
             print(f"--- Processing Item {i+1} ---")
@@ -34,6 +38,8 @@ def main():
 
             if sorted(prediction.split("Final Answer I Reasoned: ")[-1].split(",")) == sorted(event.answer.split(",")):
                 correct_count += 1
+            else:
+                bad_cases.append(event.event_uuid)
         else:
             break
     

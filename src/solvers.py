@@ -1,20 +1,20 @@
 from abc import ABC, abstractmethod
-from src.llm import baseLLM
-from src.dataloader import aerItem
+from src.llm import BaseLLM
+from src.dataloader import AERItem
 
-class baseSolver(ABC):
-    def __init__(self, llm: baseLLM):
+class BaseSolver(ABC):
+    def __init__(self, llm: BaseLLM):
         self.llm = llm
 
     @abstractmethod
-    def solve(self, item: aerItem) -> str:
+    def solve(self, item: AERItem) -> str:
         pass
 
-class baselineSolver(baseSolver):
+class BaselineSolver(BaseSolver):
     """
     The basic zero-shot CoT solver.
     """
-    def solve(self, item: aerItem) -> str:
+    def solve(self, item: AERItem) -> str:
         docs_text = "\n".join(f"Document{i+1}: {doc}" for i, doc in enumerate(item.documents))
         options_text = "\n".join(f"{label}: {opt}" for label, opt in zip(["A", "B", "C", "D"], item.options))
 

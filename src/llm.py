@@ -1,12 +1,12 @@
 from openai import OpenAI
 from abc import ABC, abstractmethod
 
-class baseLLM(ABC):
+class BaseLLM(ABC):
     @abstractmethod
     def generate(self, messages: list, temperature: float = 0.1) -> str:
         pass
 
-class chatLLM(baseLLM):
+class ChatLLM(BaseLLM):
     def __init__(self, model_name: str, api_key: str, base_url: str):
         self.model_name = model_name
         self.client = OpenAI(api_key=api_key, base_url=base_url)
