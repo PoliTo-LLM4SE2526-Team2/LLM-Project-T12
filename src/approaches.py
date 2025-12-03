@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from src.llm import BaseLLM
 from src.dataloader import AERItem
 
-class BaseSolver(ABC):
+class BaseApproach(ABC):
     def __init__(self, llm: BaseLLM):
         self.llm = llm
 
@@ -10,9 +10,9 @@ class BaseSolver(ABC):
     def solve(self, item: AERItem) -> str:
         pass
 
-class BaselineSolver(BaseSolver):
+class BaselineApproach(BaseApproach):
     """
-    The basic zero-shot CoT solver.
+    The basic zero-shot CoT approach.
     """
     def solve(self, item: AERItem) -> str:
         docs_text = "\n".join(f"Document{i+1}: {doc}" for i, doc in enumerate(item.documents))
