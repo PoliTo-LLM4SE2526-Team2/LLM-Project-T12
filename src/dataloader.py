@@ -1,34 +1,38 @@
 import json
+from dataclasses import dataclass
 from typing import List
 
+@dataclass
 class aerItem:
     """
-    A data type class
+    A customized data type class.
     """
     id: int
     event: str
     documents: List[str]
     options: List[str]
-    answer: str = None
+    answer: str
 
 class dataLoader:
     """
     The main class for data loader.
     """
-    def __init__(self, json_path: str, jsonl_path: str):
-        self.json_path = json_path
-        self.jsonl_path = jsonl_path
+    def __init__(self, docs_path: str, questions_path: str):
+        self.docs_path = docs_path
+        self.questions_path = questions_path
+
+        # We load docs.json file in advance, cuz it would be used every iteration.
         self.docs_data = self._load_json_data()
 
     def _load_json_data(self):
         try:
-            with open(self.json_path, "r") as f:
+            with open(self.docs_path, "r") as f:
                 return json.load(f)
         except FileNotFoundError:
-            print(f"Error: JSON file not found at {self.json_path}")
+            print(f"Error: JSON file not found at {self.docs_path}")
             return []
         except json.JSONDecodeError:
-            print(f"Error: Failed to decode JSON from {self.json_path}")
+            print(f"Error: Failed to decode JSON from {self.docs_path}")
             return []
 
     def load(self):
@@ -37,7 +41,7 @@ class dataLoader:
         for item in self.docs_data:
             docs_dict[item["topic_id"]] = [doc["content"] for doc in item["docs"]]
 
-        with open(self.jsonl_path, "r") as f:
+        with open(self.questions_path, "r") as f:
             for line_str in f:
                 try:
                     line = json.loads(line_str)
@@ -49,7 +53,7 @@ class dataLoader:
                     id = topic_id,
                     event = line["target_event"],
                     documents = documents,
-                    options = [line[f"option{i}"] for i in ["A", "B", "C", "D"]],
+                    options = [line[f"option_{i}"] for i in ["A", "B", "C", "D"]],
                     answer = line['golden_answer']
                 )
                 yield aer_item
