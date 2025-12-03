@@ -7,6 +7,7 @@ Course project for "Large Language Models for Software Engineering 25/26" @ Poli
 AER-Project/
 │
 ├── data/               # Dataset files (SemEval 2026)
+├── paper/              # Project report with ACL template
 ├── src/
 │   ├── llm.py          # LLM API Wrapper (DeepSeek)
 │   ├── dataloader.py   # Data preprocessing and loading
