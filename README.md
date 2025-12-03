@@ -1,5 +1,5 @@
 # SemEval2026-AER
-Course project for "Large Language Models for Software Engineering 25/26" @ PoliTo. Exploring SemEval 2026 Task 12: Abductive Event Reasoning (AER) to investigate and enhance real-world causal inference capabilities in LLM.
+Course project for "Large Language Models for Software Engineering 25/26" @ PoliTo. Exploring SemEval 2026 Task 12: Abductive Event Reasoning (AER) to investigate real-world causal inference capabilities in LLM.
 
 ## Project Structure
 
