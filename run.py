@@ -19,13 +19,13 @@ def main():
     # we use Deepseek api right now, just modify parameters of chatLLM() if we want ChatGPT instead
     # we firstly use the baseline model to solve, for details please refer to "src/solvers.py"
     llm = ChatLLM(model_name=MODEL_NAME, api_key=API_KEY, base_url=BASE_URL)
-    solver = BaselineSolver(llm)
+    solver = BaselineSolver(llm) # change this component if we want to use another solve method
     loader = DataLoader(args.docs_path, args.questions_path)
 
     print(f"Running experiment with {solver.__class__.__name__}...\n")
 
     correct_count = 0
-    bad_cases = [] # include all uuid of incorrectly predicted events
+    bad_cases = {} # include all uuid of incorrectly predicted events and llm reasoning process
     for i, event in enumerate(loader.load()):
         if i <= args.limit - 1:
             print(f"--- Processing Item {i+1} ---")
@@ -39,7 +39,7 @@ def main():
             if sorted(prediction.split("Final Answer I Reasoned: ")[-1].split(",")) == sorted(event.answer.split(",")):
                 correct_count += 1
             else:
-                bad_cases.append(event.event_uuid)
+                bad_cases[event.event_uuid] = prediction
         else:
             break
     
