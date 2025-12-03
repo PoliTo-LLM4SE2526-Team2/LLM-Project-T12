@@ -43,7 +43,7 @@ def main():
         else:
             break
     
-    print(f"Accuracy: {correct_count / (args.limit + 1) * 100:.2f}%\n")
+    print(f"Accuracy: {correct_count / args.limit * 100:.2f}%\n")
 
 if __name__ == "__main__":
     main()
