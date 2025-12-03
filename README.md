@@ -5,6 +5,7 @@ Course project for "Large Language Models for Software Engineering" @ PoliTo. Ex
 
 ```text
 AER-Project/
+│
 ├── data/               # Dataset files (SemEval 2026)
 ├── src/
 │   ├── llm.py          # LLM API Wrapper (DeepSeek)
