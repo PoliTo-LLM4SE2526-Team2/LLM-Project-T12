@@ -10,7 +10,8 @@ AER-Project/
 ├── paper/              # Project report with ACL template
 ├── results/            # Model training results
 ├── src/
-│   ├── llm.py          # LLM API Wrapper (DeepSeek)
+│   ├── approaches.py   # Reasoning logic (Baseline, CoT, etc.)
 │   ├── dataloader.py   # Data preprocessing and loading
-│   └── solvers.py      # Reasoning logic (Baseline, CoT, etc.)
+│   ├── evaluator.py    # Evaluate model performance
+│   └── llm.py          # LLM API Wrapper (DeepSeek)
 └── run.py              # Main entry point for experiments
