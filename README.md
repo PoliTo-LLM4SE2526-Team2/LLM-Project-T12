@@ -8,6 +8,7 @@ AER-Project/
 │
 ├── data/               # Dataset files (SemEval 2026)
 ├── paper/              # Project report with ACL template
+├── results/            # Model training results
 ├── src/
 │   ├── llm.py          # LLM API Wrapper (DeepSeek)
 │   ├── dataloader.py   # Data preprocessing and loading
