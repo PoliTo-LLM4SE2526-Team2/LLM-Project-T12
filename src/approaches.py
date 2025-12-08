@@ -33,16 +33,35 @@ class BaselineApproach(BaseApproach):
         Instruction:
         1. Analyze the relationship between the event and the documents.
         2. Evaluate each candidate cause.
-        3. Select the most plausible cause.
+        3. Select the plausible cause(s).
 
         Output format:
-        First, provide a brief reasoning chain point by point.
-        Finally, output the answer strictly in this format: "Final Answer I Reasoned: [Option Label]".
+        First, provide a detailed reasoning chain explaining:
+        1. What information is found in the documents related to the event.
+        2. How each candidate cause relates to the event.
+        3. Why certain causes are more plausible than others.
+        4. Which documents support or contradict each option.
+        5. Your final conclusion with clear justification.
+        Finally, state the answer strictly in this format: "Final Answer I Reasoned: [Option Label]".
+        Your output must strictly adhere to the format and order specified above!!!
+
         Note that you have to output all satisfied labels, for example the final answer you reasoned is A:
         1. if you find B and C have the same content with A, then you have to output A,B,C.
         2. if you find B express the same meaning with A but just with a different way of saying it, then you have to output A,B.
         3. if you find C encompassed by A, then you have to output A,C.
+
+        If there is an option states "None of the others are correct causes." and you have clear evidence that NONE of other options are plausible causes according to what you've retrieved, then choose only this one. Otherwise, never choose this option.
         """
+        # Note:
+        # There may be one or multiple correct option(s).
+        # Select ALL options that are directly supported or strongly implied by the documents as plausible causes of the event.
+        # If multiple options are all plausible and not contradicted by the evidence, include all of them in the final answer separated by commas.
+        # If there is an option states "None of the others are correct causes." and you have clear evidence that NONE of other options are plausible causes according to what you've retrieved, then choose only this one. Otherwise, never choose this option.
+        
+        # Note that you have to output all satisfied labels, for example the final answer you reasoned is A:
+        # 1. if you find B and C have the same content with A, then you have to output A,B,C.
+        # 2. if you find B express the same meaning with A but just with a different way of saying it, then you have to output A,B.
+        # 3. if you find C encompassed by A, then you have to output A,C.
 
         messages = [
             {"role": "system", "content": system_prompt},

@@ -1,52 +1,156 @@
 import argparse
+import concurrent.futures
+from datetime import datetime
+import os
+import re
+import time
 from src.dataloader import DataLoader
 from src.llm import ChatLLM
 from src.approaches import BaselineApproach
+from src.evaluator import Evaluator
+from dotenv import load_dotenv
 
-MODEL_NAME = "deepseek-reasoner"
-API_KEY = "sk-6d964559089a47c488dde2fcb7e3b6fe"
-BASE_URL = "https://api.deepseek.com"
+
+def parse_answer(prediction: str) -> set:
+   
+    if not prediction:
+        return set()
+    
+    # Try to find "Final Answer I Reasoned: ..." pattern
+    pattern = r"Final Answer I Reasoned:\s*([A-D,\s]+)"
+    match = re.search(pattern, prediction, re.IGNORECASE)
+    
+    if match:
+        answer_str = match.group(1).strip()
+        # Split by comma and clean up
+        answers = [a.strip().upper() for a in answer_str.split(",") if a.strip()]
+        # Filter valid options (A, B, C, D)
+        valid_answers = {a for a in answers if a in ["A", "B", "C", "D"]}
+        return valid_answers
+    
+    # Fallback: try to find any single letter A-D at the end
+    pattern2 = r"\b([A-D])\b"
+    matches = re.findall(pattern2, prediction[-200:])  # Check last 200 chars
+    if matches:
+        return {m.upper() for m in matches if m.upper() in ["A", "B", "C", "D"]}
+    
+    return set()
+
+
+def parse_ground_truth(answer_str: str) -> set:
+    
+    if not answer_str:
+        return set()
+    answers = [a.strip().upper() for a in answer_str.split(",") if a.strip()]
+    return {a for a in answers if a in ["A", "B", "C", "D"]}
+
 
 def main():
-    # to define parameters.
+
+    # parse arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("--docs_path", type=str, default="data/dev/docs.json")
     parser.add_argument("--questions_path", type=str, default="data/dev/questions.jsonl")
-    parser.add_argument("--limit", type=int, default=2, help="Run the first 2 events to test.")
+    parser.add_argument("--output_dir", type=str, default="results", help="Directory to save results")
     args = parser.parse_args()
 
     # initialize components
-    # we use Deepseek api right now, just modify parameters of chatLLM() if we want ChatGPT instead
-    # we firstly use the baseline model to solve, for details please refer to "src/solvers.py"
-    llm = ChatLLM(model_name=MODEL_NAME, api_key=API_KEY, base_url=BASE_URL)
+    load_dotenv()
+    llm = ChatLLM(model_name=os.getenv("MODEL_NAME"), api_key=os.getenv("API_KEY"), base_url=os.getenv("BASE_URL"))
     solver = BaselineApproach(llm) # change this component if we want to use another solve method
     loader = DataLoader(args.docs_path, args.questions_path)
+    evaluator = Evaluator()
+    start_time = time.time()
 
     print(f"Running experiment with {solver.__class__.__name__}...\n")
 
-    correct_count = 0
-    bad_cases = {} # include all uuid of incorrectly predicted events and llm reasoning process
-    for i, event in enumerate(loader.load()):
-        if i <= args.limit - 1:
-            print(f"--- Processing Item {i+1} ---")
-            prediction = solver.solve(event)
+    max_workers = int(os.getenv("MAX_WORKERS"))
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+        # submit each event in the dataset to excutor
+        # executor.submit(function, arg1, arg2, ...)
+        future_to_event = {executor.submit(solver.solve, event): event for event in loader.load()}
 
-            print("-" * 30)
-            print(prediction)
-            print(f"\nGround truth: {event.answer}")
-            print("-" * 30 + "\n")
+        for future in concurrent.futures.as_completed(future_to_event):
+            event = future_to_event[future]
+            try:
+                prediction = future.result()
 
-            if sorted(prediction.split("Final Answer I Reasoned: ")[-1].split(",")) == sorted(event.answer.split(",")):
-                correct_count += 1
-            else:
-                bad_cases[event.event_uuid] = prediction
-        else:
-            break
+                # parse answers
+                predicted = parse_answer(prediction)
+                ground_truth = parse_ground_truth(event.answer)
+
+                # update evaluator
+                evaluator.update(
+                    predicted=predicted,
+                    ground_truth=ground_truth,
+                    event_uuid=event.event_uuid,
+                    prediction_text=prediction,
+                    event=event.event,
+                    options=event.options
+                )
+
+                # Print result with reasoning
+                print("-" * 50)
+                print("REASONING PROCESS:")
+                print("-" * 50)
+                # Extract reasoning part (everything before "Final Answer")
+                # reasoning_match = re.search(r"(.+?)(?:Final Answer|$)", prediction, re.DOTALL | re.IGNORECASE)
+                # if reasoning_match:
+                #     reasoning = reasoning_match.group(1).strip()
+                #     print(reasoning)
+                # else:
+                #     print(prediction)
+                print(prediction)
+                print("-" * 50)
+                print(f"Predicted Answer: {sorted(list(predicted))}")
+                print(f"Ground Truth: {sorted(list(ground_truth))}")
+                print(f"Correct: {predicted == ground_truth}")
+                print("-" * 50)
+                print()
+
+            except Exception as e:
+                print(f'{event.id} generated an exception: {e}')
+                evaluator.update(
+                    predicted=set(),
+                    ground_truth=parse_ground_truth(event.answer),
+                    event_uuid=event.event_uuid,
+                    prediction_text="",
+                    event=event.event,
+                    options=event.options
+                )
+
+    end_time = time.time()
+    total_time = end_time - start_time
+
+    # print evaluation summary
+    print("=" * 50)
+    print("EVALUATION SUMMARY")
+    print("=" * 50)
+    print(f"Approach: {solver.__class__.__name__}")
+    print(f"LLM Model: {os.getenv("MODEL_NAME")}")
+    print(f"Total Time: {total_time:.2f} seconds")
+    summary = evaluator.get_summary()
+    print(f"\nTotal: {summary['total']}")
+    print(f"Correct: {summary['correct']}")
+    print(f"Incorrect: {summary['incorrect']}")
+    print(f"Accuracy: {summary['accuracy']:.4f} ({summary['accuracy']*100:.2f}%)")
+    print(f"Macro F1 Score: {summary['macro_f1']:.4f}")
+    print(f"\nSingle Answer Accuracy: {summary['single_answer_accuracy']:.4f} ({summary['single_answer_count']} cases)")
+    print(f"Multi Answer Accuracy: {summary['multi_answer_accuracy']:.4f} ({summary['multi_answer_count']} cases)")
+    print(f"Insufficient Info Accuracy: {summary['insufficient_info_accuracy']:.4f} ({summary['insufficient_info_count']} cases)")
+    print(f"\nOption Level Matrix:")
+    print("\tPrecision\tRecall\t\tF1")
+    for option, matrix in sorted(summary['option_matrix'].items()):
+        print(f"{option}\t{matrix["precision"]:.4f}\t\t{matrix["recall"]:.4f}\t\t{matrix["f1"]:.4f}")
+    print("=" * 50)
+
+    # Save results
+    os.makedirs(args.output_dir, exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_file = os.path.join(args.output_dir, f"results_{timestamp}.json")
+    evaluator.save_results(output_file, approach_name=solver.__class__.__name__)
     
-    print(f"Accuracy: {correct_count / args.limit * 100:.2f}%\n")
+    print(f"\nEvaluation complete! Results saved to: {output_file}")
 
 if __name__ == "__main__":
     main()
-
-
-
