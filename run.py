@@ -8,6 +8,7 @@ from src.dataloader import DataLoader
 from src.llm import ChatLLM
 from src.approaches import BaselineApproach
 from src.evaluator import Evaluator
+from src.retriever import DocumentRetriever
 from dotenv import load_dotenv
 
 
@@ -52,17 +53,27 @@ def main():
     parser.add_argument("--docs_path", type=str, default="data/dev/docs.json")
     parser.add_argument("--questions_path", type=str, default="data/dev/questions.jsonl")
     parser.add_argument("--output_dir", type=str, default="results", help="Directory to save results")
+    parser.add_argument("--top_k", type=int, default=10, help="Number of top documents to retrieve (0 = use all)")
+    parser.add_argument("--no_retrieval", action="store_true", help="Disable document retrieval (use all documents)")
     args = parser.parse_args()
 
     # initialize components
     load_dotenv()
     llm = ChatLLM(model_name=os.getenv("MODEL_NAME"), api_key=os.getenv("API_KEY"), base_url=os.getenv("BASE_URL"))
-    solver = BaselineApproach(llm) # change this component if we want to use another solve method
+
+    retriever = None if args.no_retrieval else DocumentRetriever(top_k=args.top_k if args.top_k > 0 else 1000)
+
+    solver = BaselineApproach(llm, retriever) # change this component if we want to use another solve method
     loader = DataLoader(args.docs_path, args.questions_path)
     evaluator = Evaluator()
     start_time = time.time()
 
-    print(f"Running experiment with {solver.__class__.__name__}...\n")
+    print(f"Running experiment with {solver.__class__.__name__}...")
+    if retriever != None:
+        print(f"Document retrieval: Enabled (top_k={args.top_k})\n")
+    else:
+        print("Document retrieval: Disabled (using all documents)\n")
+    print()
 
     max_workers = int(os.getenv("MAX_WORKERS"))
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:

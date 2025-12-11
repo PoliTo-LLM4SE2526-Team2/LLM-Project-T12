@@ -13,5 +13,6 @@ AER-Project/
 │   ├── approaches.py   # Reasoning logic (Baseline, CoT, etc.)
 │   ├── dataloader.py   # Data preprocessing and loading
 │   ├── evaluator.py    # Evaluate model performance
+│   ├── retriever.py    # Retrieves and ranks documents
 │   └── llm.py          # LLM API Wrapper (DeepSeek)
 └── run.py              # Main entry point for experiments
