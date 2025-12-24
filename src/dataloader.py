@@ -10,6 +10,7 @@ class AERItem:
     id: int
     event: str
     event_uuid: str
+    title_snippet: List[str]
     documents: List[str]
     options: List[str]
     answer: str
@@ -39,8 +40,11 @@ class DataLoader:
     def load(self):
         # reformat the docs_data into a dict like {<topic_id>: [<corresponding docs content>, ...]}
         docs_dict = {}
+        title_snippet_dict = {}
         for item in self.docs_data:
             docs_dict[item["topic_id"]] = [doc["content"] for doc in item["docs"]]
+            # Splice title and snipprt of the document together, forming this title_snippet
+            title_snippet_dict[item["topic_id"]] = [doc["title"] + " " + doc["snippet"] for doc in item["docs"]]
 
         with open(self.questions_path, "r") as f:
             for line_str in f:
@@ -50,10 +54,12 @@ class DataLoader:
                     continue
                 topic_id = line["topic_id"]
                 documents = docs_dict.get(topic_id, [])
+                title_snippet = title_snippet_dict.get(topic_id, [])
                 aer_item = AERItem(
                     id = topic_id,
                     event = line["target_event"],
                     event_uuid = line["uuid"],
+                    title_snippet = title_snippet,
                     documents = documents,
                     options = [line[f"option_{i}"] for i in ["A", "B", "C", "D"]],
                     answer = line['golden_answer']
