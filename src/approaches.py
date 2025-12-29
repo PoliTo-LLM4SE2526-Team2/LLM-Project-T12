@@ -17,7 +17,7 @@ class BaselineApproach(BaseApproach):
     The basic zero-shot CoT approach.
     """
     def solve(self, item: AERItem) -> str:
-        documents = self.retriever.retrieve(item.event, item.documents) if self.retriever else item.documents
+        documents = self.retriever.retrieve(item.event, item.title_snippet, item.documents) if self.retriever else item.documents
 
         docs_text = "\n".join(f"Document{i+1}: {doc}" for i, doc in enumerate(documents))
         options_text = "\n".join(f"{label}: {opt}" for label, opt in zip(["A", "B", "C", "D"], item.options))
