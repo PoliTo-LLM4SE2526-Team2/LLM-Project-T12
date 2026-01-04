@@ -3,6 +3,7 @@ import concurrent.futures
 from datetime import datetime
 import os
 import re
+import json
 import time
 from src.dataloader import DataLoader
 from src.llm import ChatLLM
@@ -52,6 +53,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--docs_path", type=str, default="data/dev/docs.json")
     parser.add_argument("--questions_path", type=str, default="data/dev/questions.jsonl")
+    parser.add_argument("--submission_path", type=str, default="submission.jsonl")
     parser.add_argument("--output_dir", type=str, default="results", help="Directory to save results")
     parser.add_argument("--top_k", type=int, default=10, help="Number of top documents to retrieve (0 = use all)")
     parser.add_argument("--no_retrieval", action="store_true", help="Disable document retrieval (use all documents)")
@@ -66,6 +68,7 @@ def main():
     solver = BaselineApproach(llm, retriever) # change this component if we want to use another solve method
     loader = DataLoader(args.docs_path, args.questions_path)
     evaluator = Evaluator()
+    submission = []
     start_time = time.time()
 
     print(f"Running experiment with {solver.__class__.__name__}...")
@@ -100,6 +103,12 @@ def main():
                     options=event.options
                 )
 
+                # save to submission
+                predicted_str = ",".join(sorted(predicted))
+                submission_answer = {"id": event.event_uuid, "answer": predicted_str}
+                submission.append(submission_answer)
+
+
                 # Print result with reasoning
                 print("-" * 50)
                 print("REASONING PROCESS:")
@@ -132,6 +141,11 @@ def main():
 
     end_time = time.time()
     total_time = end_time - start_time
+
+    # write to submission.jsonl
+    with open(args.submission_path, 'w') as f:
+        for item in submission:
+            f.write(json.dumps(item, ensure_ascii=False) + '\n')
 
     # print evaluation summary
     print("=" * 50)
