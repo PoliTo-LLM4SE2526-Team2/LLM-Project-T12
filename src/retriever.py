@@ -8,8 +8,9 @@ class DocumentRetriever:
     Uses BM25 (Best Matching 25)
     """
     
-    def __init__(self, top_k: int = 10):
+    def __init__(self, top_k: int = 10, full_doc: bool = True):
         self.top_k = top_k
+        self.full_doc = full_doc
         # BM25 is instantiated per query set in this design
     
     def retrieve(self, event: str, title_snippet: List[str], documents: List[str]) -> List[str]:
@@ -21,14 +22,15 @@ class DocumentRetriever:
             return documents
         
         try:
-            # 1. Preprocessing: Tokenization
-            tokenized_titlesnippet = [item.lower().split(" ") for item in title_snippet]
+            # Preprocessing document/snippet
+            if self.full_doc:
+                tokenized_content = [doc.lower().split(" ") for doc in documents]
+            else:
+                tokenized_content = [item.lower().split(" ") for item in title_snippet]
             tokenized_event = event.lower().split(" ")
             
-            # 2. Build Index
-            bm25 = BM25Okapi(tokenized_titlesnippet)
-            
-            # 3. Retrieve Top-N
+            # Retrieve
+            bm25 = BM25Okapi(tokenized_content)
             retrieved_docs = bm25.get_top_n(tokenized_event, documents, n=self.top_k)
             
             return retrieved_docs
@@ -46,10 +48,13 @@ class DocumentRetriever:
             return []
         
         try:
-            tokenized_titlesnippet = [item.lower().split(" ") for item in title_snippet]
+            if self.full_doc:
+                tokenized_content = [doc.lower().split(" ") for doc in documents]
+            else:
+                tokenized_content = [item.lower().split(" ") for item in title_snippet]
             tokenized_event = event.lower().split(" ")
             
-            bm25 = BM25Okapi(tokenized_titlesnippet)
+            bm25 = BM25Okapi(tokenized_content)
             
             # Calculate scores for all documents
             scores = bm25.get_scores(tokenized_event)

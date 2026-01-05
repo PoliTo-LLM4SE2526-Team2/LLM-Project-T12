@@ -63,7 +63,7 @@ def main():
     load_dotenv()
     llm = ChatLLM(model_name=os.getenv("MODEL_NAME"), api_key=os.getenv("API_KEY"), base_url=os.getenv("BASE_URL"))
 
-    retriever = None if args.no_retrieval else DocumentRetriever(top_k=args.top_k if args.top_k > 0 else 1000)
+    retriever = None if args.no_retrieval else DocumentRetriever(top_k=args.top_k if args.top_k > 0 else 1000, full_doc=False)
 
     solver = BaselineApproach(llm, retriever) # change this component if we want to use another solve method
     loader = DataLoader(args.docs_path, args.questions_path)
