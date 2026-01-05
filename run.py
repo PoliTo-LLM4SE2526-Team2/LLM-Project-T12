@@ -63,8 +63,7 @@ def main():
     load_dotenv()
     llm = ChatLLM(model_name=os.getenv("MODEL_NAME"), api_key=os.getenv("API_KEY"), base_url=os.getenv("BASE_URL"))
 
-    # full_doc default as True means use full content of documents to retrieve
-    retriever = None if args.no_retrieval else DocumentRetriever(top_k=args.top_k if args.top_k > 0 else 1000, full_doc=False)
+    retriever = None if args.no_retrieval else DocumentRetriever(top_k=args.top_k if args.top_k > 0 else 1000, full_doc=False)    # "full_doc" (default: True): uses the full content of documents for retrieval, or uses title+snippet if set to False
 
     solver = BaselineApproach(llm, retriever) # change this component if we want to use another solve method
     loader = DataLoader(args.docs_path, args.questions_path)
