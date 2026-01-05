@@ -9,7 +9,7 @@ from src.dataloader import DataLoader
 from src.llm import ChatLLM
 from src.approaches import BaselineApproach
 from src.evaluator import Evaluator
-from src.retriever import DocumentRetriever
+from src.retriever import DocumentRetriever, SemanticRetriever
 from dotenv import load_dotenv
 
 
@@ -57,13 +57,42 @@ def main():
     parser.add_argument("--output_dir", type=str, default="results", help="Directory to save results")
     parser.add_argument("--top_k", type=int, default=10, help="Number of top documents to retrieve (0 = use all)")
     parser.add_argument("--no_retrieval", action="store_true", help="Disable document retrieval (use all documents)")
+    parser.add_argument("--retrieval_method", type=str, default="bm25", choices=["bm25", "semantic"], 
+                       help="Retrieval method: 'bm25' (keyword-based) or 'semantic' (vector-based)")
+    parser.add_argument("--semantic_model", type=str, default="all-MiniLM-L6-v2",
+                       help="Sentence transformer model for semantic retrieval (default: all-MiniLM-L6-v2)")
+    parser.add_argument("--use_full_content", action="store_true", default=False,
+                       help="Use full document content for retrieval (default: False, applies to both BM25 and semantic)")
+    parser.add_argument("--use_gpu", action="store_true", help="Use GPU for semantic retrieval (if available)")
     args = parser.parse_args()
 
     # initialize components
     load_dotenv()
     llm = ChatLLM(model_name=os.getenv("MODEL_NAME"), api_key=os.getenv("API_KEY"), base_url=os.getenv("BASE_URL"))
 
-    retriever = None if args.no_retrieval else DocumentRetriever(top_k=args.top_k if args.top_k > 0 else 1000, full_doc=False)    # "full_doc" (default: True): uses the full content of documents for retrieval, or uses title+snippet if set to False
+    # Initialize retriever based on method
+    if args.no_retrieval:
+        retriever = None
+    elif args.retrieval_method == "semantic":
+        try:
+            retriever = SemanticRetriever(
+                top_k=args.top_k if args.top_k > 0 else 1000,
+                model_name=args.semantic_model,
+                use_full_content=args.use_full_content,
+                use_gpu=args.use_gpu
+            )
+        except ImportError as e:
+            print(f"Error: {e}")
+            print("Falling back to BM25 retrieval...")
+            retriever = DocumentRetriever(
+                top_k=args.top_k if args.top_k > 0 else 1000,
+                use_full_content=args.use_full_content
+            )
+    else:  # bm25
+        retriever = DocumentRetriever(
+            top_k=args.top_k if args.top_k > 0 else 1000,
+            use_full_content=args.use_full_content
+        )
 
     solver = BaselineApproach(llm, retriever) # change this component if we want to use another solve method
     loader = DataLoader(args.docs_path, args.questions_path)
@@ -73,7 +102,12 @@ def main():
 
     print(f"Running experiment with {solver.__class__.__name__}...")
     if retriever != None:
-        print(f"Document retrieval: Enabled (top_k={args.top_k})\n")
+        retrieval_type = "Semantic" if isinstance(retriever, SemanticRetriever) else "BM25"
+        print(f"Document retrieval: Enabled ({retrieval_type}, top_k={args.top_k})")
+        if isinstance(retriever, SemanticRetriever):
+            print(f"  Model: {retriever.model_name}")
+        print(f"  Use full content: {retriever.use_full_content}")
+        print()
     else:
         print("Document retrieval: Disabled (using all documents)\n")
     print()

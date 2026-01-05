@@ -28,7 +28,7 @@ class DataLoader:
 
     def _load_json_data(self):
         try:
-            with open(self.docs_path, "r") as f:
+            with open(self.docs_path, "r", encoding="utf-8") as f:
                 return json.load(f)
         except FileNotFoundError:
             print(f"Error: JSON file not found at {self.docs_path}")
@@ -46,7 +46,7 @@ class DataLoader:
             # Splice title and snipprt of the document together, forming this title_snippet
             title_snippet_dict[item["topic_id"]] = [doc["title"] + " " + doc["snippet"] for doc in item["docs"]]
 
-        with open(self.questions_path, "r") as f:
+        with open(self.questions_path, "r", encoding="utf-8") as f:
             for line_str in f:
                 try:
                     line = json.loads(line_str)
