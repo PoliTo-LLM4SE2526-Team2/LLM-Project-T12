@@ -7,7 +7,7 @@ import json
 import time
 from src.dataloader import DataLoader
 from src.llm import ChatLLM
-from src.approaches import BaselineApproach
+from src.approaches import BaselineApproach, SelfConsistencyRefinementApproach
 from src.evaluator import Evaluator
 from src.retriever import DocumentRetriever
 from dotenv import load_dotenv
@@ -57,6 +57,13 @@ def main():
     parser.add_argument("--output_dir", type=str, default="results", help="Directory to save results")
     parser.add_argument("--top_k", type=int, default=10, help="Number of top documents to retrieve (0 = use all)")
     parser.add_argument("--no_retrieval", action="store_true", help="Disable document retrieval (use all documents)")
+    parser.add_argument("--approach", type=str, default="baseline", 
+                        choices=["baseline", "self_consistency_refinement", "sc_refine"],
+                        help="Reasoning approach to use")
+    parser.add_argument("--num_samples", type=int, default=5, 
+                        help="Number of samples for self-consistency (only for sc methods)")
+    parser.add_argument("--sc_temperature", type=float, default=0.7,
+                        help="Temperature for self-consistency sampling")
     args = parser.parse_args()
 
     # initialize components
@@ -65,7 +72,17 @@ def main():
 
     retriever = None if args.no_retrieval else DocumentRetriever(top_k=args.top_k if args.top_k > 0 else 1000, full_doc=False)    # "full_doc" (default: True): uses the full content of documents for retrieval, or uses title+snippet if set to False
 
-    solver = BaselineApproach(llm, retriever) # change this component if we want to use another solve method
+    # Select approach based on argument
+    if args.approach in ["self_consistency_refinement", "sc_refine"]:
+        solver = SelfConsistencyRefinementApproach(
+            llm, 
+            retriever, 
+            num_samples=args.num_samples,
+            temperature=args.sc_temperature
+        )
+    else:
+        solver = BaselineApproach(llm, retriever)
+    
     loader = DataLoader(args.docs_path, args.questions_path)
     evaluator = Evaluator()
     submission = []
