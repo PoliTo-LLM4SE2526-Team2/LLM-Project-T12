@@ -169,7 +169,7 @@ def main():
     print("EVALUATION SUMMARY")
     print("=" * 50)
     print(f"Approach: {solver.__class__.__name__}")
-    print(f"LLM Model: {os.getenv("MODEL_NAME")}")
+    print(f"LLM Model: {os.getenv('MODEL_NAME')}")
     print(f"Total Time: {total_time:.2f} seconds")
     summary = evaluator.get_summary()
     print(f"\nTotal: {summary['total']}")
@@ -183,7 +183,7 @@ def main():
     print(f"\nOption Level Matrix:")
     print("\tPrecision\tRecall\t\tF1")
     for option, matrix in sorted(summary['option_matrix'].items()):
-        print(f"{option}\t{matrix["precision"]:.4f}\t\t{matrix["recall"]:.4f}\t\t{matrix["f1"]:.4f}")
+        print(f"{option}\t{matrix['precision']:.4f}\t\t{matrix['recall']:.4f}\t\t{matrix['f1']:.4f}")
     print("=" * 50)
 
     # Save results
