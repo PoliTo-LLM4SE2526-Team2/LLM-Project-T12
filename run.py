@@ -7,36 +7,40 @@ import json
 import time
 from src.dataloader import DataLoader
 from src.llm import ChatLLM
-from src.approaches import BaselineApproach
+from src.approaches import BaselineApproach, SelfConsistencyApproach
 from src.evaluator import Evaluator
 from src.retriever import DocumentRetriever
 from dotenv import load_dotenv
 
 
 def parse_answer(prediction: str) -> set:
-   
+    """
+    Parse LLM output and extract the final answer(s) labeled A-D.
+    Handles outputs like:
+    - Final Answer I Reasoned: A,B
+    - Final Answer I Reasoned: (A,B)
+    - Final Answer I Reasoned: A / B
+    - Includes spaces or line breaks
+    """
     if not prediction:
         return set()
     
-    # Try to find "Final Answer I Reasoned: ..." pattern
-    pattern = r"Final Answer I Reasoned:\s*([A-D,\s]+)"
-    match = re.search(pattern, prediction, re.IGNORECASE)
+    import re
+    try:
+        # 宽松匹配：允许括号、空格、逗号
+        pattern = r"Final Answer I Reasoned:\s*[\(\s]*([A-D,\s]+)[\)\s]*"
+        match = re.search(pattern, prediction, re.IGNORECASE)
+        if match:
+            answer_str = match.group(1)
+            answers = [a.strip().upper() for a in answer_str.split(",") if a.strip() in ["A","B","C","D"]]
+            return set(answers)
+    except re.error:
+        # 正则报错时也不会中断
+        return set()
     
-    if match:
-        answer_str = match.group(1).strip()
-        # Split by comma and clean up
-        answers = [a.strip().upper() for a in answer_str.split(",") if a.strip()]
-        # Filter valid options (A, B, C, D)
-        valid_answers = {a for a in answers if a in ["A", "B", "C", "D"]}
-        return valid_answers
-    
-    # Fallback: try to find any single letter A-D at the end
-    pattern2 = r"\b([A-D])\b"
-    matches = re.findall(pattern2, prediction[-200:])  # Check last 200 chars
-    if matches:
-        return {m.upper() for m in matches if m.upper() in ["A", "B", "C", "D"]}
-    
-    return set()
+    # fallback: 在最后 200 个字符里找 A-D
+    matches = re.findall(r"\b([A-D])\b", prediction[-200:])
+    return {m.upper() for m in matches if m.upper() in ["A","B","C","D"]}
 
 
 def parse_ground_truth(answer_str: str) -> set:
@@ -51,6 +55,9 @@ def main():
 
     # parse arguments
     parser = argparse.ArgumentParser()
+    parser.add_argument("--approach",type=str,default="baseline",choices=["baseline", "self_consistency"],help="Reasoning approach to use")
+    parser.add_argument("--n_samples",type=int,default=5,help="Number of samples for Self-Consistency")
+    parser.add_argument("--n_events", type=int, default=0, help="Number of events to run (0 = all)")  # 新增
     parser.add_argument("--docs_path", type=str, default="data/dev/docs.json")
     parser.add_argument("--questions_path", type=str, default="data/dev/questions.jsonl")
     parser.add_argument("--submission_path", type=str, default="submission.jsonl")
@@ -65,8 +72,23 @@ def main():
 
     retriever = None if args.no_retrieval else DocumentRetriever(top_k=args.top_k if args.top_k > 0 else 1000, full_doc=False)    # "full_doc" (default: True): uses the full content of documents for retrieval, or uses title+snippet if set to False
 
-    solver = BaselineApproach(llm, retriever) # change this component if we want to use another solve method
+    if args.approach == "baseline":
+        solver = BaselineApproach(llm, retriever)
+    elif args.approach == "self_consistency":
+        solver = SelfConsistencyApproach(
+            llm,
+            retriever,
+            n_samples=args.n_samples
+            )
+    else:
+        raise ValueError(f"Unknown approach: {args.approach}")
+
     loader = DataLoader(args.docs_path, args.questions_path)
+    events = list(loader.load())  # ⚡ 转成 list，这样可以切片
+    # 如果指定了 --n_events，只保留前 n_events 个
+    if args.n_events > 0:
+        events = events[:args.n_events]
+
     evaluator = Evaluator()
     submission = []
     start_time = time.time()
@@ -82,7 +104,7 @@ def main():
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
         # submit each event in the dataset to excutor
         # executor.submit(function, arg1, arg2, ...)
-        future_to_event = {executor.submit(solver.solve, event): event for event in loader.load()}
+        future_to_event = {executor.submit(solver.solve, event): event for event in events}
 
         for future in concurrent.futures.as_completed(future_to_event):
             event = future_to_event[future]
@@ -166,7 +188,10 @@ def main():
     print(f"\nOption Level Matrix:")
     print("\tPrecision\tRecall\t\tF1")
     for option, matrix in sorted(summary['option_matrix'].items()):
-        print(f"{option}\t{matrix["precision"]:.4f}\t\t{matrix["recall"]:.4f}\t\t{matrix["f1"]:.4f}")
+        print(
+            f"{option}\t{matrix['precision']:.4f}\t\t"
+            f"{matrix['recall']:.4f}\t\t{matrix['f1']:.4f}"
+            )
     print("=" * 50)
 
     # Save results

@@ -1,0 +1,131 @@
+{
+  "approach": "SelfConsistencyApproach",
+  "summary": {
+    "total": 5,
+    "correct": 0,
+    "incorrect": 5,
+    "accuracy": 0.0,
+    "macro_f1": 0.0,
+    "insufficient_info_count": 0,
+    "insufficient_info_accuracy": 0.0,
+    "single_answer_count": 3,
+    "single_answer_accuracy": 0.0,
+    "multi_answer_count": 2,
+    "multi_answer_accuracy": 0.0,
+    "option_stats": {
+      "C": {
+        "correct": 0,
+        "total_selected": 0,
+        "total_should_select": 4
+      },
+      "B": {
+        "correct": 0,
+        "total_selected": 0,
+        "total_should_select": 2
+      },
+      "A": {
+        "correct": 0,
+        "total_selected": 0,
+        "total_should_select": 2
+      }
+    },
+    "option_matrix": {
+      "C": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "B": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "A": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    "error_count": 5
+  },
+  "error_cases": [
+    {
+      "uuid": "422a45ef-3db3-4d14-a6ca-ca489748f619",
+      "event": "President Yoon Suk Yeol vowed to carry out a thorough investigation.",
+      "predicted": [],
+      "ground_truth": [
+        "C"
+      ],
+      "prediction_text": "",
+      "options": [
+        "option_A: Kim and her friend crawled out of the crush and were pulled into a tavern by adults.",
+        "option_B: Emergency workers and pedestrians performed CPR on victims in the streets on Saturday night.",
+        "option_C: At least 153 people were killed and dozens injured.",
+        "option_D: Kim and her friend entered the alley at 8 p.m. and became trapped as the crowd density increased."
+      ]
+    },
+    {
+      "uuid": "3921ba8b-654a-4812-8213-f30eacd51521",
+      "event": "Twitter removed Trump's tweets and locked his account.",
+      "predicted": [],
+      "ground_truth": [
+        "C"
+      ],
+      "prediction_text": "",
+      "options": [
+        "option_A: A woman was shot inside the Capitol and died.",
+        "option_B: Pipe bombs were reported at the Republican National Committee building and the Democratic National Committee headquarters.",
+        "option_C: Supporters stormed the U.S. Capitol.",
+        "option_D: Capitol Police Chief Steven Sund, House Sergeant at Arms Paul Irving, and Senate Sergeant at Arms Michael Stenger resigned."
+      ]
+    },
+    {
+      "uuid": "0d8d052d-ca7d-4dab-8b00-48c9cf0e48c1",
+      "event": "President Donald Trump proposed tariffs on steel and aluminum.",
+      "predicted": [],
+      "ground_truth": [
+        "B"
+      ],
+      "prediction_text": "",
+      "options": [
+        "option_A: Trump scrapped the Trans-Pacific Partnership (TPP).",
+        "option_B: Trump named Robert Lighthizer, a steel industry lobbyist, as U.S. Trade Representative.",
+        "option_C: China overtook the United States as the largest economy (PPP) by 2016.",
+        "option_D: Japan approved China’s WTO bid in 1999."
+      ]
+    },
+    {
+      "uuid": "a729a3df-ca37-4c86-9a80-15826c55a04d",
+      "event": "On November 24, 2018, \"yellow vest\" protestors blocked the Champs Elysées in Paris, leading to confrontations.",
+      "predicted": [],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "prediction_text": "",
+      "options": [
+        "option_A: The Macron government announced an increase in gas taxes effective January 1, 2019.",
+        "option_B: The Macron government announced an increase in gas taxes effective January 1, 2019.",
+        "option_C: The Macron government announced an increase in gas taxes effective January 1, 2019.",
+        "option_D: 227 people were injured in the protests, with six severely."
+      ]
+    },
+    {
+      "uuid": "a7e8ed66-cf2a-4f51-8f69-683beaaeb30d",
+      "event": "On November 26, 2018, the first trials for those arrested on November 24 took place.",
+      "predicted": [],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "prediction_text": "",
+      "options": [
+        "option_A: 130 people were arrested across France, including 42 in Paris.",
+        "option_B: A protester was accidentally run over and killed by a car near Lyon during demonstrations.",
+        "option_C: 130 people were arrested across France, including 42 in Paris.",
+        "option_D: The Macron government announced an increase in gas taxes effective January 1, 2019."
+      ]
+    }
+  ]
+}
