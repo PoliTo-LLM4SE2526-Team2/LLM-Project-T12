@@ -2,6 +2,9 @@ from abc import ABC, abstractmethod
 from src.llm import BaseLLM
 from src.retriever import DocumentRetriever
 from src.dataloader import AERItem
+from collections import Counter
+import re
+from src.prompts import PROMPTS
 
 
 class BaseApproach(ABC):
@@ -10,7 +13,7 @@ class BaseApproach(ABC):
         self.retriever = retriever
 
     @abstractmethod
-    def solve(self, item: AERItem) -> str:
+    def solve(self, item: AERItem, prompt_name: str) -> str:
         pass
 
 
@@ -19,25 +22,171 @@ class BaselineApproach(BaseApproach):
     The basic zero-shot CoT approach.
     """
 
-    def solve(self, item: AERItem) -> str:
+    def solve(self, item: AERItem, prompt_name: str = "cot") -> str:
         documents = (
             self.retriever.retrieve(item.event, item.title_snippet, item.documents)
             if self.retriever
             else item.documents
         )
 
-        docs_text = "\n".join(
-            f"Document{i + 1}: {doc}" for i, doc in enumerate(documents)
-        )
+        docs_text = "\n".join(f"[Doc{i + 1}]: {doc}" for i, doc in enumerate(documents))
         options_text = "\n".join(
             f"{label}: {opt}" for label, opt in zip(["A", "B", "C", "D"], item.options)
         )
 
-        system_prompt = "You are an expert detective and logic analyst. Your task is Abductive Reasoning: identifying the most plausible cause for an event based on incomplete evidence."
+        system_prompt = PROMPTS[prompt_name]["system_prompt"]
+        user_prompt = PROMPTS[prompt_name]["user_prompt"].format(
+            event=item.event,
+            docs_text=docs_text,
+            options_text=options_text
+        )
 
-        user_prompt = f"""
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
+
+        response = self.llm.generate(messages)
+        return response
+
+
+
+class SelfConsistencyRefinementApproach(BaseApproach):
+    """
+    Combines Self-Consistency (multiple sampling + voting) with Self-Refinement (critique and improve).
+    
+    Process:
+    1. Self-Consistency: Generate multiple reasoning paths with higher temperature
+    2. Vote on the most common answer
+    3. Self-Refinement: Critique the voted answer and refine it
+    """
+    
+    def __init__(self, llm: BaseLLM, retriever: DocumentRetriever = None):
+        super().__init__(llm, retriever)
+        self.num_samples = 5
+        self.temperature = 0.7
+    
+    def _parse_answer_from_response(self, response: str) -> set:
+        """Extract answer options from LLM response."""
+        if not response:
+            return set()
+        
+        # Try to find "Final Answer I Reasoned: ..." pattern
+        pattern = r"Final Answer I Reasoned:\s*([A-D,\s]+)"
+        match = re.search(pattern, response, re.IGNORECASE)
+        
+        if match:
+            answer_str = match.group(1).strip()
+            answers = [a.strip().upper() for a in answer_str.split(",") if a.strip()]
+            return {a for a in answers if a in ["A", "B", "C", "D"]}
+        
+        # Fallback: find any A-D letters
+        pattern2 = r"\b([A-D])\b"
+        matches = re.findall(pattern2, response[-200:])
+        if matches:
+            return {m.upper() for m in matches if m.upper() in ["A", "B", "C", "D"]}
+        
+        return set()
+    
+    def _get_prompt(self, item: AERItem, prompt_name: str) -> tuple:
+        """Get the system and user prompts."""
+        documents = (
+            self.retriever.retrieve(item.event, item.title_snippet, item.documents)
+            if self.retriever
+            else item.documents
+        )
+        
+        docs_text = "\n".join(f"[Doc{i + 1}]: {doc}" for i, doc in enumerate(documents))
+        options_text = "\n".join(
+            f"{label}: {opt}" for label, opt in zip(["A", "B", "C", "D"], item.options)
+        )
+
+        system_prompt = PROMPTS[prompt_name]["system_prompt"]
+        user_prompt = PROMPTS[prompt_name]["user_prompt"].format(
+            event=item.event,
+            docs_text=docs_text,
+            options_text=options_text
+        )
+        
+        return system_prompt, user_prompt, docs_text, options_text, item.event
+    
+    def solve(self, item: AERItem, prompt_name: str = "cot") -> str:
+        """
+        Main solving method combining Self-Consistency and Self-Refinement.
+        """
+        system_prompt, user_prompt, docs_text, options_text, event = self._get_prompt(item, prompt_name)
+        
+        # ============ STAGE 1: Self-Consistency ============
+        print(f"\n[Self-Consistency] Generating {self.num_samples} reasoning paths...")
+        
+        all_responses = []
+        all_answers = []
+        
+        for i in range(self.num_samples):
+            messages = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ]
+            
+            response = self.llm.generate(messages, temperature=self.temperature)
+            all_responses.append(response)
+            
+            # Parse answer
+            answer = self._parse_answer_from_response(response)
+            all_answers.append(frozenset(answer))  # Use frozenset for hashable voting
+            
+            print(f"  Sample {i+1}: {sorted(list(answer)) if answer else 'No answer'}")
+        
+        # Vote for the most common answer
+        if not all_answers or all(len(a) == 0 for a in all_answers):
+            # If no valid answers, return first response
+            return all_responses[0] if all_responses else ""
+        
+        answer_counts = Counter(all_answers)
+        most_common_answer, vote_count = answer_counts.most_common(1)[0]
+        most_common_answer = set(most_common_answer)
+        
+        print(f"\n[Voting Result] Most common answer: {sorted(list(most_common_answer))} (votes: {vote_count}/{self.num_samples})")
+        
+        # Find the response that matches the most common answer
+        best_response = None
+        for response in all_responses:
+            if self._parse_answer_from_response(response) == most_common_answer:
+                best_response = response
+                break
+        
+        if not best_response:
+            best_response = all_responses[0]
+        
+        # ============ STAGE 2: Self-Refinement ============
+        print("\n[Self-Refinement] Critiquing and refining the answer...")
+        
+        critique_prompt = f"""
+        You previously analyzed this abductive reasoning problem and concluded:
+        
+        {best_response}
+        
+        Now, critically review your reasoning:
+        1. Are there any logical flaws or inconsistencies in your analysis?
+        2. Did you miss any important evidence from the documents?
+        3. Did you correctly apply the rule about selecting ALL plausible causes?
+        4. For the "None of the others" option, did you verify that truly NONE of the other options are plausible?
+        5. Are there any options you selected without sufficient evidence, or rejected despite having support?
+        
+        If you find issues, provide a critique. If your reasoning is sound, confirm it.
+        """
+        
+        critique_messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": critique_prompt}
+        ]
+        
+        critique_response = self.llm.generate(critique_messages, temperature=0.3)
+        
+        # Generate refined answer
+        refinement_prompt = f"""
         Target Event:
-        {item.event}
+        {event}
 
         Retrieved Evidence:
         {docs_text}
@@ -45,264 +194,47 @@ class BaselineApproach(BaseApproach):
         Candidate Causes:
         {options_text}
 
-        Instruction:
-        1. Analyze the relationship between the event and the documents.
-        2. Evaluate each candidate cause.
-        3. Select the plausible cause(s).
-
+        Your initial reasoning:
+        {best_response}
+        
+        Your self-critique:
+        {critique_response}
+        
+        Based on your critique, provide your FINAL refined answer. If your initial reasoning was correct, you can confirm it. If there were issues, correct them.
+        
         Output format:
-        First, provide a detailed reasoning chain explaining:
-        1. What information is found in the documents related to the event.
-        2. How each candidate cause relates to the event.
-        3. Why certain causes are more plausible than others.
-        4. Which documents support or contradict each option.
-        5. Your final conclusion with clear justification.
+        First, briefly explain any changes you're making (or confirm your original answer).
+        Then, provide your detailed final reasoning.
         Finally, state the answer strictly in this format: "Final Answer I Reasoned: [Option Label]".
-        Your output must strictly adhere to the format and order specified above!!!
-
-        Note that there may be one or multiple correct option(s), you have to select ALL options that are directly supported or strongly implied by the documents as plausible causes of the event, for example the final answer you reasoned is A:
-        1. if you find B and C have the same content with A, then you have to output A,B,C.
-        2. if you find B express the same meaning with A but just with a different way of saying it, then you have to output A,B.
-        3. if you find C encompassed by A, then you have to output A,C.
-
-        If there is an option states "None of the others are correct causes." and you have clear evidence that NONE of other options are plausible causes according to what you've retrieved, then choose only this one. Otherwise, never choose this option.
+        
+        Remember:
+        - Select ALL options that are plausible causes supported by evidence
+        - Only choose "None of the others" if you have clear evidence that ALL other options are incorrect
         """
-
-        messages = [
+        
+        refinement_messages = [
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
+            {"role": "user", "content": refinement_prompt}
         ]
+        
+        final_response = self.llm.generate(refinement_messages, temperature=0.1)
+        
+        print("[Self-Refinement] Complete!")
+        
+        # Return the full refinement process for transparency
+        full_output = f"""
+        ========== SELF-CONSISTENCY STAGE ==========
+        Generated {self.num_samples} samples, voted answer: {sorted(list(most_common_answer))} ({vote_count}/{self.num_samples} votes)
 
-        response = self.llm.generate(messages)
-        return response
+        Best reasoning from consistency stage:
+        {best_response}
 
+        ========== SELF-REFINEMENT STAGE ==========
+        Self-Critique:
+        {critique_response}
 
-class OptimizedApproach(BaseApproach):
-    """
-    Optimized approach addressing identified failure patterns:
-    1. Under-selection: Structured per-option evaluation
-    2. Over-selection: Strict temporal causation check
-    3. Cause/Consequence confusion: Explicit directionality check
-    4. "None correct" failures: Balanced handling without bias
-    5. Duplicate options: Explicit duplicate detection
-    """
-
-    def solve(self, item: AERItem) -> str:
-        documents = (
-            self.retriever.retrieve(item.event, item.title_snippet, item.documents)
-            if self.retriever
-            else item.documents
-        )
-
-        docs_text = "\n".join(f"[Doc{i + 1}]: {doc}" for i, doc in enumerate(documents))
-        options_text = "\n".join(
-            f"{label}: {opt}" for label, opt in zip(["A", "B", "C", "D"], item.options)
-        )
-
-        system_prompt = """You are an expert in causal reasoning and abductive inference. Your task is to identify which candidate option(s) are plausible CAUSES of a target event.
-
-CRITICAL DEFINITIONS:
-- CAUSE: An event/action that happened BEFORE the target event AND directly led to or enabled the target event
-- NOT A CAUSE: Events that happened AFTER, are consequences OF, or are merely correlated with the target event
-- Temporal Rule: A cause must precede its effect in time"""
-
-        user_prompt = f"""TARGET EVENT (the effect we need to explain):
-"{item.event}"
-
-EVIDENCE DOCUMENTS:
-{docs_text}
-
-CANDIDATE CAUSES:
-{options_text}
-
-=== ANALYSIS INSTRUCTIONS ===
-
-STEP 1: DUPLICATE CHECK
-First, identify if any options have identical or nearly identical wording. List any duplicates found.
-
-STEP 2: PER-OPTION CAUSAL ANALYSIS
-For EACH option (A, B, C, D), answer these questions:
-1. TEMPORAL: Did this happen BEFORE the target event? (Yes/No/Unclear)
-2. DOCUMENTED: Is there evidence in the documents supporting this? (Yes/No)
-3. CAUSAL LINK: Does this logically LEAD TO or ENABLE the target event? (Yes/No)
-4. VERDICT: Is this a plausible cause? (CAUSE / NOT_CAUSE / INSUFFICIENT_INFO)
-
-Format each option analysis as:
-[Option X]: <option text>
-- Temporal: <Yes/No/Unclear>
-- Documented: <Yes/No>
-- Causal Link: <Yes/No>
-- Verdict: <CAUSE/NOT_CAUSE/INSUFFICIENT_INFO>
-- Reasoning: <brief explanation>
-
-STEP 3: HANDLE "NONE OF THE OTHERS" OPTION
-If one option states "None of the others are correct causes" or similar:
-- This option should be selected ONLY IF all other options received NOT_CAUSE verdict
-- This option should NOT be selected if ANY other option is a valid cause
-
-STEP 4: FINAL SELECTION RULES
-- Select ALL options with CAUSE verdict
-- If options are duplicates (same/similar text), select ALL duplicate labels
-- If no option qualifies as CAUSE and there's a "None correct" option, select it
-- Never select both regular causes AND "None correct" option
-
-=== OUTPUT FORMAT ===
-After your analysis, state your final answer EXACTLY as:
-"Final Answer I Reasoned: X" (single answer) or "Final Answer I Reasoned: X,Y,Z" (multiple answers, comma-separated, no spaces after commas)"""
-
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
-        ]
-
-        response = self.llm.generate(messages)
-        return response
-
-
-class TwoPassApproach(BaseApproach):
-    """
-    Two-pass reasoning approach:
-    Pass 1: Identify all potentially related options (liberal selection)
-    Pass 2: Verify causal direction and filter (strict verification)
-    """
-
-    def solve(self, item: AERItem) -> str:
-        documents = (
-            self.retriever.retrieve(item.event, item.title_snippet, item.documents)
-            if self.retriever
-            else item.documents
-        )
-
-        docs_text = "\n".join(f"[Doc{i + 1}]: {doc}" for i, doc in enumerate(documents))
-        options_text = "\n".join(
-            f"{label}: {opt}" for label, opt in zip(["A", "B", "C", "D"], item.options)
-        )
-
-        system_prompt = """You are an expert in abductive reasoning. You will analyze candidate causes for an event using a two-pass verification process."""
-
-        user_prompt = f"""TARGET EVENT: "{item.event}"
-
-DOCUMENTS:
-{docs_text}
-
-OPTIONS:
-{options_text}
-
-=== TWO-PASS ANALYSIS ===
-
-**PASS 1: CANDIDATE IDENTIFICATION (Be Inclusive)**
-For each option, determine if it has ANY connection to the target event based on the documents.
-Mark as CANDIDATE if there's any potential causal relationship. Mark as REJECT only if clearly unrelated.
-
-Options to consider as candidates: [List A/B/C/D that pass]
-
-**PASS 2: CAUSAL VERIFICATION (Be Strict)**
-For each CANDIDATE from Pass 1, verify:
-
-Q1: Does the evidence show this happened BEFORE the target event?
-Q2: Is there a logical mechanism by which this CAUSED or ENABLED the target event?
-Q3: Is this a CAUSE (led to event) or a CONSEQUENCE (resulted from event)?
-
-Only options answering: Q1=Yes, Q2=Yes, Q3=CAUSE are valid.
-
-**DUPLICATE HANDLING:**
-If two options have identical text, both labels must be included in the answer.
-
-**"NONE CORRECT" HANDLING:**
-If an option states "None of the others are correct":
-- Select it ONLY if Pass 2 produces zero valid causes
-- Do NOT select it alongside other causes
-
-**FINAL ANSWER:**
-List all options that passed both passes.
-
-State exactly: "Final Answer I Reasoned: X" or "Final Answer I Reasoned: X,Y,Z" """
-
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
-        ]
-
-        response = self.llm.generate(messages)
-        return response
-
-
-class StructuredCoTApproach(BaseApproach):
-    """
-    Structured Chain-of-Thought with explicit scoring rubric.
-    Uses numerical scoring to reduce ambiguity in multi-answer selection.
-    """
-
-    def solve(self, item: AERItem) -> str:
-        documents = (
-            self.retriever.retrieve(item.event, item.title_snippet, item.documents)
-            if self.retriever
-            else item.documents
-        )
-
-        docs_text = "\n".join(f"[Doc{i + 1}]: {doc}" for i, doc in enumerate(documents))
-        options_text = "\n".join(
-            f"{label}: {opt}" for label, opt in zip(["A", "B", "C", "D"], item.options)
-        )
-
-        system_prompt = """You are an expert causal analyst. Score each candidate cause using a structured rubric, then select all options meeting the threshold."""
-
-        user_prompt = f"""TARGET EVENT: "{item.event}"
-
-EVIDENCE:
-{docs_text}
-
-CANDIDATE CAUSES:
-{options_text}
-
-=== SCORING RUBRIC ===
-
-Score each option from 0-3 on each criterion:
-
-**TEMPORAL (0-3)**
-- 0: Clearly happened AFTER the event (consequence, not cause)
-- 1: Timing unclear or simultaneous
-- 2: Likely before the event
-- 3: Definitely before the event (documented)
-
-**EVIDENCE (0-3)**
-- 0: No document mentions this
-- 1: Vaguely related to documents
-- 2: Partially supported by documents
-- 3: Directly stated or strongly implied in documents
-
-**CAUSATION (0-3)**
-- 0: No causal connection to the event
-- 1: Correlated but not causal
-- 2: Contributing factor
-- 3: Direct cause or necessary precondition
-
-=== SCORING TABLE ===
-
-| Option | Temporal | Evidence | Causation | Total | Select? |
-|--------|----------|----------|-----------|-------|---------|
-| A      |          |          |           |       |         |
-| B      |          |          |           |       |         |
-| C      |          |          |           |       |         |
-| D      |          |          |           |       |         |
-
-SELECTION RULES:
-- Total >= 7: Strong candidate (SELECT)
-- Total 5-6: Moderate candidate (SELECT if no better options or ties for meaning with a selected option)
-- Total < 5: Weak candidate (DO NOT SELECT)
-- If an option says "None correct" and all others score < 5, select only that option
-- If options have identical text, they get identical scores - select ALL matching labels
-
-=== OUTPUT ===
-
-1. Fill the scoring table with reasoning
-2. Apply selection rules
-3. State: "Final Answer I Reasoned: X" or "Final Answer I Reasoned: X,Y,Z" """
-
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
-        ]
-
-        response = self.llm.generate(messages)
-        return response
+        ========== FINAL REFINED ANSWER ==========
+        {final_response}
+        """
+        
+        return full_output

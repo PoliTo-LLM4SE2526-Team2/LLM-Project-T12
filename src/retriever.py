@@ -1,74 +1,152 @@
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 from rank_bm25 import BM25Okapi
 import numpy as np
+from sentence_transformers import SentenceTransformer
+
 
 class DocumentRetriever:
     """
     Retrieves and ranks documents based on relevance to the event.
-    Uses BM25 (Best Matching 25)
+    Combines BM25 and vector-based retrieval using Reciprocal Rank Fusion (RRF).
     """
-    
-    def __init__(self, top_k: int = 10, full_doc: bool = True):
+
+    def __init__(self, top_k: int = 10,
+                 use_full_content: bool = False,
+                 use_gpu: bool = False,
+                 rrf_k: int = 60):
+
         self.top_k = top_k
-        self.full_doc = full_doc
-        # BM25 is instantiated per query set in this design
+        self.use_full_content = use_full_content
+        self.use_gpu = use_gpu
+        self.rrf_k = rrf_k
+        
+        # Initialize the model
+        try:
+            model_name = 'all-MiniLM-L6-v2'
+            self.model = SentenceTransformer(model_name)
+            if use_gpu:
+                try:
+                    self.model = self.model.to('cuda')
+                    print(f"Using GPU for semantic retrieval")
+                except:
+                    print(f"GPU not available, using CPU")
+            print(f"Loaded semantic retrieval model: {model_name}")
+        except Exception as e:
+            raise RuntimeError(f"Failed to load model {model_name}: {e}")
+
+
     
+    def _retrieve_bm25(self, event: str, title_snippet: List[str], documents: List[str]) -> List[str]:
+        """
+        Retrieve all documents using BM25 with scores.
+        Returns list of documents sorted by score descending.
+        """    
+        try:
+            # Preprocessing document/snippet
+            if self.use_full_content:
+                texts_to_index = documents
+            else:
+                texts_to_index = title_snippet
+            tokenized_texts = [item.lower().split(" ") for item in texts_to_index]
+            tokenized_event = event.lower().split(" ")
+            
+            # Retrieve
+            bm25 = BM25Okapi(tokenized_texts)
+            scores = bm25.get_scores(tokenized_event)
+            sorted_indices = np.argsort(scores)[::-1]
+            
+            results = [documents[i] for i in sorted_indices]
+            return results
+           
+        except Exception as e:
+            print(f"Warning: BM25 retrieval failed ({e}).")
+            return None
+        
+
+    def _retrieve_semantic(self, event: str, title_snippet: List[str], documents: List[str]) -> List[str]:
+        """
+        Semantic retriever using vector embeddings (sentence transformers).
+        Returns list of documents sorted by similarity descending.
+        """
+        try:
+            if self.use_full_content:
+                texts_to_index = documents
+            else:
+                texts_to_index = title_snippet
+            
+            # Encode event and documents
+            event_embedding = self.model.encode(
+                [event],
+                convert_to_numpy=True,
+                show_progress_bar=False,
+                normalize_embeddings=True,
+            )
+
+            doc_embeddings = self.model.encode(
+                texts_to_index,
+                convert_to_numpy=True,
+                show_progress_bar=False,
+                batch_size=32,  # Batch processing for efficiency
+                normalize_embeddings=True,
+            )
+
+            # Calculate cosine similarity (dot product since vectors are normalized)
+            # event_embedding shape: (1, dim)
+            # doc_embeddings shape: (n_docs, dim)
+            similarities = np.dot(doc_embeddings, event_embedding.T).flatten()
+
+            # Sort all documents by similarity descending
+            sorted_indices = np.argsort(similarities)[::-1]
+
+            results = [documents[i] for i in sorted_indices]
+            return results
+            
+        except Exception as e:
+            print(f"Warning: Vector retrieval failed ({e})")
+            return None
+        
+    
+    def _rrf_merge(self, bm25_results: List[str], 
+                   vector_results: List[str]) -> List[Tuple[str, float]]:
+        """
+        Merge results from BM25 and vector retrieval using Reciprocal Rank Fusion (RRF).
+        RRF score: 1 / (k + rank)
+        """
+        rrf_scores: Dict[str, float] = {}
+
+        # Process BM25 results
+        for rank, doc in enumerate(bm25_results, 1):
+            rrf_scores[doc] = rrf_scores.get(doc, 0) + 1.0 / (self.rrf_k + rank)
+
+        # Process vector results
+        for rank, doc in enumerate(vector_results, 1):
+            rrf_scores[doc] = rrf_scores.get(doc, 0) + 1.0 / (self.rrf_k + rank)
+
+        # Sort by RRF score descending
+        merged_results = sorted(rrf_scores.items(), key=lambda x: x[1], reverse=True)
+        return merged_results[:self.top_k]
+    
+
     def retrieve(self, event: str, title_snippet: List[str], documents: List[str]) -> List[str]:
-       
+        """
+        Retrieve top_k documents using combined BM25 and vector retrieval with RRF.
+        """
         if not documents:
             return []
         
         if len(documents) <= self.top_k:
             return documents
-        
-        try:
-            # Preprocessing document/snippet
-            if self.full_doc:
-                tokenized_content = [doc.lower().split(" ") for doc in documents]
-            else:
-                tokenized_content = [item.lower().split(" ") for item in title_snippet]
-            tokenized_event = event.lower().split(" ")
-            
-            # Retrieve
-            bm25 = BM25Okapi(tokenized_content)
-            retrieved_docs = bm25.get_top_n(tokenized_event, documents, n=self.top_k)
-            
-            return retrieved_docs
-            
-        except Exception as e:
-            print(f"Warning: BM25 retrieval failed ({e}), using first {self.top_k} documents")
-            return documents[:self.top_k]
-
     
-    def retrieve_with_scores(self, event: str, title_snippet: List[str], documents: List[str]) -> List[Tuple[str, float]]:
-        """
-        Return documents with their BM25 scores.
-        """
-        if not documents:
-            return []
-        
-        try:
-            if self.full_doc:
-                tokenized_content = [doc.lower().split(" ") for doc in documents]
+        # Get results from both methods (all documents ranked)
+        bm25_results = self._retrieve_bm25(event, title_snippet, documents)
+        vector_results = self._retrieve_semantic(event, title_snippet, documents)
+
+        if not vector_results:
+            if not bm25_results:
+                return documents
             else:
-                tokenized_content = [item.lower().split(" ") for item in title_snippet]
-            tokenized_event = event.lower().split(" ")
+                return [doc for doc in bm25_results[:self.top_k]]
             
-            bm25 = BM25Okapi(tokenized_content)
-            
-            # Calculate scores for all documents
-            scores = bm25.get_scores(tokenized_event)
-            
-            # Sort manually to get top_k
-            # argsort returns lowest to highest, so we reverse it [::-1]
-            top_indices = np.argsort(scores)[::-1][:self.top_k]
-            
-            results = []
-            for i in top_indices:
-                results.append((documents[i], float(scores[i])))
-                
-            return results
-            
-        except Exception as e:
-            print(f"Warning: BM25 score retrieval failed ({e})")
-            return [(doc, 0.0) for doc in documents[:self.top_k]]
+        # Merge using RRF
+        merged_results = self._rrf_merge(bm25_results, vector_results)
+        return [doc for doc, _ in merged_results]

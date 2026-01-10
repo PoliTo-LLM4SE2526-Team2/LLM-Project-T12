@@ -9,9 +9,7 @@ from src.dataloader import DataLoader
 from src.llm import ChatLLM
 from src.approaches import (
     BaselineApproach,
-    OptimizedApproach,
-    TwoPassApproach,
-    StructuredCoTApproach,
+    SelfConsistencyRefinementApproach,
 )
 from src.evaluator import Evaluator
 from src.retriever import DocumentRetriever
@@ -20,10 +18,14 @@ from dotenv import load_dotenv
 # Approach registry for CLI selection
 APPROACHES = {
     "baseline": BaselineApproach,
-    "optimized": OptimizedApproach,
-    "twopass": TwoPassApproach,
-    "structured": StructuredCoTApproach,
+    "sc_refine": SelfConsistencyRefinementApproach,
 }
+PROMPT_NAME = [
+    "cot",
+    "optimized",
+    "twopass",
+    "structured",
+]
 
 
 def parse_answer(prediction: str) -> set:
@@ -69,6 +71,13 @@ def main():
     parser.add_argument(
         "--output_dir", type=str, default="results", help="Directory to save results"
     )
+
+    # arguments for retrieval
+    parser.add_argument(
+        "--no_retrieval",
+        action="store_true",
+        help="Disable document retrieval (use all documents)",
+    )
     parser.add_argument(
         "--top_k",
         type=int,
@@ -76,16 +85,30 @@ def main():
         help="Number of top documents to retrieve (0 = use all)",
     )
     parser.add_argument(
-        "--no_retrieval",
+        "--use_full_content",
         action="store_true",
-        help="Disable document retrieval (use all documents)",
+        help="Use full document content for retrieval",
     )
+    parser.add_argument(
+        "--use_gpu",
+        action="store_true",
+        help="Use GPU for semantic retrieval (if available)",
+    )
+
+    # arguments for approach
     parser.add_argument(
         "--approach",
         type=str,
         default="baseline",
         choices=list(APPROACHES.keys()),
-        help="Reasoning approach to use (baseline, optimized, twopass, structured)",
+        help="Reasoning approach to use (baseline, sc_refine)",
+    )
+    parser.add_argument(
+        "--prompt_name",
+        type=str,
+        default="cot",
+        choices=PROMPT_NAME,
+        help="Prompt to use (cot, optimized, twopass, structured)",
     )
     args = parser.parse_args()
 
@@ -101,9 +124,11 @@ def main():
         None
         if args.no_retrieval
         else DocumentRetriever(
-            top_k=args.top_k if args.top_k > 0 else 1000, full_doc=False
+            top_k=args.top_k if args.top_k > 0 else 10,
+            use_full_content=args.use_full_content,
+            use_gpu=args.use_gpu,
         )
-    )  # "full_doc" (default: True): uses the full content of documents for retrieval, or uses title+snippet if set to False
+    )
 
     # Select approach based on CLI argument
     ApproachClass = APPROACHES[args.approach]
@@ -125,7 +150,7 @@ def main():
         # submit each event in the dataset to excutor
         # executor.submit(function, arg1, arg2, ...)
         future_to_event = {
-            executor.submit(solver.solve, event): event for event in loader.load()
+            executor.submit(solver.solve, event, prompt_name=args.prompt_name): event for event in loader.load()
         }
 
         for future in concurrent.futures.as_completed(future_to_event):
@@ -156,13 +181,6 @@ def main():
                 print("-" * 50)
                 print("REASONING PROCESS:")
                 print("-" * 50)
-                # Extract reasoning part (everything before "Final Answer")
-                # reasoning_match = re.search(r"(.+?)(?:Final Answer|$)", prediction, re.DOTALL | re.IGNORECASE)
-                # if reasoning_match:
-                #     reasoning = reasoning_match.group(1).strip()
-                #     print(reasoning)
-                # else:
-                #     print(prediction)
                 print(prediction)
                 print("-" * 50)
                 print(f"Predicted Answer: {sorted(list(predicted))}")
@@ -185,17 +203,15 @@ def main():
     end_time = time.time()
     total_time = end_time - start_time
 
-    # write to submission.jsonl
-    with open(args.submission_path, "w") as f:
-        for item in submission:
-            f.write(json.dumps(item, ensure_ascii=False) + "\n")
 
     # print evaluation summary
     print("=" * 50)
     print("EVALUATION SUMMARY")
     print("=" * 50)
-    print(f"Approach: {solver.__class__.__name__}")
     print(f"LLM Model: {os.getenv('MODEL_NAME')}")
+    print(f"Approach: {args.approach}")
+    print(f"Prompt Type: {args.prompt_name}")
+    print(f"Retrieval: {not args.no_retrieval}")
     print(f"Total Time: {total_time:.2f} seconds")
     summary = evaluator.get_summary()
     print(f"\nTotal: {summary['total']}")
@@ -226,7 +242,12 @@ def main():
     output_file = os.path.join(args.output_dir, f"results_{timestamp}.json")
     evaluator.save_results(output_file, approach_name=solver.__class__.__name__)
 
-    print(f"\nEvaluation complete! Results saved to: {output_file}")
+    # write to submission.jsonl
+    with open(args.submission_path, "w", encoding="utf-8") as f:
+        for item in submission:
+            f.write(json.dumps(item, ensure_ascii=False) + "\n")
+
+    print(f"\nEvaluation complete! submission.json created and results saved to: {output_file}")
 
 
 if __name__ == "__main__":
