@@ -72,7 +72,8 @@ class SelfConsistencyRefinementApproach(BaseApproach):
             return set()
         
         # Try to find "Final Answer I Reasoned: ..." pattern
-        pattern = r"Final Answer I Reasoned:\s*([A-D,\s]+)"
+        # Use a more precise pattern that stops at non-answer characters
+        pattern = r"Final Answer I Reasoned:\s*([A-D](?:\s*,\s*[A-D])*)"
         match = re.search(pattern, response, re.IGNORECASE)
         
         if match:

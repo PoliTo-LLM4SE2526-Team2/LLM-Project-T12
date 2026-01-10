@@ -16,3 +16,11 @@ AER-Project/
 │   ├── retriever.py    # Retrieves and ranks documents
 │   └── llm.py          # LLM API Wrapper (DeepSeek)
 └── run.py              # Main entry point for experiments
+```
+
+## Quick Start
+1. Install dependencies
+```
+> pip install -r requirements.txt
+```
+

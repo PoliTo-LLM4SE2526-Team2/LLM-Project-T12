@@ -36,8 +36,12 @@ PROMPTS = {
         1. if you find B and C have the same content with A, then you have to output A,B,C.
         2. if you find B express the same meaning with A but just with a different way of saying it, then you have to output A,B.
         3. if you find C encompassed by A, then you have to output A,C.
+        
+        If there is an option states "None of the others are correct causes." and you have clear evidence that NONE of other options are plausible causes according to what you've retrieved, then choose only this one.
 
-        If there is an option states "None of the others are correct causes." and you have clear evidence that NONE of other options are plausible causes according to what you've retrieved, then choose only this one. Otherwise, never choose this option.
+        CRITICAL:: 
+        1. There is guaranteed to be AT LEAST one correct answer from the given options, so an empty answer is NOT allowed!
+        2. The "Final Answer I Reasoned: ..." line MUST be the very last line of your response. Do NOT write anything after it!
         """
     },
     "optimized": {
@@ -101,6 +105,10 @@ PROMPTS = {
         === OUTPUT FORMAT ===
         After your analysis, state your final answer EXACTLY as:
         "Final Answer I Reasoned: X" (single answer) or "Final Answer I Reasoned: X,Y,Z" (multiple answers, comma-separated, no spaces after commas)
+
+        CRITICAL: 
+        1. There is guaranteed to be AT LEAST one correct answer from the given options, so an empty answer is NOT allowed!
+        2. The "Final Answer I Reasoned: ..." line MUST be the absolute last line of your response. Do NOT add any text, explanation, or punctuation after it!
         """
     },
     "twopass": {
@@ -149,6 +157,10 @@ PROMPTS = {
         List all options that passed both passes.
 
         State exactly: "Final Answer I Reasoned: X" or "Final Answer I Reasoned: X,Y,Z"
+
+        CRITICAL: 
+        1. There is guaranteed to be AT LEAST one correct answer from the given options, so an empty answer is NOT allowed!
+        2. This final answer MUST be the absolute last line of your response. Do NOT add any text after it!
         """
     },
     "structured": {
@@ -210,6 +222,10 @@ PROMPTS = {
         1. Fill the scoring table with reasoning
         2. Apply selection rules
         3. State: "Final Answer I Reasoned: X" or "Final Answer I Reasoned: X,Y,Z"
+
+        CRITICAL: 
+        1. There is guaranteed to be AT LEAST one correct answer from the given options, so an empty answer is NOT allowed!
+        2. The "Final Answer I Reasoned: ..." line MUST be the absolute last line of your response. Do NOT add any text after it!
         """
     }
 }

@@ -11,7 +11,7 @@ class ChatLLM(BaseLLM):
         self.model_name = model_name
         self.client = OpenAI(api_key=api_key, base_url=base_url)
 
-    def generate(self, messages, temperature = 0.7, top_p = 0.9) -> str:
+    def generate(self, messages, temperature = 0, top_p = 1) -> str:
         try:
             response = self.client.chat.completions.create(
                 model = self.model_name,

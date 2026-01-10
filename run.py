@@ -14,6 +14,7 @@ from src.approaches import (
 from src.evaluator import Evaluator
 from src.retriever import DocumentRetriever
 from dotenv import load_dotenv
+from tqdm import tqdm
 
 # Approach registry for CLI selection
 APPROACHES = {
@@ -33,7 +34,8 @@ def parse_answer(prediction: str) -> set:
         return set()
 
     # Try to find "Final Answer I Reasoned: ..." pattern
-    pattern = r"Final Answer I Reasoned:\s*([A-D,\s]+)"
+    # Use a more precise pattern that stops at non-answer characters
+    pattern = r"Final Answer I Reasoned:\s*([A-D](?:\s*,\s*[A-D])*)"
     match = re.search(pattern, prediction, re.IGNORECASE)
 
     if match:
@@ -138,7 +140,15 @@ def main():
     submission = []
     start_time = time.time()
 
-    print(f"Running experiment with {solver.__class__.__name__}...")
+    # count questions.jsonl
+    try:
+        with open(args.questions_path, "r", encoding="utf-8") as f:
+            total_questions = sum(1 for _ in f)
+    except Exception as e:
+        total_questions = None
+
+    print(f"Running experiment with {args.approach}...")
+    print(f"Using {args.prompt_name} as prompt...")
     if retriever != None:
         print(f"Document retrieval: Enabled (top_k={args.top_k})\n")
     else:
@@ -146,12 +156,14 @@ def main():
     print()
 
     max_workers = int(os.getenv("MAX_WORKERS"))
+
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        # submit each event in the dataset to excutor
-        # executor.submit(function, arg1, arg2, ...)
+        events = list(loader.load())
         future_to_event = {
-            executor.submit(solver.solve, event, prompt_name=args.prompt_name): event for event in loader.load()
+            executor.submit(solver.solve, event, prompt_name=args.prompt_name): event for event in events
         }
+
+        pbar = tqdm(total=total_questions if total_questions is not None else len(events), desc="Progress", ncols=80)
 
         for future in concurrent.futures.as_completed(future_to_event):
             event = future_to_event[future]
@@ -177,17 +189,17 @@ def main():
                 submission_answer = {"id": event.event_uuid, "answer": predicted_str}
                 submission.append(submission_answer)
 
-                # Print result with reasoning
-                print("-" * 50)
-                print("REASONING PROCESS:")
-                print("-" * 50)
-                print(prediction)
-                print("-" * 50)
-                print(f"Predicted Answer: {sorted(list(predicted))}")
-                print(f"Ground Truth: {sorted(list(ground_truth))}")
-                print(f"Correct: {predicted == ground_truth}")
-                print("-" * 50)
-                print()
+                # # Print result with reasoning
+                # print("-" * 50)
+                # print("REASONING PROCESS:")
+                # print("-" * 50)
+                # print(prediction)
+                # print("-" * 50)
+                # print(f"Predicted Answer: {sorted(list(predicted))}")
+                # print(f"Ground Truth: {sorted(list(ground_truth))}")
+                # print(f"Correct: {predicted == ground_truth}")
+                # print("-" * 50)
+                # print()
 
             except Exception as e:
                 print(f"{event.id} generated an exception: {e}")
@@ -199,12 +211,16 @@ def main():
                     event=event.event,
                     options=event.options,
                 )
+            finally:
+                pbar.update(1)
+        pbar.close()
 
     end_time = time.time()
     total_time = end_time - start_time
 
 
     # print evaluation summary
+    print("\n")
     print("=" * 50)
     print("EVALUATION SUMMARY")
     print("=" * 50)
@@ -212,6 +228,8 @@ def main():
     print(f"Approach: {args.approach}")
     print(f"Prompt Type: {args.prompt_name}")
     print(f"Retrieval: {not args.no_retrieval}")
+    if not args.no_retrieval:
+        print(f"Use Full Content: {args.use_full_content}")
     print(f"Total Time: {total_time:.2f} seconds")
     summary = evaluator.get_summary()
     print(f"\nTotal: {summary['total']}")
@@ -247,8 +265,9 @@ def main():
         for item in submission:
             f.write(json.dumps(item, ensure_ascii=False) + "\n")
 
-    print(f"\nEvaluation complete! submission.json created and results saved to: {output_file}")
+    print(f"\nEvaluation complete! submission.json created and results saved to: {output_file}\n")
 
 
 if __name__ == "__main__":
+    os.environ["TOKENIZERS_PARALLELISM"] = "false"
     main()
