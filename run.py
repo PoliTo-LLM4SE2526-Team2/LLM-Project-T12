@@ -178,7 +178,7 @@ def main():
                 evaluator.update(
                     predicted=predicted,
                     ground_truth=ground_truth,
-                    event_uuid=event.event_uuid,
+                    event_id=event.event_id,
                     prediction_text=prediction,
                     event=event.event,
                     options=event.options,
@@ -186,7 +186,7 @@ def main():
 
                 # save to submission
                 predicted_str = ",".join(sorted(predicted))
-                submission_answer = {"id": event.event_uuid, "answer": predicted_str}
+                submission_answer = {"id": event.event_id, "answer": predicted_str}
                 submission.append(submission_answer)
 
                 # # Print result with reasoning
@@ -206,7 +206,7 @@ def main():
                 evaluator.update(
                     predicted=set(),
                     ground_truth=parse_ground_truth(event.answer),
-                    event_uuid=event.event_uuid,
+                    event_id=event.event_id,
                     prediction_text="",
                     event=event.event,
                     options=event.options,

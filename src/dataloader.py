@@ -9,7 +9,7 @@ class AERItem:
     """
     id: int
     event: str
-    event_uuid: str
+    event_id: str
     title_snippet: List[str]
     documents: List[str]
     options: List[str]
@@ -58,7 +58,7 @@ class DataLoader:
                 aer_item = AERItem(
                     id = topic_id,
                     event = line["target_event"],
-                    event_uuid = line["uuid"],
+                    event_id = line["id"],
                     title_snippet = title_snippet,
                     documents = documents,
                     options = [line[f"option_{i}"] for i in ["A", "B", "C", "D"]],

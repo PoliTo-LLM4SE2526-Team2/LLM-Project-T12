@@ -27,7 +27,7 @@ class Evaluator:
         self.insufficient_info_count = 0
         self.insufficient_info_correct = 0
     
-    def update(self, predicted: Set[str], ground_truth: Set[str], event_uuid: str = "", 
+    def update(self, predicted: Set[str], ground_truth: Set[str], event_id: str = "", 
                prediction_text: str = "", event: str = "", options: List[str] = None):
        
         self.total += 1
@@ -39,9 +39,9 @@ class Evaluator:
         else:
             self.incorrect += 1
             # Store error case
-            if event_uuid:
+            if event_id:
                 self.error_cases.append({
-                    "uuid": event_uuid,
+                    "id": event_id,
                     "event": event,
                     "predicted": sorted(list(predicted)),
                     "ground_truth": sorted(list(ground_truth)),
