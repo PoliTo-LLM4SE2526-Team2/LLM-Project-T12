@@ -1,9 +1,203 @@
 """
 Centralized prompt storage for all approaches.
 Each prompt has a unique name with 'intro', 'system' and 'user' fields.
+
+IMPORTANT: Optimized for SemEval 2026 Task 12 evaluation metric:
+- 1.0 points: Perfect match (P = G)
+- 0.5 points: Partial match (P ⊂ G, no wrong selections)
+- 0.0 points: Any wrong selection or empty answer
+
+Key insight: Wrong selection is severely penalized (0 points),
+while missing some correct answers still gives partial credit (0.5 points).
+Therefore, CONSERVATIVE strategy is optimal: "Better to miss one than select wrong one"
 """
 
 PROMPTS = {
+    # ============================================================
+    # CONSERVATIVE: 保守策略（推荐使用）
+    # 核心思想：宁缺毋滥，只选高置信度选项
+    # ============================================================
+    "conservative": {
+        "intro": "Conservative strategy optimized for partial matching metric. Prioritizes precision over recall.",
+        "system_prompt": """You are an expert in causal reasoning and abductive inference.
+
+CRITICAL EVALUATION RULE:
+- Selecting ANY wrong option = 0 points (complete failure)
+- Missing some correct options = 0.5 points (partial credit)
+- Perfect match = 1.0 points
+
+STRATEGY: Be CONSERVATIVE. Only select options you are HIGHLY CONFIDENT about.
+It is much better to miss one correct answer than to include one wrong answer.""",
+
+        "user_prompt": """
+TARGET EVENT:
+{event}
+
+EVIDENCE DOCUMENTS:
+{docs_text}
+
+CANDIDATE CAUSES:
+{options_text}
+
+=== CONSERVATIVE ANALYSIS ===
+
+STEP 1: EVIDENCE CHECK
+For each option, find DIRECT evidence in documents:
+- Option A: [Quote from Doc if exists] or "NO DIRECT EVIDENCE"
+- Option B: [Quote from Doc if exists] or "NO DIRECT EVIDENCE"
+- Option C: [Quote from Doc if exists] or "NO DIRECT EVIDENCE"
+- Option D: [Quote from Doc if exists] or "NO DIRECT EVIDENCE"
+
+STEP 2: CONFIDENCE ASSESSMENT
+Rate each option's confidence level:
+- 🟢 HIGH: Direct documentary evidence + clear temporal precedence + obvious causal mechanism
+- 🟡 MEDIUM: Some evidence but uncertain causation or timing
+- 🔴 LOW: Weak/no evidence, speculation, or likely a consequence not cause
+
+STEP 3: STRATEGIC SELECTION (Remember: wrong = 0 points, partial = 0.5 points)
+- 🟢 HIGH confidence → SELECT
+- 🟡 MEDIUM confidence → DO NOT SELECT (risk not worth it)
+- 🔴 LOW confidence → DO NOT SELECT
+
+STEP 4: SPECIAL CASES
+1. DUPLICATE OPTIONS: If two options have identical/nearly identical text, select ALL or NONE of them together.
+2. "NONE CORRECT" OPTION: Select ONLY if ALL other options are 🔴 LOW confidence. Never select alongside other causes.
+
+STEP 5: FINAL VERIFICATION
+Before answering, ask yourself: "Am I CERTAIN about each selection? Any doubt = don't select."
+
+=== OUTPUT ===
+State your final answer as: "Final Answer I Reasoned: X" or "Final Answer I Reasoned: X,Y,Z"
+
+CRITICAL:
+1. At least one answer is required (empty answer = 0 points)
+2. Only select HIGH confidence options
+3. "Final Answer I Reasoned: ..." must be the LAST line
+"""
+    },
+
+    # ============================================================
+    # EVIDENCE_ANCHORED: 证据锚定策略
+    # 核心思想：每个选择必须有明确的文档证据支持
+    # ============================================================
+    "evidence_anchored": {
+        "intro": "Evidence-anchored approach requiring explicit document citations for each selection.",
+        "system_prompt": """You are an expert in evidence-based causal reasoning.
+
+CORE PRINCIPLE: No evidence, no selection.
+Every selected option MUST have explicit supporting evidence from the documents.
+
+EVALUATION CONTEXT:
+- Wrong selection = 0 points (catastrophic)
+- Missing correct = 0.5 points (acceptable)
+- Perfect = 1.0 points (ideal)""",
+
+        "user_prompt": """
+TARGET EVENT:
+{event}
+
+EVIDENCE DOCUMENTS:
+{docs_text}
+
+CANDIDATE CAUSES:
+{options_text}
+
+=== EVIDENCE-ANCHORED ANALYSIS ===
+
+For EACH option, complete this analysis:
+
+**Option A**: {first_option_text}
+- Evidence: [QUOTE exact text from document] or "NONE FOUND"
+- Temporal: Does evidence show this happened BEFORE target event? [YES/NO/UNCLEAR]
+- Causal Link: Does this CAUSE or ENABLE the target event? [YES/NO]
+- Verdict: [SELECT - with evidence] or [REJECT - insufficient evidence]
+
+**Option B**: (same format)
+**Option C**: (same format)  
+**Option D**: (same format)
+
+=== SELECTION RULES ===
+1. ONLY select options with ALL of:
+   - Explicit documentary evidence (quoted)
+   - Temporal precedence (YES)
+   - Causal link (YES)
+
+2. If options have identical text → select all or none together
+
+3. "None of the others" option:
+   - Select ONLY if all other options lack evidence
+   - NEVER select alongside other causes
+
+=== OUTPUT ===
+Final Answer I Reasoned: [Only options meeting ALL criteria above]
+
+CRITICAL: "Final Answer I Reasoned: ..." must be the absolute LAST line.
+"""
+    },
+
+    # ============================================================
+    # BALANCED: 平衡策略
+    # 在保守和激进之间取得平衡
+    # ============================================================
+    "balanced": {
+        "intro": "Balanced strategy weighing precision and recall based on evidence strength.",
+        "system_prompt": """You are an expert in causal reasoning with document evidence.
+
+EVALUATION METRIC:
+- Perfect match = 1.0 points
+- Correct subset (no errors) = 0.5 points  
+- Any wrong selection = 0.0 points
+
+Your goal: Maximize expected score. Since wrong selections are catastrophic (0 points), 
+prioritize precision while still capturing high-confidence correct answers.""",
+
+        "user_prompt": """
+TARGET EVENT:
+{event}
+
+EVIDENCE DOCUMENTS:
+{docs_text}
+
+CANDIDATE CAUSES:
+{options_text}
+
+=== ANALYSIS FRAMEWORK ===
+
+**PHASE 1: Evidence Mapping**
+For each option, identify supporting evidence:
+| Option | Documentary Evidence | Strength |
+|--------|---------------------|----------|
+| A      | [Doc X]: "..." or NONE | Strong/Weak/None |
+| B      | [Doc X]: "..." or NONE | Strong/Weak/None |
+| C      | [Doc X]: "..." or NONE | Strong/Weak/None |
+| D      | [Doc X]: "..." or NONE | Strong/Weak/None |
+
+**PHASE 2: Causal Verification**
+For options with evidence, verify:
+1. TEMPORAL: Did this happen BEFORE the target event?
+2. MECHANISM: Is there a logical causal pathway?
+3. DIRECTION: Is this a CAUSE (leads to event) or CONSEQUENCE (results from event)?
+
+**PHASE 3: Risk-Adjusted Selection**
+Given scoring (wrong=0, partial=0.5):
+- Strong evidence + Clear causation → SELECT
+- Moderate evidence + Probable causation → SELECT only if very confident
+- Weak evidence or unclear → DO NOT SELECT
+
+**PHASE 4: Consistency Checks**
+- Duplicate options: Same decision for identical text
+- "None correct": Only if ALL others rejected
+
+=== OUTPUT ===
+Final Answer I Reasoned: [Your selections]
+
+CRITICAL: This line must be the LAST line of your response.
+"""
+    },
+
+    # ============================================================
+    # 保留原有的 prompts（向后兼容）
+    # ============================================================
     "cot": {
         "intro": "The basic zero-shot CoT approach",
         "system_prompt": "You are an expert detective and logic analyst. Your task is Abductive Reasoning: identifying the most plausible cause for an event based on incomplete evidence.",
@@ -44,6 +238,7 @@ PROMPTS = {
         2. The "Final Answer I Reasoned: ..." line MUST be the very last line of your response. Do NOT write anything after it!
         """
     },
+
     "optimized": {
         "intro": """
         Optimized approach addressing identified failure patterns:
@@ -111,6 +306,7 @@ PROMPTS = {
         2. The "Final Answer I Reasoned: ..." line MUST be the absolute last line of your response. Do NOT add any text, explanation, or punctuation after it!
         """
     },
+
     "twopass": {
         "intro": """
         Two-pass reasoning approach:
@@ -163,6 +359,7 @@ PROMPTS = {
         2. This final answer MUST be the absolute last line of your response. Do NOT add any text after it!
         """
     },
+
     "structured": {
         "intro": """
         Structured Chain-of-Thought with explicit scoring rubric.

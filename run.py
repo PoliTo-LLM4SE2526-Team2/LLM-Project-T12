@@ -10,6 +10,9 @@ from src.llm import ChatLLM
 from src.approaches import (
     BaselineApproach,
     SelfConsistencyRefinementApproach,
+    ConservativeApproach,
+    LightweightConsistencyApproach,
+    TwoPassApproach,
 )
 from src.evaluator import Evaluator
 from src.retriever import DocumentRetriever
@@ -20,12 +23,18 @@ from tqdm import tqdm
 APPROACHES = {
     "baseline": BaselineApproach,
     "sc_refine": SelfConsistencyRefinementApproach,
+    "conservative": ConservativeApproach,
+    "lightweight_sc": LightweightConsistencyApproach,
+    "twopass_real": TwoPassApproach,
 }
 PROMPT_NAME = [
     "cot",
     "optimized",
     "twopass",
     "structured",
+    "conservative",
+    "evidence_anchored",
+    "balanced",
 ]
 
 
@@ -233,9 +242,11 @@ def main():
     print(f"Total Time: {total_time:.2f} seconds")
     summary = evaluator.get_summary()
     print(f"\nTotal: {summary['total']}")
-    print(f"Correct: {summary['correct']}")
+    print(f"Full Match: {summary['full_match']}")
+    print(f"Partial Match: {summary['partial_match']}")
     print(f"Incorrect: {summary['incorrect']}")
-    print(f"Accuracy: {summary['accuracy']:.4f} ({summary['accuracy'] * 100:.2f}%)")
+    print(f"Official Score: {summary['official_score']:.4f}")
+    print(f"Strict Accuracy: {summary['strict_accuracy']:.4f} ({summary['strict_accuracy'] * 100:.2f}%)")
     print(f"Macro F1 Score: {summary['macro_f1']:.4f}")
     print(
         f"\nSingle Answer Accuracy: {summary['single_answer_accuracy']:.4f} ({summary['single_answer_count']} cases)"
