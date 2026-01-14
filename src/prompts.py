@@ -164,6 +164,12 @@ Example: If the event is "Biden declared disaster for Texas"
 - ❌ "Power plants shut down" = CONSEQUENCE of the storm
 - ❌ "ERCOT acknowledged cold weather" = Just correlated
 
+⚠️ "NONE CORRECT" DETECTION:
+- If NO option has strong documentary evidence as a DIRECT cause
+- If all options are consequences, correlations, or background info
+- Then select the "None of the others are correct" option
+- Don't force a selection if nothing truly fits!
+
 ⚠️ COMMON MISTAKES TO AVOID:
 1. Selecting background/historical events that are NOT direct causes
 2. Selecting multiple options when only one is the TRUE cause
