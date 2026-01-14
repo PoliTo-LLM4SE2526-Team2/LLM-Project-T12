@@ -1,0 +1,2733 @@
+{
+  "approach": "LightweightConsistencyApproach",
+  "summary": {
+    "total": 200,
+    "official_score": 0.505,
+    "full_match": 83,
+    "partial_match": 36,
+    "incorrect": 81,
+    "strict_accuracy": 0.415,
+    "macro_f1": 0.6624322558791507,
+    "prediction_types": {
+      "full_match": 83,
+      "partial_match": 36,
+      "empty_prediction": 0,
+      "wrong_only": 37,
+      "mixed_error": 6,
+      "over_complete": 38
+    },
+    "insufficient_info_count": 35,
+    "insufficient_info_accuracy": 0.4857142857142857,
+    "insufficient_info_partial": 0,
+    "single_answer_count": 117,
+    "single_answer_accuracy": 0.48717948717948717,
+    "single_answer_partial": 0,
+    "multi_answer_count": 83,
+    "multi_answer_accuracy": 0.3132530120481928,
+    "multi_answer_partial": 36,
+    "option_stats": {
+      "B": {
+        "correct": 68,
+        "total_selected": 96,
+        "total_should_select": 86
+      },
+      "A": {
+        "correct": 55,
+        "total_selected": 78,
+        "total_should_select": 81
+      },
+      "C": {
+        "correct": 47,
+        "total_selected": 80,
+        "total_should_select": 73
+      },
+      "D": {
+        "correct": 48,
+        "total_selected": 90,
+        "total_should_select": 71
+      }
+    },
+    "option_matrix": {
+      "B": {
+        "precision": 0.7083333333333334,
+        "recall": 0.7906976744186046,
+        "f1": 0.7472527472527473
+      },
+      "A": {
+        "precision": 0.7051282051282052,
+        "recall": 0.6790123456790124,
+        "f1": 0.6918238993710691
+      },
+      "C": {
+        "precision": 0.5875,
+        "recall": 0.6438356164383562,
+        "f1": 0.6143790849673203
+      },
+      "D": {
+        "precision": 0.5333333333333333,
+        "recall": 0.676056338028169,
+        "f1": 0.5962732919254659
+      }
+    },
+    "error_count": 81,
+    "partial_count": 36
+  },
+  "error_cases": [
+    {
+      "id": "q-24",
+      "event": "The FBI and ATF cleared the Capitol.",
+      "predicted": [
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B",
+        "C"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:3, D:0\nVoted answers: ['B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,C\n\nFinal Answer I Reasoned: B,C\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: Pipe bombs were reported at the Republican National Committee building and the Democratic National Committee headquarters.",
+        "option_C: Trump urged supporters to march to the Capitol.",
+        "option_D: Five people died during the riots."
+      ]
+    },
+    {
+      "id": "q-21",
+      "event": "David Cameron announced his resignation as Prime Minister.",
+      "predicted": [
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:2, D:0\nVoted answers: ['B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,C\n\nFinal Answer I Reasoned: B,C\n",
+      "options": [
+        "option_A: The referendum date was set in February.",
+        "option_B: The UK voted to leave the EU in a June 23 referendum.",
+        "option_C: Prime Minister David Cameron pledged a referendum on EU membership in 2013.",
+        "option_D: Northern Ireland and Scotland voted to remain in the EU."
+      ]
+    },
+    {
+      "id": "q-11",
+      "event": "Authorities in Myanmar and Thailand declared a state of emergency.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:3, C:0, D:0\nVoted answers: ['A', 'B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B\n\nFinal Answer I Reasoned: A,B\n",
+      "options": [
+        "option_A: The earthquake caused significant damage and displacement across Myanmar.",
+        "option_B: A high-rise under construction collapsed in Bangkok, Thailand, causing casualties.",
+        "option_C: Mandalay General Hospital became full, stopped admitting patients, and lost power and water.",
+        "option_D: Myanmar's ruling junta chief reported at least 144 people killed and over 732 injured."
+      ]
+    },
+    {
+      "id": "q-13",
+      "event": "Elon Musk gained full command of the federal cost-cutting effort.",
+      "predicted": [
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "C",
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:0, C:3, D:2\nVoted answers: ['C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C,D\n\nFinal Answer I Reasoned: C,D\n",
+      "options": [
+        "option_A: Elon Musk contributed $277 million to Trump's and other Republicans' 2024 campaigns.",
+        "option_B: DOGE representatives spoke with staff at over a dozen federal agencies.",
+        "option_C: Vivek Ramaswamy withdrew from the project before Mr. Trump assumed office.",
+        "option_D: The order to halt federal grants was rescinded."
+      ]
+    },
+    {
+      "id": "q-17",
+      "event": "Musk allies took top positions in federal agencies.",
+      "predicted": [
+        "A",
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A",
+        "B",
+        "C"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:2, B:2, C:2, D:1\nVoted answers: ['A', 'B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C\n\nFinal Answer I Reasoned: A,B,C\n",
+      "options": [
+        "option_A: Elon Musk and Vivek Ramaswamy increased hiring for DOGE.",
+        "option_B: Mr. Musk stated DOGE participants will not be paid and requested they work 80-hour weeks.",
+        "option_C: DOGE representatives spoke with staff at over a dozen federal agencies.",
+        "option_D: None of the others are correct causes."
+      ]
+    },
+    {
+      "id": "q-18",
+      "event": "Mr. Musk stated DOGE participants will not be paid and requested they work 80-hour weeks.",
+      "predicted": [
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:1, B:3, C:1, D:3\nVoted answers: ['B', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,D\n\n**Reasoning:**  \n- **Option B:** Directly supported by Doc6 (\"Trump named Musk and Ramaswamy as DOGE’s co-leaders\") and Doc8 (\"Trump appointed Musk... to co-lead DOGE\"), establishing Musk's authority to set terms for DOGE participants.  \n- **Option D:** Explicitly stated in Doc3 (\"Mr. Trump has said the effort would... provide outside advice on how to cut wasteful spending\"), directly linking DOGE’s purpose to Musk’s operational requirements (unpaid 80-hour work).  \n- Options A and C, while factual, are operational actions taken *after* Musk’s appointment (B) and DOGE’s stated purpose (D), making them effects rather than root causes of the target event.  \n- Confidence: **B** and **D** are 🟢 HIGH (direct documentary evidence + clear causal chain to Musk’s statement).\n\nFinal Answer I Reasoned: B,D\n",
+      "options": [
+        "option_A: Elon Musk and Vivek Ramaswamy increased hiring for DOGE.",
+        "option_B: Trump appointed Elon Musk and Vivek Ramaswamy as co-leaders of the Department of Government Efficiency (DOGE).",
+        "option_C: DOGE representatives spoke with staff at over a dozen federal agencies.",
+        "option_D: Mr. Trump stated DOGE's purpose is to advise on cutting wasteful spending."
+      ]
+    },
+    {
+      "id": "q-25",
+      "event": "Democrats won statewide offices in Arizona, North Carolina, Wisconsin, and Michigan.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:1, B:2, C:0, D:0\nVoted answers: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A\n\n**Step-by-Step Explanation:**\n\n1. **Option A Analysis**:  \n   - **Evidence**: Doc9 explicitly states, \"Trump received more votes from Latino residents than any other Republican presidential candidate in history.\"  \n   - **Confidence**: 🟢 HIGH (direct evidence from Doc9).  \n   - **Conclusion**: Correct cause (Trump’s increased Latino support contributed to his victory).\n\n2. **Option B (\"None of the others are correct\")**:  \n   - Since Option A is valid, B is automatically incorrect.  \n\n3. **Option C Analysis**:  \n   - **Evidence**: Doc7 confirms Trump’s impeachment and acquittal.  \n   - **Confidence**: 🔴 LOW (factually true but no causal link to the 2024 election outcome).  \n   - **Conclusion**: Not a cause of the target event (historical fact, not a driver of victory).  \n\n4. **Option D Analysis**:  \n   - **Evidence**: Doc7 headlines Trump’s election.  \n   - **Confidence**: 🔴 LOW (D describes the outcome itself, not a cause).  \n   - **Conclusion**: Not a cause but the event being explained.  \n\n**Final Selection**: Only Option A meets the criteria (direct evidence + causal relevance).\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: Trump received more votes from Latino residents than any other Republican presidential candidate in history.",
+        "option_B: None of the others are correct causes.",
+        "option_C: The U.S. House impeached Trump, and the U.S. Senate acquitted him.",
+        "option_D: Donald Trump was elected the 47th president of the United States."
+      ]
+    },
+    {
+      "id": "q-33",
+      "event": "The United Kingdom held a referendum on June 23.",
+      "predicted": [
+        "A",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:3, D:3\nVoted answers: ['A', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,C,D\n\nFinal Answer I Reasoned: A,C,D\n",
+      "options": [
+        "option_A: Prime Minister David Cameron pledged a referendum on EU membership in 2013.",
+        "option_B: The nation divided into 'remain' and 'leave' camps.",
+        "option_C: The Conservative Party won the election.",
+        "option_D: Cameron's attempt to renegotiate the U.K.'s EU membership terms failed."
+      ]
+    },
+    {
+      "id": "q-31",
+      "event": "Northern Ireland and Scotland voted to remain in the EU.",
+      "predicted": [
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B",
+        "C"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:1, B:1, C:1, D:1\nVoted answers: ['B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,C\n\nFinal Answer I Reasoned: B,C,D\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: The Conservative Party won the election.",
+        "option_C: Cameron's attempt to renegotiate the U.K.'s EU membership terms failed.",
+        "option_D: The nation divided into 'remain' and 'leave' camps."
+      ]
+    },
+    {
+      "id": "q-2",
+      "event": "Trump was impeached for a second time on January 13th.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:0, D:0\nVoted answers: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: Pipe bombs were reported at the Republican National Committee building and the Democratic National Committee headquarters.",
+        "option_B: Trump addressed the crowd.",
+        "option_C: None of the others are correct causes.",
+        "option_D: Trump supporters protested in Washington, D.C."
+      ]
+    },
+    {
+      "id": "q-6",
+      "event": "President Trump announced a plan to impose additional 25% tariffs on Canadian steel and aluminum imports.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:0, C:1, D:3\nVoted answers: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D\n\n**Step 1: Evidence Check**  \n- **Option D**: Directly supported by Doc1: *\"Trump said he was imposing the latest tariffs in response to Ontario's decision to slap a 25% tax on electricity exports to the U.S.\"*  \n- **Option C**: Refers to prior tariffs (25%) Trump had already imposed, which Doc1 confirms *predated* Ontario’s retaliatory tax (D). However, this is not the **direct cause** of the **new** 25% tariff announcement (the target event).  \n\n**Step 2: Confidence Assessment**  \n- **D**: 🟢 HIGH confidence (explicitly cited as the immediate trigger).  \n- **C**: 🔴 LOW confidence (prior action in the causal chain but not the proximate cause).  \n\n**Step 3: Strategic Selection**  \nOnly **D** meets the threshold for selection. Including **C** risks conflating prior context with the direct cause, violating the \"conservative\" rule.  \n\n**Final Verification**  \nNo ambiguity exists for **D**. Selecting **C** would introduce uncertainty, risking a wrong answer.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: William McKinley was shot by anarchist Leon Czolgosz on Sept. 6, 1901.",
+        "option_B: The 16th Amendment was ratified in 1913.",
+        "option_C: President Trump placed 25% tariffs on imports from Canada.",
+        "option_D: Ontario placed a 25% tax on electricity exports to the U.S."
+      ]
+    },
+    {
+      "id": "q-5",
+      "event": "On November 10, Musk stated bankruptcy was possible for Twitter if it didn't increase revenue.",
+      "predicted": [
+        "A",
+        "D"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "A",
+        "D"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:0, D:3\nVoted answers: ['A', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,D\n\n**Reasoning:**\n\n- **Option A (Twitter sued Musk):** Doc5 explicitly states that Twitter sued Musk to force the acquisition's completion. This legal action directly pressured Musk into finalizing the deal, leading to his ownership and subsequent financial struggles, culminating in the bankruptcy warning. This is a **HIGH confidence** cause.  \n- **Option D (Musk signed deal in April):** Doc2 and Doc5 confirm Musk signed the acquisition agreement in April 2023. This initiated the acquisition process, which later required the lawsuit (A) to enforce completion. Without the original deal, there would be no ownership or bankruptcy statement. **HIGH confidence**.  \n- **Option B (Profile change):** While Musk changed his profile to \"Chief Twit\" (Doc5/Doc7), this symbolic act lacks a direct causal link to the bankruptcy warning. **LOW confidence**.  \n- **Option C (None correct):** Invalid because A and D are supported by direct evidence.  \n\nBoth A and D are necessary antecedents in the causal chain leading to Musk's ownership and eventual bankruptcy statement.\n\nFinal Answer I Reasoned: A,D\n",
+      "options": [
+        "option_A: Twitter sued Elon Musk to force the acquisition.",
+        "option_B: Elon Musk changed his profile to ‘Chief Twit’.",
+        "option_C: None of the others are correct causes.",
+        "option_D: Elon Musk signed a deal to acquire Twitter in April."
+      ]
+    },
+    {
+      "id": "q-34",
+      "event": "President Trump announced a plan to impose additional 25% tariffs on Canadian steel and aluminum imports.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:0, C:0, D:3\nVoted answers: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D\n\nSTEP 1: EVIDENCE CHECK  \n- **A**: NO DIRECT EVIDENCE (Doc9 mentions McKinley's tariff policies but no causal link to assassination)  \n- **B**: NO DIRECT EVIDENCE (16th Amendment unrelated to tariffs in documents)  \n- **C**: \"Trump had placed sweeping 25% tariffs on imports from Canada\" (Doc1). However, this refers to prior tariffs, not the **additional** 25% tariff announcement.  \n- **D**: \"Ontario's decision to slap a 25% tax on electricity exports to the U.S.\" (Doc1). Explicitly cited as Trump's stated reason for imposing new tariffs.  \n\nSTEP 2: CONFIDENCE ASSESSMENT  \n- **A**: 🔴 LOW (no causal link to event)  \n- **B**: 🔴 LOW (irrelevant)  \n- **C**: 🟡 MEDIUM (prior tariffs led to Ontario’s retaliation but not direct cause of new announcement)  \n- **D**: 🟢 HIGH (directly cited in Doc1 as Trump’s justification for new tariffs)  \n\nSTEP 3: STRATEGIC SELECTION  \nOnly **D** meets HIGH confidence threshold.  \n\nSTEP 4: SPECIAL CASES  \nNo duplicates or \"none correct\" scenario.  \n\nSTEP 5: FINAL VERIFICATION  \nConfidence in **D** is absolute per Doc1’s explicit causation chain.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: William McKinley was shot by anarchist Leon Czolgosz on Sept. 6, 1901.",
+        "option_B: The 16th Amendment was ratified in 1913.",
+        "option_C: President Trump placed 25% tariffs on imports from Canada.",
+        "option_D: Ontario placed a 25% tax on electricity exports to the U.S."
+      ]
+    },
+    {
+      "id": "q-26",
+      "event": "By April 3, 2025, the death toll from the earthquake reached 4,390 in Myanmar, with over 5,490 injured.",
+      "predicted": [
+        "A",
+        "C"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:3, D:0\nVoted answers: ['A', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,C\n\nFinal Answer I Reasoned: A,C\n",
+      "options": [
+        "option_A: Mandalay General Hospital became full, stopped admitting patients, and lost power and water.",
+        "option_B: Authorities in Myanmar and Thailand declared a state of emergency.",
+        "option_C: The earthquake caused significant damage and displacement across Myanmar.",
+        "option_D: The United Nations mobilized help for Myanmar on Friday."
+      ]
+    },
+    {
+      "id": "q-10",
+      "event": "Capitol Police Chief Steven Sund, House Sergeant at Arms Paul Irving, and Senate Sergeant at Arms Michael Stenger resigned.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A",
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:0, C:0, D:3\nVoted answers: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: The Capitol was secured, and lawmakers reconvened to continue certification.",
+        "option_B: The congressional certification of Joe Biden’s victory was halted.",
+        "option_C: The Capitol was secured, and lawmakers reconvened to continue certification.",
+        "option_D: The FBI and ATF cleared the Capitol."
+      ]
+    },
+    {
+      "id": "q-51",
+      "event": "Security arrested the suspected gunman, Tetsuya Yamagami.",
+      "predicted": [
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B",
+        "C",
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:2, B:1, C:1, D:1\nVoted answers: ['A']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,C,D\n\nFinal Answer I Reasoned: A\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: Shinzo Abe returned to office in 2012 and later became the longest-serving prime minister.",
+        "option_C: Shinzo Abe reinterpreted Japan's constitution in 2014.",
+        "option_D: Shinzo Abe became the youngest prime minister in postwar Japan in 2006."
+      ]
+    },
+    {
+      "id": "q-9",
+      "event": "The D.C. National Guard was activated, and a citywide curfew was imposed.",
+      "predicted": [
+        "A",
+        "D"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:1, B:1, C:1, D:3\nVoted answers: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,D\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: The congressional certification of Joe Biden’s victory was halted.",
+        "option_B: Pipe bombs were reported at the Republican National Committee building and the Democratic National Committee headquarters.",
+        "option_C: A woman was shot inside the Capitol and died.",
+        "option_D: Protesters clashed with police and breached security barriers at the Capitol."
+      ]
+    },
+    {
+      "id": "q-19",
+      "event": "The coronavirus pandemic halted the global economy.",
+      "predicted": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B",
+        "C",
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:1, C:1, D:1\nVoted answers: ['A']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C,D\n\nFinal Answer I Reasoned: A\n",
+      "options": [
+        "option_A: COVID-19 forced countries into lockdown.",
+        "option_B: The World Health Organization (WHO) officially declared the situation a pandemic on March 11, 2020.",
+        "option_C: The U.S. government mandated port and border closures and authorized immediate repatriation of asylum seekers on March 21.",
+        "option_D: The Iranian government issued an intercity travel ban and closed schools, universities, national parks, and non-essential businesses on March 26."
+      ]
+    },
+    {
+      "id": "q-50",
+      "event": "Musk laid off thousands of Twitter employees and contractors.",
+      "predicted": [
+        "A",
+        "C"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:3, D:0\nVoted answers: ['A', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,C\n\n**Reasoning:**\n\n- **Option A**: Confirmed in Doc2 (\"completed his $44B takeover\") and Doc3 (\"took control\"). Directly precedes layoffs, enabling Musk to enact changes. High confidence.\n- **Option C**: Explicitly stated in Doc2 (\"fired CEO, CFO\") and Doc3 (\"ousted top executives\"). Immediate post-takeover action, part of restructuring leading to broader layoffs. High confidence (executive firings are a subset of workforce reductions).  \n- **Option B**: Lawsuit forced acquisition completion (Doc3), but no direct causal link to layoffs. Medium confidence (indirect).  \n- **Option D**: Symbolic action (Doc2), no causal tie to layoffs. Low confidence.  \n\n**Critical Rule Compliance**: Selected only A and C due to direct evidence of Musk’s authority (A) and immediate workforce actions (C) directly preceding mass layoffs.\n\nFinal Answer I Reasoned: A,C\n",
+      "options": [
+        "option_A: Elon Musk completed his $44 billion takeover of Twitter.",
+        "option_B: Twitter sued Elon Musk to force the acquisition.",
+        "option_C: Musk fired top Twitter executives.",
+        "option_D: Elon Musk changed his profile to ‘Chief Twit’."
+      ]
+    },
+    {
+      "id": "q-14",
+      "event": "Northern Ireland and Scotland voted to remain in the EU.",
+      "predicted": [
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "B",
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:1, C:3, D:3\nVoted answers: ['C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,C,D\n\n**Reasoning:**  \n- **Option B (The nation divided into 'remain' and 'leave' camps):** Directly supported by Doc2 and Doc5, which highlight regional divisions (Scotland/Northern Ireland voting remain vs. England/Wales voting leave).  \n- **Option C (The United Kingdom held a referendum on June 23):** Explicitly stated in Doc4 as the event enabling the vote.  \n- **Option D (The referendum date was set in February):** Doc4 confirms Cameron set the date in February, a necessary step for the referendum.  \n\n**Excluded:**  \n- **Option A (The Conservative Party won the election):** While the Conservative victory led to the referendum (Doc4), it is a distant cause and not directly tied to the regional voting outcome. Conservative selection avoids overreach.  \n\n**Confidence:**  \n- B, C, D have **direct evidence** and clear causal links to the target event.  \n- A, though factual, is indirect and excluded to minimize risk of error.\n\nFinal Answer I Reasoned: C,D\n",
+      "options": [
+        "option_A: The Conservative Party won the election.",
+        "option_B: The nation divided into 'remain' and 'leave' camps.",
+        "option_C: The United Kingdom held a referendum on June 23.",
+        "option_D: The referendum date was set in February."
+      ]
+    },
+    {
+      "id": "q-47",
+      "event": "Five people died during the riots.",
+      "predicted": [
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "B",
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:3, D:3\nVoted answers: ['B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,C,D  \n**Reasoning**:  \n- **B (Trump addressed the crowd)**: Doc1 and Doc5 explicitly state Trump’s speech incited supporters, directly linking his rhetoric to the mob’s actions.  \n- **C (Supporters stormed the U.S. Capitol)**: Multiple documents (Doc1, Doc5, Doc6) confirm the storming caused the fatal chaos (e.g., Ashli Babbitt’s shooting).  \n- **D (Trump urged supporters to march to the Capitol)**: Doc1 directly quotes Trump instructing rally attendees to march, triggering the Capitol breach.  \n\n**Excluded**:  \n- **A (Pipe bombs)**: No evidence links these to fatalities; deaths stemmed from shooting/medical emergencies during the storming.  \n\nHigh confidence in B/C/D due to explicit causal chains in documents.\n\nFinal Answer I Reasoned: B,C,D\n",
+      "options": [
+        "option_A: Pipe bombs were reported at the Republican National Committee building and the Democratic National Committee headquarters.",
+        "option_B: Trump addressed the crowd.",
+        "option_C: Supporters stormed the U.S. Capitol.",
+        "option_D: Trump urged supporters to march to the Capitol."
+      ]
+    },
+    {
+      "id": "q-29",
+      "event": "The British pound plunged in value.",
+      "predicted": [
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:0, D:1\nVoted answers: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,D\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: The nation divided into 'remain' and 'leave' camps.",
+        "option_B: The UK voted to leave the EU in a June 23 referendum.",
+        "option_C: The United Kingdom held a referendum on June 23.",
+        "option_D: Northern Ireland and Scotland voted to remain in the EU."
+      ]
+    },
+    {
+      "id": "q-43",
+      "event": "On December 18, Musk ran a Twitter poll asking if he should step down as CEO, with a majority voting yes.",
+      "predicted": [
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B",
+        "C",
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:2, D:3\nVoted answers: ['B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,C,D\n\nFinal Answer I Reasoned: B,C,D\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: The Delaware Chancery Court ordered a Friday deadline for the Twitter acquisition deal to close in early October.",
+        "option_C: Musk confirmed charging $8/month for Twitter Blue check marks and removed ID verification.",
+        "option_D: Elon Musk signed a deal to acquire Twitter in April."
+      ]
+    },
+    {
+      "id": "q-59",
+      "event": "The FBI and ATF cleared the Capitol.",
+      "predicted": [
+        "A",
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B",
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:3, C:3, D:1\nVoted answers: ['A', 'B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C\n\nFinal Answer I Reasoned: A,B,C\n",
+      "options": [
+        "option_A: Trump supporters protested in Washington, D.C.",
+        "option_B: Trump addressed the crowd.",
+        "option_C: Trump urged supporters to march to the Capitol.",
+        "option_D: Pipe bombs were reported at the Republican National Committee building and the Democratic National Committee headquarters."
+      ]
+    },
+    {
+      "id": "q-67",
+      "event": "Myanmar's ruling junta chief reported at least 144 people killed and over 732 injured.",
+      "predicted": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A",
+        "B",
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:2, B:2, C:2, D:3\nVoted answers: ['A', 'B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C,D\n\nFinal Answer I Reasoned: A,B,C,D\n",
+      "options": [
+        "option_A: The earthquake affected Bangkok, Thailand, and tremors were felt in China's Yunnan province.",
+        "option_B: Mandalay General Hospital became full, stopped admitting patients, and lost power and water.",
+        "option_C: A high-rise under construction collapsed in Bangkok, Thailand, causing casualties.",
+        "option_D: The earthquake caused significant damage and displacement across Myanmar."
+      ]
+    },
+    {
+      "id": "q-22",
+      "event": "Lockdowns obstructed agricultural flow, resulting in hiked food prices, food shortages, malnutrition, and deaths.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A",
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:1, C:0, D:3\nVoted answers: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D\n\n**Reasoning:**\n\n- **Option A (U.S. port/border closures):** No direct evidence in the documents links U.S. border closures to agricultural flow obstruction. Doc4 discusses border closures' impact on refugees but not agriculture. **Confidence: 🔴 LOW**  \n- **Option B (Healthcare disruption):** Doc3 explicitly states healthcare disruptions caused deaths from neglected conditions, but these deaths are separate from the target event’s malnutrition-related deaths. **Confidence: 🔴 LOW** (not part of the causal chain for agricultural issues).  \n- **Option C (Italy’s lockdown):** Doc3 discusses lockdowns in general causing agricultural obstruction, but Italy’s specific actions are not highlighted as a direct cause. **Confidence: 🔴 LOW** (overly specific).  \n- **Option D (Pandemic halted economy):** Doc3 directly attributes agricultural flow obstruction to lockdowns (a pandemic response) and cites economic halts as a root cause. Doc5 corroborates this with global economic impacts on food access. **Confidence: 🟢 HIGH** (directly supported).  \n\nOnly **D** meets the high-confidence threshold, aligning with documented causal mechanisms linking pandemic-driven economic halts to agricultural disruptions.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: The U.S. government mandated port and border closures and authorized immediate repatriation of asylum seekers on March 21.",
+        "option_B: The healthcare system shifted attention to COVID-19 patients, disrupting services for other medical conditions and resulting in many deaths.",
+        "option_C: The Italian government called in the military to enforce its lockdown and ordered non-essential businesses to close by March 22.",
+        "option_D: The coronavirus pandemic halted the global economy."
+      ]
+    },
+    {
+      "id": "q-70",
+      "event": "David Lebryk departed his position at the Treasury Department.",
+      "predicted": [
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:3, D:0\nVoted answers: ['B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,C\n\nFinal Answer I Reasoned: B,C\n",
+      "options": [
+        "option_A: Elon Musk and Vivek Ramaswamy increased hiring for DOGE.",
+        "option_B: Trump appointed Elon Musk and Vivek Ramaswamy as co-leaders of the Department of Government Efficiency (DOGE).",
+        "option_C: Mr. Trump stated DOGE's purpose is to advise on cutting wasteful spending.",
+        "option_D: Elon Musk contributed $277 million to Trump's and other Republicans' 2024 campaigns."
+      ]
+    },
+    {
+      "id": "q-45",
+      "event": "Authorities in Myanmar and Thailand declared a state of emergency.",
+      "predicted": [
+        "A",
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:2, B:2, C:3, D:0\nVoted answers: ['A', 'B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C\n\n**Reasoning:**  \n- **A:** Directly supported by Doc2 and Doc5 (high-rise collapse in Bangkok).  \n- **B:** Confirmed in Doc1, Doc2, and Doc5 (tremors in Bangkok/Yunnan).  \n- **C:** Explicitly stated in Doc1, Doc5, and Doc8 (M7.7 quake + aftershock).  \n- **D:** Hospital issue (Doc4) is a consequence, not a direct cause of emergency declaration.  \n\nOnly HIGH confidence options (A,B,C) are selected.\n\nFinal Answer I Reasoned: A,B,C\n",
+      "options": [
+        "option_A: A high-rise under construction collapsed in Bangkok, Thailand, causing casualties.",
+        "option_B: The earthquake affected Bangkok, Thailand, and tremors were felt in China's Yunnan province.",
+        "option_C: A M7.7 earthquake struck Myanmar on March 28, 2025, followed by a M6.7 aftershock.",
+        "option_D: Mandalay General Hospital became full, stopped admitting patients, and lost power and water."
+      ]
+    },
+    {
+      "id": "q-41",
+      "event": "By April 3, 2025, the death toll from the earthquake reached 4,390 in Myanmar, with over 5,490 injured.",
+      "predicted": [
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:3, D:3\nVoted answers: ['B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,C,D\n\n**Analysis:**\n\n**Option B:** Directly supported by Doc3: \"A powerful earthquake registered by the USGS as M7.7 hit Myanmar [...] followed by a strong aftershock measuring M6.7 just 12 minutes later\" (**🟢 HIGH confidence**).  \n\n**Option C:** Doc3 explicitly states \"significant damage [...] displacing many in an already vulnerable region\" (**🟢 HIGH confidence**).  \n\n**Option D:** Doc5 confirms: \"Mandalay General Hospital [...] is full and no longer admitting patients [...] out of power and water\" (**🟢 HIGH confidence**).  \n\n**Option A:** No explicit mention of \"Old Sagaing Bridge\" collapse in documents (only \"Ava Bridge\" referenced). **🔴 LOW confidence**.  \n\nConservative selection avoids including uncertain claims (A). B, C, D are unambiguously validated by direct evidence.\n\nFinal Answer I Reasoned: B,C,D\n",
+      "options": [
+        "option_A: The earthquake caused the collapse of the Old Sagaing Bridge and several buildings.",
+        "option_B: A M7.7 earthquake struck Myanmar on March 28, 2025, followed by a M6.7 aftershock.",
+        "option_C: The earthquake caused significant damage and displacement across Myanmar.",
+        "option_D: Mandalay General Hospital became full, stopped admitting patients, and lost power and water."
+      ]
+    },
+    {
+      "id": "q-86",
+      "event": "Elon Musk gained full command of the federal cost-cutting effort.",
+      "predicted": [
+        "A",
+        "C"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A",
+        "C"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:1, D:0\nVoted answers: ['A']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,C\n\nFinal Answer I Reasoned: A\n",
+      "options": [
+        "option_A: Vivek Ramaswamy withdrew from the project before Mr. Trump assumed office.",
+        "option_B: Elon Musk tempered his initial promise for federal spending cuts from $2 trillion to $1 trillion.",
+        "option_C: OPM offered federal workers the option to resign with pay.",
+        "option_D: Elon Musk contributed $277 million to Trump's and other Republicans' 2024 campaigns."
+      ]
+    },
+    {
+      "id": "q-88",
+      "event": "The FBI and ATF cleared the Capitol.",
+      "predicted": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "B"
+      ],
+      "false_positives": [
+        "C",
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:1, C:2, D:2\nVoted answers: ['A', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C,D\n\nFinal Answer I Reasoned: A,C,D\n",
+      "options": [
+        "option_A: Supporters stormed the U.S. Capitol.",
+        "option_B: Trump supporters protested in Washington, D.C.",
+        "option_C: Trump addressed the crowd.",
+        "option_D: Pipe bombs were reported at the Republican National Committee building and the Democratic National Committee headquarters."
+      ]
+    },
+    {
+      "id": "q-81",
+      "event": "World leaders expressed shock and condemned the murder.",
+      "predicted": [
+        "A",
+        "D"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "A",
+        "D"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:0, D:3\nVoted answers: ['A', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,D\n\n**Step-by-Step Explanation:**\n\n- **Option A**: Directly supported by Doc3 and Doc4, which highlight Abe’s role in founding and promoting the Quad alliance. His geopolitical influence via the Quad explains why global leaders (Quad members and others) would react strongly to his assassination. ✅ HIGH confidence.  \n- **Option D**: Explicitly confirmed in Doc1, Doc2, Doc4, Doc9, and Doc10. The use of a handmade gun in a country with strict gun laws underscores the shocking nature of the attack, directly contributing to global condemnation. ✅ HIGH confidence.  \n- **Option B**: A factual detail (time of death) but not a causal factor for the target event (global shock/condemnation). ❌ LOW confidence.  \n- **Option C**: Suga’s succession is unrelated to the assassination’s immediate aftermath and global reaction. ❌ LOW confidence.  \n\n**Conclusion**: Only **A** (Quad promotion) and **D** (handmade gun) are high-confidence causes linked to the target event.\n\nFinal Answer I Reasoned: A,D\n",
+      "options": [
+        "option_A: Shinzo Abe promoted the Quadrilateral Security Dialogue (Quad).",
+        "option_B: Shinzo Abe was pronounced dead at 5:03 p.m.",
+        "option_C: Yoshihide Suga succeeded Shinzo Abe in September 2020.",
+        "option_D: The shooter used a handmade gun."
+      ]
+    },
+    {
+      "id": "q-40",
+      "event": "Sinn Fein called for a referendum on Irish unity.",
+      "predicted": [
+        "A",
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "B"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:3, C:0, D:3\nVoted answers: ['A', 'B', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,D\n\n**Step-by-Step Explanation:**\n\n1. **Options A & B (UK Referendum on June 23):**  \n   - **Direct Evidence**: Doc4 explicitly states the June 23 referendum (\"The June 23 referendum – in which the public voted 52% to 48% to leave\") and directly links Sinn Fein’s call for an Irish unity referendum to the Brexit outcome.  \n   - **Confidence**: 🟢 HIGH. The Brexit referendum is the immediate trigger for Sinn Fein’s demand, as noted in Doc4: Sinn Fein cited Brexit’s impact on Northern Ireland’s border with the Republic of Ireland.  \n\n2. **Option D (Cameron’s 2013 Pledge):**  \n   - **Direct Evidence**: Doc1 and Doc7 confirm Cameron’s 2013 pledge to hold the EU referendum. While this is a root cause, the question asks for *candidate causes* of Sinn Fein’s action.  \n   - **Confidence**: 🟢 HIGH. Without Cameron’s pledge, the Brexit referendum would not have occurred, making it a necessary precondition.  \n\n3. **Option C (Division into Remain/Leave Camps):**  \n   - **Evidence**: Doc3 and Doc4 describe divisions but do not directly tie this to Sinn Fein’s call. The division is contextual, not a direct cause.  \n   - **Confidence**: 🔴 LOW. The referendum result (not the division itself) is the proximate cause.  \n\n**Special Case Handling**:  \n- A and B are duplicates. Per rules, select both if correct.  \n- D qualifies as a direct cause under conservative reasoning (critical chain: Cameron’s pledge → referendum → Brexit → Sinn Fein’s reaction).  \n\n**Final Selection**: A, B, D (all directly supported by evidence and critical to the causal chain).\n\nFinal Answer I Reasoned: A,B,D\n",
+      "options": [
+        "option_A: The United Kingdom held a referendum on June 23.",
+        "option_B: The United Kingdom held a referendum on June 23.",
+        "option_C: The nation divided into 'remain' and 'leave' camps.",
+        "option_D: Prime Minister David Cameron pledged a referendum on EU membership in 2013."
+      ]
+    },
+    {
+      "id": "q-49",
+      "event": "Lockdowns obstructed agricultural flow, resulting in hiked food prices, food shortages, malnutrition, and deaths.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:0, D:0\nVoted answers: ['A']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A\n\n**Reasoning:**  \n- **Option A** is directly supported by Doc5, which states, \"the coronavirus pandemic brings the global economy to an astonishing halt.\" The halted economy includes lockdowns, which Doc3 explicitly links to obstructed agricultural flow, food price hikes, and shortages.  \n- **Option D**, while also mentioned in Doc5 as a consequence of COVID-19, refers to financial-market impacts rather than directly causing agricultural obstruction.  \n- **Options B** and **C** are invalidated: B is incorrect because A is valid, and C (clinical trials) is unrelated to agricultural disruptions.  \n\n**Confidence:**  \n- **A**: 🟢 HIGH (direct evidence + clear causal chain).  \n- **D**: 🔴 LOW (separate consequence, not directly causal to agricultural issues).  \n\n**Conclusion:** Only **A** meets the criteria for selection.\n\nFinal Answer I Reasoned: A\n",
+      "options": [
+        "option_A: The coronavirus pandemic halted the global economy.",
+        "option_B: None of the others are correct causes.",
+        "option_C: Clinical trials began to test potential treatments and vaccines for COVID-19.",
+        "option_D: COVID-19 triggered a financial-market meltdown."
+      ]
+    },
+    {
+      "id": "q-93",
+      "event": "World leaders expressed shock and condemned the murder.",
+      "predicted": [
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:3, D:2\nVoted answers: ['B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,C,D\n\n**Reasoning:**\n\n1. **Options B & C (Assassination):** Both options state the assassination, directly supported by Docs 1,9,10. This is the immediate cause triggering global condemnation (high confidence). Though duplicates, per rules, both are selected.\n\n2. **Option D (Quad Promotion):** Docs 1,3,4 show Abe’s Quad advocacy strengthened alliances with key democracies (US, India, Australia). These nations (Quad members) were \"among the first to respond\" (Doc1), indicating his geopolitical influence contributed to the strong reactions (medium confidence). While indirect, the strategic ties he built through Quad plausibly amplified leaders’ responses.\n\nFinal Answer I Reasoned: B,C,D\n",
+      "options": [
+        "option_A: Shinzo Abe offered to host a peace summit in 2017.",
+        "option_B: Former Japanese Prime Minister Shinzo Abe was assassinated at a campaign rally.",
+        "option_C: Former Japanese Prime Minister Shinzo Abe was assassinated at a campaign rally.",
+        "option_D: Shinzo Abe promoted the Quadrilateral Security Dialogue (Quad)."
+      ]
+    },
+    {
+      "id": "q-80",
+      "event": "Elon Musk gained full command of the federal cost-cutting effort.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "A",
+        "B"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:2, B:3, C:0, D:0\nVoted answers: ['A', 'B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B\n\nFinal Answer I Reasoned: A,B\n",
+      "options": [
+        "option_A: Mr. Musk stated DOGE participants will not be paid and requested they work 80-hour weeks.",
+        "option_B: Vivek Ramaswamy withdrew from the project before Mr. Trump assumed office.",
+        "option_C: Elon Musk contributed $277 million to Trump's and other Republicans' 2024 campaigns.",
+        "option_D: Elon Musk tempered his initial promise for federal spending cuts from $2 trillion to $1 trillion."
+      ]
+    },
+    {
+      "id": "q-92",
+      "event": "South Korean prosecutors detained former defense minister Kim Yong-hyun, who allegedly recommended the martial law imposition.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:1, B:2, C:0, D:0\nVoted answers: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: Lawmakers voted down the martial law decree.",
+        "option_C: South Korea’s parliament voted to impeach President Yoon Suk Yeol.",
+        "option_D: Yoon's senior aides and defense minister offered to resign."
+      ]
+    },
+    {
+      "id": "q-90",
+      "event": "Donald Trump was elected the 47th president of the United States.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:1, C:2, D:0\nVoted answers: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C  \n**Reasoning**:  \n- **Option C** (Two assassination attempts) is directly supported by Doc1 (\"two assassination attempts targeting Trump...survived two assassination attempts\") with clear temporal relevance to the election season. These events likely boosted Trump's image as resilient, contributing to voter support (**HIGH confidence**).  \n- **Option A** (FBI videos) mentions fabricated content but lacks evidence linking it to election causation (**LOW confidence**).  \n- **Option D** (Impeachment/acquittal) occurred pre-election (Doc1) and is background context, not a direct cause (**MEDIUM confidence**, insufficient for selection).  \n- **Option B** (\"None\") is invalid since **C** is confirmed.  \n\nOnly **C** meets strict criteria for selection.\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: The FBI warns of fabricated videos misusing its name and insignia.",
+        "option_B: None of the others are correct causes.",
+        "option_C: Two assassination attempts targeted Donald Trump during the election season.",
+        "option_D: The U.S. House impeached Trump, and the U.S. Senate acquitted him."
+      ]
+    },
+    {
+      "id": "q-77",
+      "event": "Myanmar's ruling junta chief reported at least 144 people killed and over 732 injured.",
+      "predicted": [
+        "A",
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "B"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:3, C:1, D:3\nVoted answers: ['A', 'B', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,D\n\n**Reasoning:**\n\n- **Options A & B**: Both state \"The earthquake caused significant damage and displacement across Myanmar.\" Doc2 and Doc6 explicitly describe extensive structural damage (collapsed buildings, roads, bridges) and displacement (\"displacing many in an already vulnerable region\"). Direct evidence supports these as primary causes of casualties.  \n- **Option D**: Doc1 directly quotes Hari Kumar about Mandalay General Hospital being overwhelmed, losing utilities, and limiting treatment capacity. This directly contributes to the casualty count by reducing medical care availability.  \n- **Option C**: While tremors were felt in Thailand and China (Doc2, Doc6), these are consequences of the earthquake’s geographical reach, not **causes** of Myanmar’s reported casualties. Hence, excluded.  \n\n**Special Case Handling**: A and B are identical. Following the rule for duplicates, both are selected as they are validated by evidence.\n\nFinal Answer I Reasoned: A,B,D\n",
+      "options": [
+        "option_A: The earthquake caused significant damage and displacement across Myanmar.",
+        "option_B: The earthquake caused significant damage and displacement across Myanmar.",
+        "option_C: The earthquake affected Bangkok, Thailand, and tremors were felt in China's Yunnan province.",
+        "option_D: Mandalay General Hospital became full, stopped admitting patients, and lost power and water."
+      ]
+    },
+    {
+      "id": "q-111",
+      "event": "The coronavirus pandemic halted the global economy.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:0, C:0, D:3\nVoted answers: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D\n\n**Reasoning:**  \n- **Option D** is supported by Doc5: \"On March 20, the Italian government called in the military to enforce its approach... On March 22, the Prime Minister ordered all non-essential businesses and factories to close.\" This action directly contributed to halting economic activity, making it a **HIGH confidence** cause.  \n- **Options B and C** are factual events (Doc5 and Doc4 respectively) but lack a direct causal link to the global economic halt.  \n- **Option A** is invalid because D is a valid cause.  \n\nOnly **D** meets the criteria of direct evidence and clear causation.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: The United States indicted Nicolás Maduro with narco-terrorism and other serious charges on March 26.",
+        "option_C: Chinese authorities identified SARS-CoV-2 as the new coronavirus.",
+        "option_D: The Italian government called in the military to enforce its lockdown and ordered non-essential businesses to close by March 22."
+      ]
+    },
+    {
+      "id": "q-110",
+      "event": "South Korea’s parliament voted to impeach President Yoon Suk Yeol.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "A",
+        "D"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:2, B:2, C:0, D:2\nVoted answers: ['A', 'B', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B  \n**Reasoning**:  \n- **Option A/D**: Mention filing an impeachment motion on Wednesday. Docs 3 and 5 confirm this, but the successful impeachment vote (target event) occurred on Saturday (Doc2) after a second motion, not the Wednesday filing. Thus, A/D relate to a prior failed attempt and are not direct causes of the successful impeachment.  \n- **Option B**: Directly supported by Docs 1, 2, and 4, which describe large protests outside parliament during the impeachment vote.  \n- **Option C**: Incorrect, as Doc2 explicitly states the impeachment passed.  \nOnly **B** has high confidence as a contributing cause.\n\nFinal Answer I Reasoned: A,B,D\n",
+      "options": [
+        "option_A: Opposition legislators filed an impeachment motion against President Yoon on Wednesday.",
+        "option_B: Tens of thousands of protesters gathered outside the National Assembly in Seoul.",
+        "option_C: The impeachment motion against President Yoon failed.",
+        "option_D: Opposition legislators filed an impeachment motion against President Yoon on Wednesday."
+      ]
+    },
+    {
+      "id": "q-109",
+      "event": "Capitol Police Chief Steven Sund, House Sergeant at Arms Paul Irving, and Senate Sergeant at Arms Michael Stenger resigned.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:0, D:0\nVoted answers: ['A']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A\n\nFinal Answer I Reasoned: A\n",
+      "options": [
+        "option_A: Trump supporters protested in Washington, D.C.",
+        "option_B: The House and Senate recessed, and the Capitol was locked down.",
+        "option_C: Trump addressed the crowd.",
+        "option_D: The D.C. National Guard was activated, and a citywide curfew was imposed."
+      ]
+    },
+    {
+      "id": "q-117",
+      "event": "President Trump announced a plan to impose additional 25% tariffs on Canadian steel and aluminum imports.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:0, D:0\nVoted answers: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: Ontario placed a 25% tax on electricity exports to the U.S.",
+        "option_C: The 16th Amendment was ratified in 1913.",
+        "option_D: William McKinley died on Sept. 14, 1901."
+      ]
+    },
+    {
+      "id": "q-97",
+      "event": "The British pound plunged in value.",
+      "predicted": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B",
+        "C",
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:2, C:3, D:3\nVoted answers: ['A', 'B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C,D\n\nFinal Answer I Reasoned: A,B,C,D\n",
+      "options": [
+        "option_A: The United Kingdom held a referendum on June 23.",
+        "option_B: The nation divided into 'remain' and 'leave' camps.",
+        "option_C: Cameron's attempt to renegotiate the U.K.'s EU membership terms failed.",
+        "option_D: Prime Minister David Cameron pledged a referendum on EU membership in 2013."
+      ]
+    },
+    {
+      "id": "q-130",
+      "event": "The FBI and ATF cleared the Capitol.",
+      "predicted": [
+        "A",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "C",
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:3, D:3\nVoted answers: ['A', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,C,D\n\nFinal Answer I Reasoned: A,C,D\n",
+      "options": [
+        "option_A: Trump supporters protested in Washington, D.C.",
+        "option_B: Five people died during the riots.",
+        "option_C: Pipe bombs were reported at the Republican National Committee building and the Democratic National Committee headquarters.",
+        "option_D: Trump addressed the crowd."
+      ]
+    },
+    {
+      "id": "q-104",
+      "event": "By April 3, 2025, the death toll from the earthquake reached 4,390 in Myanmar, with over 5,490 injured.",
+      "predicted": [
+        "A",
+        "C"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:3, D:2\nVoted answers: ['A', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,C\n\n**Step-by-Step Explanation:**\n\n1. **Option A (Hospital Issues):**  \n   - **Evidence:** Doc5 explicitly states Mandalay General Hospital became overwhelmed, stopped admitting patients, and lost utilities.  \n   - **Confidence:** 🟢 HIGH. Directly documented and logically contributes to increased fatalities by hindering medical response.  \n\n2. **Option C (Earthquake & Aftershock):**  \n   - **Evidence:** Doc3 confirms the M7.7 earthquake on March 28, 2025, and a M6.7 aftershock minutes later.  \n   - **Confidence:** 🟢 HIGH. Primary cause of structural collapses and casualties.  \n\n3. **Option B (Bangkok Collapse):**  \n   - **Relevance:** Casualties in Thailand unrelated to Myanmar’s death toll.  \n   - **Confidence:** 🔴 LOW. Excluded as irrelevant to the target event.  \n\n4. **Option D (Bridge/Building Collapses):**  \n   - **Evidence Gap:** Documents mention bridge collapses (e.g., Ava Bridge) but not \"Old Sagaing Bridge\" specifically.  \n   - **Confidence:** 🔴 LOW. Name mismatch introduces uncertainty; excluded conservatively.  \n\n**Conclusion:** Only A and C have direct, unambiguous support in the evidence and clear causal links to the death toll.\n\nFinal Answer I Reasoned: A,C,D\n",
+      "options": [
+        "option_A: Mandalay General Hospital became full, stopped admitting patients, and lost power and water.",
+        "option_B: A high-rise under construction collapsed in Bangkok, Thailand, causing casualties.",
+        "option_C: A M7.7 earthquake struck Myanmar on March 28, 2025, followed by a M6.7 aftershock.",
+        "option_D: The earthquake caused the collapse of the Old Sagaing Bridge and several buildings."
+      ]
+    },
+    {
+      "id": "q-121",
+      "event": "President Donald Trump signed a multibillion-dollar emergency aid package.",
+      "predicted": [
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B",
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:1, C:0, D:3\nVoted answers: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,D\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: COVID-19 triggered a financial-market meltdown.",
+        "option_B: Chinese authorities identified SARS-CoV-2 as the new coronavirus.",
+        "option_C: The healthcare system shifted attention to COVID-19 patients, disrupting services for other medical conditions and resulting in many deaths.",
+        "option_D: The U.S. government mandated port and border closures and authorized immediate repatriation of asylum seekers on March 21."
+      ]
+    },
+    {
+      "id": "q-127",
+      "event": "Congress confirmed Biden as president in the early hours of January 7th.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "A",
+        "B"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:1, B:3, C:0, D:0\nVoted answers: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: A woman was shot inside the Capitol and died.",
+        "option_B: Trump addressed the crowd.",
+        "option_C: The FBI and ATF cleared the Capitol.",
+        "option_D: Five people died during the riots."
+      ]
+    },
+    {
+      "id": "q-28",
+      "event": "The Capitol was secured, and lawmakers reconvened to continue certification.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:1, C:2, D:1\nVoted answers: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: A woman was shot inside the Capitol and died.",
+        "option_B: Pipe bombs were reported at the Republican National Committee building and the Democratic National Committee headquarters.",
+        "option_C: Trump addressed the crowd.",
+        "option_D: The FBI and ATF cleared the Capitol."
+      ]
+    },
+    {
+      "id": "q-133",
+      "event": "Congress confirmed Biden as president in the early hours of January 7th.",
+      "predicted": [
+        "A",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:2, D:3\nVoted answers: ['A', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,C,D\n\n**Reasoning:**  \n- **Option A & D (Supporters stormed the U.S. Capitol):** Directly confirmed in Doc1, Doc4, Doc5, Doc6, Doc7, and Doc9. Identical options require selection together per rules.  \n- **Option B (Five deaths):** Rejected. Docs (e.g., Doc5) explicitly state **four** deaths (1 shooting + 3 medical emergencies).  \n- **Option C (Woman shot/died):** Directly supported by Doc1 (\"woman shot...died\") and Doc5 (details Ashli Babbitt’s death).  \n\n**Confidence:**  \n- A/D: 🟢 HIGH (multiple direct sources)  \n- C: 🟢 HIGH (explicit evidence)  \n- B: 🔴 LOW (incorrect death count).  \n\n**Strategic Selection:** Strictly followed conservative rules to avoid penalties.\n\nFinal Answer I Reasoned: A,C,D\n",
+      "options": [
+        "option_A: Supporters stormed the U.S. Capitol.",
+        "option_B: Five people died during the riots.",
+        "option_C: A woman was shot inside the Capitol and died.",
+        "option_D: Supporters stormed the U.S. Capitol."
+      ]
+    },
+    {
+      "id": "q-142",
+      "event": "The FBI and ATF cleared the Capitol.",
+      "predicted": [
+        "A",
+        "C"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:1, C:2, D:0\nVoted answers: ['A', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,C\n\n**Reasoning:**  \n- **Option A (Supporters stormed the U.S. Capitol):**  \n  Direct evidence in Doc2 (\"they would storm it\"), Doc4 (\"hundreds of his supporters stormed the U.S. Capitol\"), Doc6 (\"protesters [...] stormed the U.S. Capitol\"), and Doc9 (\"Trump supporters stormed the Capitol building\"). The storming directly necessitated law enforcement intervention. 🟢 **HIGH confidence**.  \n\n- **Option C (Trump addressed the crowd):**  \n  Doc2 (\"Trump calls for march on Capitol\"), Doc4 (\"incited by the president’s incendiary language\"), and Doc6 (\"Trump spoke to the crowd [...] claiming the election was rigged\") confirm Trump’s role in inciting the mob. His speech directly preceded the breach. 🟢 **HIGH confidence**.  \n\n- **Option B (Pipe bombs reported):**  \n  Doc2 mentions pipe bombs, but these were peripheral to the Capitol breach and clearance. 🟡 **MEDIUM confidence** (contributing factor, not primary cause).  \n\n- **Option D (Woman shot):**  \n  Doc4 and Doc9 describe the shooting, but this occurred *during* the riot and was a consequence, not a cause of the clearance. 🔴 **LOW confidence**.  \n\n**Strategic Selection:**  \nOnly **A** and **C** meet the criteria for direct causation and high confidence.\n\nFinal Answer I Reasoned: A,C\n",
+      "options": [
+        "option_A: Supporters stormed the U.S. Capitol.",
+        "option_B: Pipe bombs were reported at the Republican National Committee building and the Democratic National Committee headquarters.",
+        "option_C: Trump addressed the crowd.",
+        "option_D: A woman was shot inside the Capitol and died."
+      ]
+    },
+    {
+      "id": "q-143",
+      "event": "The congressional certification of Joe Biden’s victory was halted.",
+      "predicted": [
+        "A",
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C",
+        "D"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:2, B:3, C:3, D:0\nVoted answers: ['A', 'B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C\n\nFinal Answer I Reasoned: A,B,C\n",
+      "options": [
+        "option_A: Trump addressed the crowd.",
+        "option_B: Supporters stormed the U.S. Capitol.",
+        "option_C: Protesters clashed with police and breached security barriers at the Capitol.",
+        "option_D: The House and Senate recessed, and the Capitol was locked down."
+      ]
+    },
+    {
+      "id": "q-145",
+      "event": "Delta Air Lines, Southwest Airlines, and American Airlines lowered their Q1 projections.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:0, C:3, D:0\nVoted answers: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: President Trump reversed his plan to raise tariffs on Canadian steel and aluminum imports.",
+        "option_C: President Trump announced a new tariff system on Wednesday, substituting America's longstanding import tax system.",
+        "option_D: Premier Ford paused Ontario's electricity surcharge."
+      ]
+    },
+    {
+      "id": "q-146",
+      "event": "Five people died during the riots.",
+      "predicted": [
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:3, D:0\nVoted answers: ['B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,C\n\nFinal Answer I Reasoned: B,C\n",
+      "options": [
+        "option_A: Pipe bombs were reported at the Republican National Committee building and the Democratic National Committee headquarters.",
+        "option_B: Supporters stormed the U.S. Capitol.",
+        "option_C: Trump urged supporters to march to the Capitol.",
+        "option_D: Trump addressed the crowd."
+      ]
+    },
+    {
+      "id": "q-147",
+      "event": "The congressional certification of Joe Biden’s victory was halted.",
+      "predicted": [
+        "A",
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:0, D:3\nVoted answers: ['A', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,D\n\n**Reasoning:**\n\n- **Option A (High Confidence):** Multiple documents (Doc2, Doc7, Doc10) explicitly state that Congress recessed and the Capitol was locked down due to the mob’s breach, directly halting certification. For example, Doc2 notes the certification was \"delayed\" after lawmakers fled, and Doc10 describes the Senate stopping proceedings and locking doors. This procedural action (recessing/lockdown) is the immediate cause of the halting.\n\n- **Option D (High Confidence):** Documents (Doc3, Doc7, Doc10) confirm Trump’s speech incited the crowd to march on the Capitol, leading to the breach. Doc3 states Trump \"spurred the crowds\" to congregate and breach the Capitol, while Doc7 reconstructs how Trump’s call to \"walk down Pennsylvania Avenue\" directly preceded the mob’s assault. This root cause (Trump’s address) triggered the chain of events forcing the halt.\n\n- **Options B/C (Rejected):** While B (woman shot) is documented (Doc3, Doc10), it is a consequence of the riot, not a cause of the halting. C (five deaths) is unsupported (docs mention four deaths). Both lack causal linkage to the certification halt itself.\n\nFinal Answer I Reasoned: A,D\n",
+      "options": [
+        "option_A: The House and Senate recessed, and the Capitol was locked down.",
+        "option_B: A woman was shot inside the Capitol and died.",
+        "option_C: Five people died during the riots.",
+        "option_D: Trump addressed the crowd."
+      ]
+    },
+    {
+      "id": "q-129",
+      "event": "Over three million Brits called for a do-over.",
+      "predicted": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A",
+        "B",
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:3, C:3, D:3\nVoted answers: ['A', 'B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C,D\n\nFinal Answer I Reasoned: A,B,C,D\n",
+      "options": [
+        "option_A: The referendum date was set in February.",
+        "option_B: Cameron's attempt to renegotiate the U.K.'s EU membership terms failed.",
+        "option_C: The nation divided into 'remain' and 'leave' camps.",
+        "option_D: The United Kingdom held a referendum on June 23."
+      ]
+    },
+    {
+      "id": "q-30",
+      "event": "Northern Ireland and Scotland voted to remain in the EU.",
+      "predicted": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B",
+        "C",
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:3, C:3, D:3\nVoted answers: ['A', 'B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C,D\n\n**Reasoning:**\n\n1. **Option A (High Confidence):**  \n   Direct evidence from Doc2 and Doc4 confirms the UK held a referendum on June 23, 2016. This is a prerequisite for regional votes (e.g., Scotland/NI voting to remain).  \n\n2. **Option B (High Confidence):**  \n   Doc4 explicitly states Cameron pledged a referendum in 2013 if his party won the election, setting the process in motion.  \n\n3. **Option C (High Confidence):**  \n   Doc4 cites Cameron’s failed 2015 renegotiation with the EU, which directly led to the Brexit referendum.  \n\n4. **Option D (High Confidence):**  \n   The UK’s overall vote to leave (Doc2, Doc7) created the context for regional outcomes (NI/Scotland voting remain). While D is the aggregate result, it inherently includes the regional votes, making it a proximate cause of the target event.  \n\nAll options meet the criteria of **direct evidence** and **causal relevance** to the target event. Conservative selection rules prioritize inclusion of all high-confidence causes.\n\nFinal Answer I Reasoned: A,B,C,D\n",
+      "options": [
+        "option_A: The United Kingdom held a referendum on June 23.",
+        "option_B: Prime Minister David Cameron pledged a referendum on EU membership in 2013.",
+        "option_C: Cameron's attempt to renegotiate the U.K.'s EU membership terms failed.",
+        "option_D: The UK voted to leave the EU in a June 23 referendum."
+      ]
+    },
+    {
+      "id": "q-140",
+      "event": "Nicola Sturgeon stated the Scottish government would prepare legislation for a new independence referendum.",
+      "predicted": [
+        "A",
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "B"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:3, C:0, D:1\nVoted answers: ['A', 'B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,D\n\nFinal Answer I Reasoned: A,B\n",
+      "options": [
+        "option_A: Northern Ireland and Scotland voted to remain in the EU.",
+        "option_B: The UK voted to leave the EU in a June 23 referendum.",
+        "option_C: The nation divided into 'remain' and 'leave' camps.",
+        "option_D: Prime Minister David Cameron pledged a referendum on EU membership in 2013."
+      ]
+    },
+    {
+      "id": "q-60",
+      "event": "Musk allies took top positions in federal agencies.",
+      "predicted": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A",
+        "B",
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:2, B:3, C:2, D:3\nVoted answers: ['A', 'B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C,D\n\nFinal Answer I Reasoned: A,B,C,D\n",
+      "options": [
+        "option_A: DOGE representatives spoke with staff at over a dozen federal agencies.",
+        "option_B: Elon Musk and Vivek Ramaswamy increased hiring for DOGE.",
+        "option_C: Mr. Musk stated DOGE participants will not be paid and requested they work 80-hour weeks.",
+        "option_D: Trump appointed Elon Musk and Vivek Ramaswamy as co-leaders of the Department of Government Efficiency (DOGE)."
+      ]
+    },
+    {
+      "id": "q-160",
+      "event": "The United Kingdom held a referendum on June 23.",
+      "predicted": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "false_positives": [
+        "A",
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:3, C:3, D:1\nVoted answers: ['A', 'B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C,D\n\nFinal Answer I Reasoned: A,B,C\n",
+      "options": [
+        "option_A: Cameron's attempt to renegotiate the U.K.'s EU membership terms failed.",
+        "option_B: The Conservative Party won the election.",
+        "option_C: Prime Minister David Cameron pledged a referendum on EU membership in 2013.",
+        "option_D: The nation divided into 'remain' and 'leave' camps."
+      ]
+    },
+    {
+      "id": "q-153",
+      "event": "Northern Ireland and Scotland voted to remain in the EU.",
+      "predicted": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "A",
+        "C",
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:3, C:3, D:2\nVoted answers: ['A', 'B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C,D\n\nFinal Answer I Reasoned: A,B,C,D\n",
+      "options": [
+        "option_A: Cameron's attempt to renegotiate the U.K.'s EU membership terms failed.",
+        "option_B: The United Kingdom held a referendum on June 23.",
+        "option_C: Prime Minister David Cameron pledged a referendum on EU membership in 2013.",
+        "option_D: The referendum date was set in February."
+      ]
+    },
+    {
+      "id": "q-159",
+      "event": "Congress confirmed Biden as president in the early hours of January 7th.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "C",
+        "D"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "C",
+        "D"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:3, C:0, D:0\nVoted answers: ['A', 'B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B\n\nFinal Answer I Reasoned: A,B\n",
+      "options": [
+        "option_A: Supporters stormed the U.S. Capitol.",
+        "option_B: A woman was shot inside the Capitol and died.",
+        "option_C: The FBI and ATF cleared the Capitol.",
+        "option_D: The FBI and ATF cleared the Capitol."
+      ]
+    },
+    {
+      "id": "q-167",
+      "event": "Prime Minister Han Duck-soo became acting president.",
+      "predicted": [
+        "A",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:3, D:1\nVoted answers: ['A', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,C,D\n\n**Reasoning:**\n\n1. **Options A & C (Suspension):**  \n   Both options are identical. Doc4 explicitly states that after the impeachment vote, Yoon was \"suspended from exercising his powers,\" directly triggering Prime Minister Han Duck-soo to assume the role of acting president. This is a **HIGH confidence** cause.\n\n2. **Option D (Martial Law Vote):**  \n   Doc3 and Doc6 confirm lawmakers voted to annul the martial law decree. This action escalated the political crisis, leading to impeachment proceedings. While not the immediate cause, it is a critical antecedent event in the causal chain. **HIGH confidence** due to direct evidence and clear contribution to the impeachment process.\n\n3. **Option B (Protests):**  \n   While protests occurred (Doc1, Doc4), they are contextual factors pressuring lawmakers but not a direct cause of Han becoming acting president. **MEDIUM confidence**; excluded due to conservative strategy.\n\nFinal Answer I Reasoned: A,C\n",
+      "options": [
+        "option_A: President Yoon Suk Yeol was immediately suspended from exercising his powers.",
+        "option_B: Tens of thousands of protesters gathered outside the National Assembly in Seoul.",
+        "option_C: President Yoon Suk Yeol was immediately suspended from exercising his powers.",
+        "option_D: Lawmakers voted down the martial law decree."
+      ]
+    },
+    {
+      "id": "q-137",
+      "event": "Premier Ford paused Ontario's electricity surcharge.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:0, C:0, D:3\nVoted answers: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D\n\n**Reasoning:**\n\n- **Option B**: Mentions McKinley's assassination but lacks connection to Ontario's surcharge pause. **LOW confidence**.\n- **Option C**: Refers to Trump’s tariffs on exports (imports from Canada and Mexico). Doc2 confirms tariffs on Canada, but Ontario’s surcharge specifically retaliated against tariffs on Canada. **MEDIUM confidence** (includes Mexico, not directly causal for Ontario’s action).\n- **Option D**: Directly supported by Doc2: \"the sweeping 25% tariffs that Trump had placed on imports from Canada.\" This directly caused Ford’s surcharge and subsequent pause. **HIGH confidence**.\n- **Option A**: Incorrect because **D** is valid. \n\n**Conclusion**: Only **D** meets the HIGH confidence threshold.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: William McKinley was shot by anarchist Leon Czolgosz on Sept. 6, 1901.",
+        "option_C: Trump previously applied a 25% tariff on many exports from Canada and Mexico.",
+        "option_D: President Trump placed 25% tariffs on imports from Canada."
+      ]
+    },
+    {
+      "id": "q-172",
+      "event": "Congress confirmed Biden as president in the early hours of January 7th.",
+      "predicted": [
+        "A",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "C",
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:3, D:3\nVoted answers: ['A', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,C,D\n\n**Step-by-Step Explanation:**\n\n1. **Option A**: Direct evidence in Doc1 (\"Lawmakers reconvened at 8 p.m., pledging to continue with the certification\"), Doc5 (\"heavily armed FBI agents... escorted lawmakers back to work\"), and Doc8 (\"Congress confirmed Mr Biden... in the early hours of January 7th\"). High confidence.\n\n2. **Option B**: Documents mention **four** deaths (Doc5: \"four people would be dead: one from gunfire and three from medical emergencies\"). No evidence of five deaths. Incorrect.\n\n3. **Option C**: Explicitly confirmed in Doc1 (\"A woman was shot... and later died\") and Doc5 (details of Ashli Babbitt’s death). High confidence.\n\n4. **Option D**: Directly stated in Doc6 and Doc9 (\"pipe bomb... at the Republican National Committee... another device... Democratic National Committee\"). High confidence.\n\n**Strategic Selection**: A, C, D are confirmed with direct evidence. B is false. No overlaps or duplicates. All selected options meet HIGH confidence criteria.\n\nFinal Answer I Reasoned: A,C,D\n",
+      "options": [
+        "option_A: The Capitol was secured, and lawmakers reconvened to continue certification.",
+        "option_B: Five people died during the riots.",
+        "option_C: A woman was shot inside the Capitol and died.",
+        "option_D: Pipe bombs were reported at the Republican National Committee building and the Democratic National Committee headquarters."
+      ]
+    },
+    {
+      "id": "q-155",
+      "event": "Trump issued an order to halt federal grants.",
+      "predicted": [
+        "A",
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A",
+        "B",
+        "C"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:2, B:3, C:2, D:0\nVoted answers: ['A', 'B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C\n\nFinal Answer I Reasoned: A,B,C\n",
+      "options": [
+        "option_A: Elon Musk contributed $277 million to Trump's and other Republicans' 2024 campaigns.",
+        "option_B: Musk allies took top positions in federal agencies.",
+        "option_C: Mr. Musk stated DOGE participants will not be paid and requested they work 80-hour weeks.",
+        "option_D: None of the others are correct causes."
+      ]
+    },
+    {
+      "id": "q-75",
+      "event": "The Capitol was secured, and lawmakers reconvened to continue certification.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:0, C:3, D:0\nVoted answers: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C\n\n**Reasoning:**  \n- **Option A**: Although Doc1 and Doc4 confirm a woman was shot, there is no explicit causal link between her death and the Capitol being secured. The shooting occurred *during* the riot but is not identified as a direct cause of securing/reconvening. Confidence: 🔴 LOW.  \n- **Option B**: Docs mention 4 deaths (Doc4), not 5. No direct evidence supports \"five people died.\" Confidence: 🔴 LOW.  \n- **Option C**: Direct evidence (Docs1, 3, 4, 8) shows Trump’s speech incited the mob to breach the Capitol, necessitating law enforcement to secure the building. This causal chain is explicit and temporally ordered. Confidence: 🟢 HIGH.  \n- **Option D**: FBI involvement is noted (Doc1), but no evidence specifies FBI/ATF as the entities that \"cleared\" the Capitol. Securing was attributed to Capitol Police, National Guard, and broader law enforcement (Docs4, 8). Confidence: 🔴 LOW.  \n\nOnly **C** meets the threshold for high confidence.\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: A woman was shot inside the Capitol and died.",
+        "option_B: Five people died during the riots.",
+        "option_C: Trump addressed the crowd.",
+        "option_D: The FBI and ATF cleared the Capitol."
+      ]
+    },
+    {
+      "id": "q-181",
+      "event": "The Capitol was secured, and lawmakers reconvened to continue certification.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:0, D:0\nVoted answers: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B\n\n**Reasoning:**  \n- **Option B** is directly supported by Doc1 and Doc4, which explicitly mention the activation of the D.C. National Guard and the imposition of a citywide curfew. These actions directly contributed to securing the Capitol and enabling lawmakers to reconvene.  \n- Other options lack sufficient causal linkage to the target event:  \n  - **A** (woman shot) is documented but not causally tied to securing the Capitol.  \n  - **C** (Trump’s speech) incited the riot but did not directly cause the subsequent securing.  \n  - **D** (FBI/ATF involvement) lacks explicit evidence of leading the clearance.  \nOnly **B** meets the high-confidence threshold.\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: A woman was shot inside the Capitol and died.",
+        "option_B: The D.C. National Guard was activated, and a citywide curfew was imposed.",
+        "option_C: Trump addressed the crowd.",
+        "option_D: The FBI and ATF cleared the Capitol."
+      ]
+    },
+    {
+      "id": "q-55",
+      "event": "Capitol Police Chief Steven Sund, House Sergeant at Arms Paul Irving, and Senate Sergeant at Arms Michael Stenger resigned.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:1, C:0, D:2\nVoted answers: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: The Capitol was secured, and lawmakers reconvened to continue certification.",
+        "option_B: The congressional certification of Joe Biden’s victory was halted.",
+        "option_C: Congress confirmed Biden as president in the early hours of January 7th.",
+        "option_D: The FBI and ATF cleared the Capitol."
+      ]
+    },
+    {
+      "id": "q-154",
+      "event": "Mr. Musk stated DOGE participants will not be paid and requested they work 80-hour weeks.",
+      "predicted": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "A",
+        "C",
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:3, C:3, D:3\nVoted answers: ['A', 'B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,C,D\n\n**Reasoning:**\n\n- **A**: Doc3 states Trump's purpose for DOGE: \"provide outside advice on how to cut wasteful spending.\"  \n- **B**: Doc6 and Doc8 confirm Trump appointed Musk and Ramaswamy as DOGE co-leaders.  \n- **C**: Doc6 explicitly mentions DOGE representatives spoke with staff at \"more than a dozen federal agencies.\"  \n- **D**: Doc6 directly states Musk contributed \"$277 million toward electing Trump and other Republicans in 2024.\"  \n\nAll options are **directly supported** by evidence, meeting the HIGH confidence threshold.\n\nFinal Answer I Reasoned: A,B,C,D\n",
+      "options": [
+        "option_A: Mr. Trump stated DOGE's purpose is to advise on cutting wasteful spending.",
+        "option_B: Trump appointed Elon Musk and Vivek Ramaswamy as co-leaders of the Department of Government Efficiency (DOGE).",
+        "option_C: DOGE representatives spoke with staff at over a dozen federal agencies.",
+        "option_D: Elon Musk contributed $277 million to Trump's and other Republicans' 2024 campaigns."
+      ]
+    },
+    {
+      "id": "q-197",
+      "event": "General Motors announced it would suspend its advertising on Twitter.",
+      "predicted": [
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:0, D:2\nVoted answers: ['B', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,D\n\nFinal Answer I Reasoned: B,D\n",
+      "options": [
+        "option_A: The Delaware Chancery Court ordered a Friday deadline for the Twitter acquisition deal to close in early October.",
+        "option_B: Elon Musk completed his $44 billion takeover of Twitter.",
+        "option_C: Elon Musk changed his profile to ‘Chief Twit’.",
+        "option_D: Musk fired top Twitter executives."
+      ]
+    },
+    {
+      "id": "q-149",
+      "event": "Capitol Police Chief Steven Sund, House Sergeant at Arms Paul Irving, and Senate Sergeant at Arms Michael Stenger resigned.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:0, C:0, D:3\nVoted answers: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D\n\n**Reasoning:**  \n- **Option D** (\"Trump supporters protested in Washington, D.C.\") is supported by direct evidence across multiple documents (e.g., Doc2, Doc3, Doc4, Doc6) detailing the storming of the Capitol by Trump supporters, which directly led to security failures and subsequent resignations. The protest escalated into a violent breach, explicitly cited in Doc3 as the catalyst for resignations.  \n- **Options A and B** describe procedural outcomes (certification halted/resumed) but are not direct causes of the resignations.  \n- **Option C** (\"None\") is invalid because **D** is a valid cause.  \n\nConfidence: **D** is directly tied to the security failure via documented evidence of the protest/storming, making it the sole correct answer.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: Congress confirmed Biden as president in the early hours of January 7th.",
+        "option_B: The congressional certification of Joe Biden’s victory was halted.",
+        "option_C: None of the others are correct causes.",
+        "option_D: Trump supporters protested in Washington, D.C."
+      ]
+    },
+    {
+      "id": "q-168",
+      "event": "Global markets plunged following the Brexit vote.",
+      "predicted": [
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "C",
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:2, D:2\nVoted answers: ['B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,C,D\n\n**Reasoning:**\n\n**Option B:** Confirmed in Doc1 (\"U.K. Votes To Leave EU\") and Doc2 (\"UK referendum vote\"). Direct cause of the market plunge. 🟢 HIGH  \n**Option C:** Doc5 explicitly states Cameron's 2013 pledge. 🟢 HIGH  \n**Option D:** Doc5 details Cameron's failed renegotiation attempt. 🟢 HIGH  \n\n**Option A:** While Doc5 notes the June 23 date was \"set in February,\" this is a procedural step (not a causal driver) and overlaps temporally with Cameron's pledge (C). 🔴 LOW (excluded conservatively to avoid over-selection).  \n\nOnly B, C, D have clear causal roles and direct evidence.\n\nFinal Answer I Reasoned: B,C,D\n",
+      "options": [
+        "option_A: The referendum date was set in February.",
+        "option_B: The UK voted to leave the EU in a June 23 referendum.",
+        "option_C: Prime Minister David Cameron pledged a referendum on EU membership in 2013.",
+        "option_D: Cameron's attempt to renegotiate the U.K.'s EU membership terms failed."
+      ]
+    },
+    {
+      "id": "q-190",
+      "event": "The new 10% tariffs will go into effect on Saturday, and reciprocal rates next Wednesday.",
+      "predicted": [
+        "A",
+        "D"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "A",
+        "D"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:0, D:3\nVoted answers: ['A', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,D\n\nFinal Answer I Reasoned: A,D\n",
+      "options": [
+        "option_A: President Trump reversed his plan to raise tariffs on Canadian steel and aluminum imports.",
+        "option_B: President Trump announced a new tariff system on Wednesday, substituting America's longstanding import tax system.",
+        "option_C: The 16th Amendment was ratified in 1913.",
+        "option_D: Trump previously applied a 25% tariff on many exports from Canada and Mexico."
+      ]
+    },
+    {
+      "id": "q-158",
+      "event": "David Cameron announced his resignation as Prime Minister.",
+      "predicted": [
+        "A",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:1, B:0, C:3, D:1\nVoted answers: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,C,D\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: The United Kingdom held a referendum on June 23.",
+        "option_B: The Conservative Party won the election.",
+        "option_C: The UK voted to leave the EU in a June 23 referendum.",
+        "option_D: The referendum date was set in February."
+      ]
+    },
+    {
+      "id": "q-199",
+      "event": "President Trump announced a plan to impose additional 25% tariffs on Canadian steel and aluminum imports.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:0, C:0, D:3\nVoted answers: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D\n\n**Reasoning:**\n\n- **Option A:** While Doc1 mentions Trump's existing 25% tariffs on Canadian imports, these tariffs preceded Ontario’s retaliatory electricity tax (D) and are not the direct cause of the **new** 25% tariff increase. The target event explicitly cites Ontario’s action as the trigger.  \n- **Option D:** Directly supported by Doc1:  \n  > \"*Trump said he was imposing the latest tariffs in response to Ontario's decision to slap a 25% tax on electricity exports to the U.S.*\"  \n  This establishes D as the immediate, high-confidence cause.  \n- **Options B & C:** No evidence in any document (Doc9 references McKinley’s tariff policies, not his assassination or death).  \n- Conservative strategy selects **only D**, as it is the sole option with explicit causal linkage to the target event.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: President Trump placed 25% tariffs on imports from Canada.",
+        "option_B: William McKinley was shot by anarchist Leon Czolgosz on Sept. 6, 1901.",
+        "option_C: William McKinley died on Sept. 14, 1901.",
+        "option_D: Ontario placed a 25% tax on electricity exports to the U.S."
+      ]
+    },
+    {
+      "id": "q-102",
+      "event": "David Cameron announced his resignation as Prime Minister.",
+      "predicted": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "false_positives": [
+        "B",
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:3, C:3, D:3\nVoted answers: ['A', 'B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,D,A,C\n\nFinal Answer I Reasoned: A,B,C,D\n",
+      "options": [
+        "option_A: The United Kingdom held a referendum on June 23.",
+        "option_B: Prime Minister David Cameron pledged a referendum on EU membership in 2013.",
+        "option_C: The United Kingdom held a referendum on June 23.",
+        "option_D: The referendum date was set in February."
+      ]
+    },
+    {
+      "id": "q-120",
+      "event": "Lockdowns obstructed agricultural flow, resulting in hiked food prices, food shortages, malnutrition, and deaths.",
+      "predicted": [
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B",
+        "C"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:3, C:2, D:0\nVoted answers: ['B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B,C\n\n**Step-by-Step Explanation:**\n\n1. **Option A Analysis**:  \n   - **Evidence Check**: No direct mention in any document of the Italian government specifically involving the military to enforce lockdowns.  \n   - **Confidence**: 🔴 LOW (no evidence).  \n\n2. **Option B Analysis**:  \n   - **Evidence Check**: Doc5 explicitly states, *\"As the coronavirus pandemic brings the global economy to an astonishing halt...\"*  \n   - **Confidence**: 🟢 HIGH (direct evidence + causal link to agricultural disruption).  \n\n3. **Option C Analysis**:  \n   - **Evidence Check**: Doc3 directly states: *\"The disruption of healthcare services to other medical conditions due to the drifted attention given to COVID-19 pandemic has resulted in many deaths.\"*  \n   - **Confidence**: 🟢 HIGH (direct evidence + clear causal mechanism).  \n\n4. **Option D Analysis**:  \n   - **Evidence Check**: Doc6 confirms WHO notification of pneumonia cases in Wuhan (Dec. 31).  \n   - **Confidence**: 🟡 MEDIUM (distal cause, not directly linked to agricultural obstruction).  \n\n**Selection**: Only HIGH confidence options (B, C) are selected. D is excluded due to indirect causation.\n\nFinal Answer I Reasoned: B,C\n",
+      "options": [
+        "option_A: The Italian government called in the military to enforce its lockdown and ordered non-essential businesses to close by March 22.",
+        "option_B: The coronavirus pandemic halted the global economy.",
+        "option_C: The healthcare system shifted attention to COVID-19 patients, disrupting services for other medical conditions and resulting in many deaths.",
+        "option_D: The WHO was notified of a cluster of unusual pneumonia cases in Wuhan City, China on Dec. 31."
+      ]
+    },
+    {
+      "id": "q-1",
+      "event": "Videos of the assassination circulated on social media.",
+      "predicted": [
+        "A",
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A",
+        "B"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:2, B:1, C:0, D:3\nVoted answers: ['A', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,B,D\n\nFinal Answer I Reasoned: A,D\n",
+      "options": [
+        "option_A: The shooter used a handmade gun.",
+        "option_B: Security arrested the suspected gunman, Tetsuya Yamagami.",
+        "option_C: Shinzo Abe became the deputy chief cabinet secretary in the early 2000s.",
+        "option_D: A man fired twice at Shinzo Abe."
+      ]
+    },
+    {
+      "id": "q-157",
+      "event": "Musk fired top Twitter executives.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:0, B:0, C:3, D:0\nVoted answers: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C\n\n**Reasoning:**\n\n- **Option C**: Directly supported by Doc3: \"Friday's deadline to close the deal was ordered by the Delaware Chancery Court in early October.\" This deadline forced Musk to finalize the acquisition, enabling him to take control and fire executives. Temporal precedence and causation are clear (court order → deal closure → firings). High confidence.  \n- **Other options**:  \n  - **A**: While Twitter sued Musk to enforce the acquisition (Doc3), this is an indirect cause (lawsuit → court order → deal closure → firings). Not selected due to conservative strategy (proximate cause prioritized).  \n  - **D**: Profile change (Doc2/Doc3) is a concurrent symbolic act, not a causal factor. Low confidence.  \n  - **B**: Invalid since C is correct.  \n\n**Only C meets the high-confidence threshold.**\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: Twitter sued Elon Musk to force the acquisition.",
+        "option_B: None of the others are correct causes.",
+        "option_C: The Delaware Chancery Court ordered a Friday deadline for the Twitter acquisition deal to close in early October.",
+        "option_D: Elon Musk changed his profile to ‘Chief Twit’."
+      ]
+    },
+    {
+      "id": "q-156",
+      "event": "The S&P 500 fell below its 200-day moving average on Monday.",
+      "predicted": [
+        "A",
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== LIGHTWEIGHT CONSISTENCY ==========\nSamples: 3, Threshold: 2\nVote counts: A:3, B:0, C:0, D:3\nVoted answers: ['A', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A,D\n\n**Reasoning:**\n\n- **Option A**: Directly supported by Doc1: Trump announced a new tariff system on Wednesday, substituting previous import taxes. This caused market turmoil mentioned in Doc1 (\"global financial markets suffered their biggest rout in years\") and Doc9 explicitly links tariff uncertainty to the S&P 500 drop. High confidence (🟢).  \n- **Option D**: Directly supported by Doc1 (\"Mr. Trump hit those countries with a 25% tariff on many of their exports last month\") and Doc5 (prior tariffs on Canada/Mexico). While not the immediate trigger, ongoing trade tensions from these tariffs contributed to broader market uncertainty. High confidence (🟢).  \n\n**Excluded**:  \n- **B**: No causal link to the S&P drop (exemptions irrelevant to market reaction).  \n- **C**: No evidence for Venezuela oil-related tariffs in any document.\n\nFinal Answer I Reasoned: A,D\n",
+      "options": [
+        "option_A: President Trump announced a new tariff system on Wednesday, substituting America's longstanding import tax system.",
+        "option_B: The White House did not apply tariffs to Russia, North Korea, Cuba, and Belarus.",
+        "option_C: Trump announced tariffs on Chinese goods and any country buying oil from Venezuela.",
+        "option_D: Trump previously applied a 25% tariff on many exports from Canada and Mexico."
+      ]
+    }
+  ],
+  "partial_cases": [
+    {
+      "id": "q-20",
+      "event": "The D.C. National Guard was activated, and a citywide curfew was imposed.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B",
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-7",
+      "event": "South Korea’s parliament voted to impeach President Yoon Suk Yeol.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-38",
+      "event": "Ontario placed a 25% tax on electricity exports to the U.S.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-58",
+      "event": "Global markets plunged following the Brexit vote.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-61",
+      "event": "The Iranian government issued an intercity travel ban and closed schools, universities, national parks, and non-essential businesses on March 26.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-46",
+      "event": "Yoon's senior aides and defense minister offered to resign.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "missing": [
+        "A",
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-48",
+      "event": "The congressional certification of Joe Biden’s victory was halted.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-87",
+      "event": "World leaders expressed shock and condemned the murder.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-79",
+      "event": "The US Senate will likely vote on Wednesday on a bill to halt Trump’s tariffs on Canadian imports.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "B",
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-83",
+      "event": "The congressional certification of Joe Biden’s victory was halted.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-96",
+      "event": "The D.C. National Guard was activated, and a citywide curfew was imposed.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-99",
+      "event": "The Italian government called in the military to enforce its lockdown and ordered non-essential businesses to close by March 22.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-64",
+      "event": "Capitol Police Chief Steven Sund, House Sergeant at Arms Paul Irving, and Senate Sergeant at Arms Michael Stenger resigned.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-116",
+      "event": "Opposition legislators filed an impeachment motion against President Yoon on Wednesday.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-100",
+      "event": "Congress confirmed Biden as president in the early hours of January 7th.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "B",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-122",
+      "event": "The congressional certification of Joe Biden’s victory was halted.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B",
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-98",
+      "event": "Opposition legislators filed an impeachment motion against President Yoon on Wednesday.",
+      "predicted": [
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "D"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-123",
+      "event": "Yoon's senior aides and defense minister offered to resign.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-118",
+      "event": "Yoon's senior aides and defense minister offered to resign.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "D"
+      ],
+      "missing": [
+        "A",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-126",
+      "event": "The D.C. National Guard was activated, and a citywide curfew was imposed.",
+      "predicted": [
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-128",
+      "event": "The US Senate will likely vote on Wednesday on a bill to halt Trump’s tariffs on Canadian imports.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-132",
+      "event": "Security arrested the suspected gunman, Tetsuya Yamagami.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-139",
+      "event": "Capitol Police Chief Steven Sund, House Sergeant at Arms Paul Irving, and Senate Sergeant at Arms Michael Stenger resigned.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-134",
+      "event": "Opposition legislators filed an impeachment motion against President Yoon on Wednesday.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-152",
+      "event": "Congress confirmed Biden as president in the early hours of January 7th.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-173",
+      "event": "Lawmakers voted down the martial law decree.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-180",
+      "event": "The D.C. National Guard was activated, and a citywide curfew was imposed.",
+      "predicted": [
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "D"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-165",
+      "event": "India sent approximately 15 tonnes of relief material to Myanmar via an IAF C-130J aircraft.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-178",
+      "event": "Capitol Police Chief Steven Sund, House Sergeant at Arms Paul Irving, and Senate Sergeant at Arms Michael Stenger resigned.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-196",
+      "event": "The tariff announcement triggered a global meltdown in stock markets.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-184",
+      "event": "Sinn Fein called for a referendum on Irish unity.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-78",
+      "event": "Supporters stormed the U.S. Capitol.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "A",
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-112",
+      "event": "Protesters clashed with police and breached security barriers at the Capitol.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-113",
+      "event": "Capitol Police Chief Steven Sund, House Sergeant at Arms Paul Irving, and Senate Sergeant at Arms Michael Stenger resigned.",
+      "predicted": [
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "D"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-191",
+      "event": "South Korea’s parliament voted to impeach President Yoon Suk Yeol.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "A",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-65",
+      "event": "Lockdowns obstructed agricultural flow, resulting in hiked food prices, food shortages, malnutrition, and deaths.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "missing": [
+        "A",
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    }
+  ]
+}

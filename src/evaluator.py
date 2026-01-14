@@ -39,13 +39,16 @@ class Evaluator:
         self.multi_answer = defaultdict(int)
         self.insufficient_info_count = 0
         self.insufficient_info_correct = 0
+        self.insufficient_info_partial = 0  # New: partial match with insufficient info
         
-        # 新增：详细的错误分类统计
-        self.error_types = {
-            "over_selection": 0,    # 多选了错误选项
-            "under_selection": 0,   # 少选了正确选项（但没选错）-> 这是 partial
-            "wrong_selection": 0,   # 选错了（有 false positive）
-            "empty_prediction": 0,  # 空预测
+        # Prediction type classification (including correct predictions)
+        self.prediction_types = {
+            "full_match": 0,            # P = G: perfect match (score = 1.0)
+            "partial_match": 0,         # P ⊂ G: under-selection, no wrong (score = 0.5)
+            "empty_prediction": 0,      # P = ∅: empty prediction (score = 0.0)
+            "wrong_only": 0,            # P ∩ G = ∅: all wrong, none correct (score = 0.0)
+            "mixed_error": 0,           # Has correct & wrong, missing some (score = 0.0)
+            "over_complete": 0,         # P ⊃ G: all correct + extras (score = 0.0)
         }
     
     def _calculate_instance_score(self, predicted: Set[str], ground_truth: Set[str]) -> float:
@@ -73,20 +76,41 @@ class Evaluator:
         # Any other case: wrong selection or superset
         return 0.0
     
-    def _classify_error(self, predicted: Set[str], ground_truth: Set[str]) -> str:
-        """Classify the type of error."""
+    def _classify_error_type(self, predicted: Set[str], ground_truth: Set[str], score: float) -> str:
+        """Classify the type of error/prediction.
+        
+        Returns:
+            - 'full_match': P = G (score = 1.0)
+            - 'partial_match': P ⊂ G (score = 0.5)
+            - 'empty_prediction': P = ∅ (score = 0.0)
+            - 'wrong_only': P ∩ G = ∅, all wrong (score = 0.0)
+            - 'mixed_error': has both correct & wrong (score = 0.0)
+            - 'over_complete': P ⊃ G, all correct + extras (score = 0.0)
+        """
+        if score == 1.0:
+            return "full_match"
+        
+        if score == 0.5:
+            return "partial_match"
+        
+        # score = 0.0 cases:
         if not predicted:
             return "empty_prediction"
         
-        false_positives = predicted - ground_truth  # 选错的
-        false_negatives = ground_truth - predicted  # 漏选的
+        false_positives = predicted - ground_truth  # wrong selections
+        false_negatives = ground_truth - predicted  # missed correct ones
+        true_positives = predicted & ground_truth   # correct selections
         
-        if false_positives:
-            return "wrong_selection"  # 有错选
-        elif false_negatives:
-            return "under_selection"  # 只有漏选（这其实是 partial match）
-        else:
-            return "unknown"
+        # All predictions are wrong
+        if not true_positives:
+            return "wrong_only"
+        
+        # Has all correct answers + extra wrong ones
+        if not false_negatives and false_positives:
+            return "over_complete"
+        
+        # Has some correct, some wrong, missing some correct
+        return "mixed_error"
     
     def update(self, predicted: Set[str], ground_truth: Set[str], event_id: str = "", 
                prediction_text: str = "", event: str = "", options: List[str] = None):
@@ -95,6 +119,10 @@ class Evaluator:
         
         # Calculate instance score using official metric
         score = self._calculate_instance_score(predicted, ground_truth)
+        
+        # Classify the prediction type
+        prediction_type = self._classify_error_type(predicted, ground_truth, score)
+        self.prediction_types[prediction_type] += 1
         
         if score == 1.0:
             self.correct += 1
@@ -108,13 +136,11 @@ class Evaluator:
                     "predicted": sorted(list(predicted)),
                     "ground_truth": sorted(list(ground_truth)),
                     "missing": sorted(list(ground_truth - predicted)),
-                    "score": 0.5
+                    "score": 0.5,
+                    "prediction_type": prediction_type
                 })
         else:
             self.incorrect += 1
-            # 分类错误类型
-            error_type = self._classify_error(predicted, ground_truth)
-            self.error_types[error_type] += 1
             
             # Store error case
             if event_id:
@@ -127,7 +153,7 @@ class Evaluator:
                     "ground_truth": sorted(list(ground_truth)),
                     "false_positives": sorted(list(false_positives)),
                     "false_negatives": sorted(list(false_negatives)),
-                    "error_type": error_type,
+                    "prediction_type": prediction_type,
                     "prediction_text": prediction_text,
                     "options": [f"option_{label}: {opt}" for label, opt in zip(["A", "B", "C", "D"], options)] if options else []
                 })
@@ -155,14 +181,19 @@ class Evaluator:
         stats["correct"] += (score == 1.0)
         stats["partial"] = stats.get("partial", 0) + (score == 0.5)
         
-        # Check for "insufficient information" (usually option with "none of" text)
+        # Check for "insufficient information" (only count when ground_truth contains this option)
         if options:
             for i, opt in enumerate(options):
                 if "insufficient" in opt.lower() or "none of" in opt.lower():
                     option_label = ["A", "B", "C", "D"][i]
-                    self.insufficient_info_count += 1
-                    if option_label in ground_truth and option_label in predicted:
-                        self.insufficient_info_correct += 1
+                    # Only count if ground_truth contains this option
+                    if option_label in ground_truth:
+                        self.insufficient_info_count += 1
+                        # Count correctness based on score
+                        if score == 1.0:  # Full match
+                            self.insufficient_info_correct += 1
+                        elif score == 0.5 and option_label in predicted:  # Partial match with this option
+                            self.insufficient_info_partial += 1
                     break
     
     def get_official_score(self) -> float:
@@ -249,11 +280,12 @@ class Evaluator:
             # 传统指标
             "strict_accuracy": self.get_accuracy(),
             "macro_f1": self.get_macro_f1(),
-            # 错误分类
-            "error_types": self.error_types,
+            # 预测类型分布 (包括正确和错误)
+            "prediction_types": self.prediction_types,
             # 分类统计
             "insufficient_info_count": self.insufficient_info_count,
             "insufficient_info_accuracy": self.get_insufficient_info_accuracy(),
+            "insufficient_info_partial": self.insufficient_info_partial,
             "single_answer_count": self.single_answer["count"],
             "single_answer_accuracy": self.get_single_answer_accuracy(),
             "single_answer_partial": self.single_answer.get("partial", 0),
@@ -283,14 +315,26 @@ class Evaluator:
         print(f"   Partial Match (0.5): {summary['partial_match']:4d} ({summary['partial_match']/summary['total']*100:.1f}%)")
         print(f"   Incorrect (0.0):     {summary['incorrect']:4d} ({summary['incorrect']/summary['total']*100:.1f}%)")
         
-        print(f"\n❌ Error Types:")
-        for error_type, count in summary['error_types'].items():
+        print(f"\n🔍 Prediction Type Distribution:")
+        for pred_type, count in sorted(summary['prediction_types'].items(), key=lambda x: -x[1]):
             if count > 0:
-                print(f"   {error_type}: {count}")
+                print(f"   {pred_type:<18}: {count:4d} ({count/summary['total']*100:.1f}%)")
         
         print(f"\n📋 By Answer Type:")
         print(f"   Single-answer: {summary['single_answer_accuracy']:.2%} accuracy, {summary['single_answer_count']} cases")
         print(f"   Multi-answer:  {summary['multi_answer_accuracy']:.2%} accuracy, {summary['multi_answer_count']} cases")
+        
+        print(f"\n💡 Insufficient Information Cases:")
+        if summary['insufficient_info_count'] > 0:
+            insuf_acc = summary['insufficient_info_accuracy']
+            insuf_partial = summary['insufficient_info_partial']
+            insuf_total = summary['insufficient_info_count']
+            print(f"   Total: {insuf_total} cases")
+            print(f"   Full Match: {int(insuf_acc * insuf_total)} ({insuf_acc:.2%})")
+            print(f"   Partial Match: {insuf_partial} ({insuf_partial/insuf_total:.2%})")
+            print(f"   Combined Success: {int(insuf_acc * insuf_total) + insuf_partial} ({(int(insuf_acc * insuf_total) + insuf_partial)/insuf_total:.2%})")
+        else:
+            print(f"   No insufficient information cases in dataset")
         
         print(f"\n📊 Option-Level Performance:")
         print(f"   {'Option':<8} {'Precision':<12} {'Recall':<12} {'F1':<12}")
