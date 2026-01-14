@@ -37,32 +37,32 @@ PROMPT_NAME = [
     "balanced",
 ]
 
-'''
-def parse_answer(prediction: str) -> set:
-    if not prediction:
-        return set()
 
-    # Try to find "Final Answer I Reasoned: ..." pattern
-    # Use a more precise pattern that stops at non-answer characters
-    pattern = r"Final Answer I Reasoned:\s*([A-D](?:\s*,\s*[A-D])*)"
-    match = re.search(pattern, prediction, re.IGNORECASE)
+# def parse_answer(prediction: str) -> set:
+#     if not prediction:
+#         return set()
 
-    if match:
-        answer_str = match.group(1).strip()
-        # Split by comma and clean up
-        answers = [a.strip().upper() for a in answer_str.split(",") if a.strip()]
-        # Filter valid options (A, B, C, D)
-        valid_answers = {a for a in answers if a in ["A", "B", "C", "D"]}
-        return valid_answers
+#     # Try to find "Final Answer I Reasoned: ..." pattern
+#     # Use a more precise pattern that stops at non-answer characters
+#     pattern = r"Final Answer I Reasoned:\s*([A-D](?:\s*,\s*[A-D])*)"
+#     match = re.search(pattern, prediction, re.IGNORECASE)
 
-    # Fallback: try to find any single letter A-D at the end
-    pattern2 = r"\b([A-D])\b"
-    matches = re.findall(pattern2, prediction[-200:])  # Check last 200 chars
-    if matches:
-        return {m.upper() for m in matches if m.upper() in ["A", "B", "C", "D"]}
+#     if match:
+#         answer_str = match.group(1).strip()
+#         # Split by comma and clean up
+#         answers = [a.strip().upper() for a in answer_str.split(",") if a.strip()]
+#         # Filter valid options (A, B, C, D)
+#         valid_answers = {a for a in answers if a in ["A", "B", "C", "D"]}
+#         return valid_answers
 
-    return set()
-'''
+#     # Fallback: try to find any single letter A-D at the end
+#     pattern2 = r"\b([A-D])\b"
+#     matches = re.findall(pattern2, prediction[-200:])  # Check last 200 chars
+#     if matches:
+#         return {m.upper() for m in matches if m.upper() in ["A", "B", "C", "D"]}
+
+#     return set()
+
 
 def parse_answer(prediction: str) -> set:
     if not prediction:
