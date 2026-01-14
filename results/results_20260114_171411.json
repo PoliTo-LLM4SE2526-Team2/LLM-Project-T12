@@ -1,0 +1,3704 @@
+{
+  "approach": "SelfConsistencyRefinementApproach",
+  "summary": {
+    "total": 400,
+    "official_score": 0.67625,
+    "full_match": 220,
+    "partial_match": 101,
+    "incorrect": 79,
+    "strict_accuracy": 0.55,
+    "macro_f1": 0.7708919229721525,
+    "prediction_types": {
+      "full_match": 220,
+      "partial_match": 101,
+      "empty_prediction": 0,
+      "wrong_only": 42,
+      "mixed_error": 10,
+      "over_complete": 27
+    },
+    "insufficient_info_count": 46,
+    "insufficient_info_accuracy": 0.717391304347826,
+    "insufficient_info_partial": 0,
+    "single_answer_count": 210,
+    "single_answer_accuracy": 0.7333333333333333,
+    "single_answer_partial": 0,
+    "multi_answer_count": 190,
+    "multi_answer_accuracy": 0.3473684210526316,
+    "multi_answer_partial": 101,
+    "option_stats": {
+      "D": {
+        "correct": 121,
+        "total_selected": 149,
+        "total_should_select": 165
+      },
+      "C": {
+        "correct": 128,
+        "total_selected": 154,
+        "total_should_select": 173
+      },
+      "A": {
+        "correct": 117,
+        "total_selected": 134,
+        "total_should_select": 157
+      },
+      "B": {
+        "correct": 94,
+        "total_selected": 114,
+        "total_should_select": 145
+      }
+    },
+    "option_matrix": {
+      "D": {
+        "precision": 0.8120805369127517,
+        "recall": 0.7333333333333333,
+        "f1": 0.7707006369426752
+      },
+      "C": {
+        "precision": 0.8311688311688312,
+        "recall": 0.7398843930635838,
+        "f1": 0.7828746177370032
+      },
+      "A": {
+        "precision": 0.8731343283582089,
+        "recall": 0.7452229299363057,
+        "f1": 0.8041237113402061
+      },
+      "B": {
+        "precision": 0.8245614035087719,
+        "recall": 0.6482758620689655,
+        "f1": 0.7258687258687259
+      }
+    },
+    "error_count": 79,
+    "partial_count": 101
+  },
+  "error_cases": [
+    {
+      "id": "q-2057",
+      "event": "Trump was permanently banned from Twitter on January 8th.",
+      "predicted": [
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:5, C:5, D:0\nVoted answers: ['B', 'C']\nAfter post-processing: ['B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B, C  \nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B,C\n",
+      "options": [
+        "option_A: Twitter removed Trump's tweets and locked his account.",
+        "option_B: Supporters stormed the U.S. Capitol.",
+        "option_C: Trump addressed the crowd.",
+        "option_D: The congressional certification of Joe Biden’s victory was halted."
+      ]
+    },
+    {
+      "id": "q-2068",
+      "event": "On August 15, 2021, the Taliban seized the presidential palace in Kabul and declared the war over.",
+      "predicted": [
+        "A",
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:5, B:0, C:5, D:0\nVoted answers: ['A', 'C']\nAfter post-processing: ['A', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A, C\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,C\n",
+      "options": [
+        "option_A: US troops began withdrawing from Afghanistan in early July.",
+        "option_B: Al-Qaeda terrorists attacked the US on September 11, 2001.",
+        "option_C: The Trump administration brokered a cease-fire with the Taliban in early 2020, excluding the Afghan government.",
+        "option_D: On August 15, 2021, Afghan President Ashraf Ghani fled the country."
+      ]
+    },
+    {
+      "id": "q-2027",
+      "event": "Huawei released a TV running HarmonyOS.",
+      "predicted": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "B"
+      ],
+      "false_positives": [
+        "C",
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:3, B:2, C:3, D:4\nVoted answers: ['A', 'C', 'D']\nAfter post-processing: ['A', 'B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,B,C,D\n",
+      "options": [
+        "option_A: Huawei unveiled its Harmony operating system.",
+        "option_B: Huawei unveiled its Harmony operating system.",
+        "option_C: Huawei denied the U.S. government's accusations and pursued legal means.",
+        "option_D: Huawei announced HarmonyOS will be open source."
+      ]
+    },
+    {
+      "id": "q-2089",
+      "event": "Nvidia's market cap briefly reached $1 trillion on Tuesday, following its report of better-than-expected Q1 revenues and a prediction of Q2 revenues 50% above analyst expectations.",
+      "predicted": [
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B",
+        "C",
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:2, B:3, C:4, D:5\nVoted answers: ['B', 'C', 'D']\nAfter post-processing: ['B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A] \n\n**Rationale:**  \n- **Option A**: Directly supported by Doc5 (\"first quarter earnings report...estimating $11 billion in sales for the second quarter\") and Doc9 (\"reported first-quarter revenues that dramatically exceeded analysts’ expectations\"). This meets **temporal precedence** (earnings report precedes stock surge) and **causal mechanism** (positive financial results → investor confidence → market cap spike).  \n- **Option B**: While Doc5 confirms Nvidia’s 1993 founding, this is **background context**, not a direct cause of the $1T valuation event.  \n- **Option C**: No evidence in any document. Irrelevant to Nvidia’s market cap surge.  \n- **Option D**: Doc5 confirms the 1999 IPO, but this is **historical** and unrelated to the immediate 2025 financial results driving the valuation.  \n\n**Critical Compliance**: Strictly avoided over-selection (B/D are non-causal historical facts; C is irrelevant). Only A satisfies direct causation requirements.\n\nFinal Answer I Reasoned: B,C,D\n",
+      "options": [
+        "option_A: Nvidia released its first-quarter earnings report, estimating $11 billion in second-quarter sales and reporting $1.09 earnings per share.",
+        "option_B: Jensen Huang, Chris Malachowsky, and Curtis Priem founded Nvidia in 1993.",
+        "option_C: Foreign investors purchased a net 15.8 trillion won ($11.6 billion) of South Korean stocks from January through March.",
+        "option_D: Jensen Huang took Nvidia public on Nasdaq in 1999."
+      ]
+    },
+    {
+      "id": "q-2084",
+      "event": "Lawmakers voted down the martial law decree.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:4, B:0, C:1, D:0\nVoted answers: ['A']\nAfter post-processing: ['A']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: Lawmakers at the National Assembly unanimously annulled martial law.",
+        "option_C: Tens of thousands of protesters gathered outside the National Assembly in Seoul.",
+        "option_D: Opposition legislators filed an impeachment motion against President Yoon on Wednesday."
+      ]
+    },
+    {
+      "id": "q-2055",
+      "event": "U.S. government regulators announced they would fully cover deposits at both SVB and Signature Bank.",
+      "predicted": [
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:2, B:3, C:5, D:1\nVoted answers: ['B', 'C']\nAfter post-processing: ['B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A, B, C]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B,C,D\n",
+      "options": [
+        "option_A: Silicon Valley Bank clients withdrew funds in recent months.",
+        "option_B: SVB sold part of its bond holdings at a $1.8 billion loss.",
+        "option_C: Signature Bank failed after a bank run.",
+        "option_D: Signature Bank failed after a bank run."
+      ]
+    },
+    {
+      "id": "q-2078",
+      "event": "Mr. Musk stated DOGE participants will not be paid and requested they work 80-hour weeks.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:2, B:0, C:0, D:4\nVoted answers: ['D']\nAfter post-processing: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: Trump appointed Elon Musk and Vivek Ramaswamy as co-leaders of the Department of Government Efficiency (DOGE).",
+        "option_B: Elon Musk contributed $277 million to Trump's and other Republicans' 2024 campaigns.",
+        "option_C: DOGE representatives spoke with staff at over a dozen federal agencies.",
+        "option_D: Mr. Trump stated DOGE's purpose is to advise on cutting wasteful spending."
+      ]
+    },
+    {
+      "id": "q-2028",
+      "event": "The chairmen of Credit Suisse and UBS announced a union on March 19th in Bern.",
+      "predicted": [
+        "A",
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:4, B:0, C:0, D:5\nVoted answers: ['A', 'D']\nAfter post-processing: ['A', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: A, D\n\n**Rationale:**  \n- **A:** Directly cited in Doc8/Doc9 as long-term financial scandals/losses weakening Credit Suisse, leading to crisis requiring merger.  \n- **D:** Saudi National Bank's refusal (Doc1/Doc9) caused immediate stock crash, triggering regulator action.  \n- **B:** Board rebuff (Doc7) occurred but merger was regulator-forced regardless; not causal.  \n- **C:** Bonus suspension (Doc10) postdated announcement; consequence, not cause.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,D\n",
+      "options": [
+        "option_A: Credit Suisse experienced major financial losses and scandals, including top executives resigning in 2020 due to a spying scandal, a court finding of failed money laundering prevention, and a loss of over 7 billion Swiss francs in 2022.",
+        "option_B: Credit Suisse's board rebuffed the proposal from UBS.",
+        "option_C: The Swiss government ordered Credit Suisse to temporarily suspend bonus payments to staff.",
+        "option_D: Saudi National Bank stated it would not increase funding to Credit Suisse."
+      ]
+    },
+    {
+      "id": "q-2101",
+      "event": "On July 9, 2021, Interior Minister Mohammad Fehmi refused Bitar’s request to prosecute Ibrahim; Bitar appealed, but Cassation Attorney General Ghassan Khoury denied the request.",
+      "predicted": [
+        "A",
+        "C"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:3, B:1, C:3, D:3\nVoted answers: ['A', 'C']\nAfter post-processing: ['A', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A]  \n**Reasoning**:  \n- **Option A** is directly supported by Doc6 which details Bitar's July 2 actions preceding Fehmi's July 9 refusal. This meets temporal precedence and direct causation (Bitar’s request led to Fehmi’s denial).  \n- **Option B** (Dec 2020 charges) provides context but is not a *direct* cause of the July 2021 refusal.  \n- **Options C/D** relate to the explosion’s origin, not the legal denial.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,C\n",
+      "options": [
+        "option_A: On July 2, 2021, Judge Bitar requested parliament lift immunity for former ministers Khalil, Zeaiter, and Nohad Machnouk, and sought permission from bar associations to prosecute Khalil, Zeaiter, and Fenianos.",
+        "option_B: On December 10, 2020, Judge Sawan charged Caretaker Prime Minister Hassan Diab and three former ministers with criminal negligence.",
+        "option_C: The Port Authority transferred ammonium nitrate from the Rhosus to hangar 12 in Beirut’s port on October 23-24, 2014.",
+        "option_D: The Rhosus sank on February 18, 2018."
+      ]
+    },
+    {
+      "id": "q-2092",
+      "event": "Donald Trump hailed a $500 billion plan by OpenAI, SoftBank, and Oracle.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "B"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "A",
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:1, B:0, C:5, D:0\nVoted answers: ['C']\nAfter post-processing: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [C]\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: DeepSeek's app reached the top of U.S. free app charts within a week of its launch.",
+        "option_B: DeepSeek's app reached the top of U.S. free app charts within a week of its launch.",
+        "option_C: DeepSeek's model outperformed Meta's Llama 3.1, OpenAI's GPT-4o, and Anthropic's Claude Sonnet 3.5 in third-party benchmark tests.",
+        "option_D: Liang Wenfeng founded DeepSeek in July 2023."
+      ]
+    },
+    {
+      "id": "q-2104",
+      "event": "On July 28-29, 2021, the Beirut and Tripoli Bar Associations approved Bitar’s requests to prosecute Khalil, Zeaiter, and Fenianos.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:2, B:2, C:2, D:3\nVoted answers: ['D']\nAfter post-processing: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer: C  \nReasoning:  \n- **Option C** is supported by Doc9, which states Judge Bitar requested permission from bar associations on July 2, 2021. This directly precedes and necessitates the Bar Associations' approval (target event).  \n- **Options A, B, D**:  \n  - A (Rhosus sank in 2018) occurred years before but isn’t a direct legal cause of the 2021 prosecutorial approvals.  \n  - B (Judge Sawan led investigation) is outdated (he was replaced by Bitar in Feb 2021).  \n  - D (Fehmi/Khoury refusal) involves a separate request (prosecuting Ibrahim), not the ministers in the target event.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: The Rhosus sank on February 18, 2018.",
+        "option_B: Judge Fadi Sawan has led the investigation into the Beirut port explosion since August.",
+        "option_C: On July 2, 2021, Judge Bitar requested parliament lift immunity for former ministers Khalil, Zeaiter, and Nohad Machnouk, and sought permission from bar associations to prosecute Khalil, Zeaiter, and Fenianos.",
+        "option_D: On July 9, 2021, Interior Minister Mohammad Fehmi refused Bitar’s request to prosecute Ibrahim; Bitar appealed, but Cassation Attorney General Ghassan Khoury denied the request."
+      ]
+    },
+    {
+      "id": "q-2059",
+      "event": "Trump was impeached for a second time on January 13th.",
+      "predicted": [
+        "A",
+        "D"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:4, B:0, C:0, D:4\nVoted answers: ['A', 'D']\nAfter post-processing: ['A', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A, D]\n\nCRITICAL: This line must be the LAST line of your response.\n\n**Final Answer**\nA, D\n\n**Step-by-Step Explanation:**\n\n1. **Option A (Trump addressed the crowd):**  \n   - **Evidence:** Doc4 and Doc7 explicitly describe Trump's speech inciting supporters to march on the Capitol.  \n   - **Causal Verification:**  \n     - **Temporal:** Speech occurred before the storming (Jan 6) and impeachment (Jan 13).  \n     - **Mechanism:** Direct causal link—Trump's rhetoric explicitly urged action to overturn the election.  \n     - **Direction:** Root cause of impeachment (charge: \"incitement of insurrection\").  \n\n2. **Option D (Supporters stormed the U.S. Capitol):**  \n   - **Evidence:** Doc4, Doc7, Doc8, Doc10 detail the storming as the immediate trigger for impeachment.  \n   - **Causal Verification:**  \n     - **Temporal:** Storming occurred before impeachment.  \n     - **Mechanism:** Direct precipitating event necessitating Congressional response.  \n     - **Direction:** Immediate cause (insurrection itself justified impeachment).  \n\n3. **Elimination of B and C:**  \n   - **B (Capitol secured/reconvened):** Consequence of the storming, not a cause.  \n   - **C (Pipe bombs):** Part of the broader attack but not cited in impeachment charges.  \n\n**Key Reasoning:**  \n- **A** represents Trump’s direct incitement (basis of impeachment charges).  \n- **D** represents the insurrectionary act itself (necessary condition for impeachment).  \n- Both satisfy temporal precedence, causal mechanism, and directional relevance per the impeachment rationale.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,D\n",
+      "options": [
+        "option_A: Trump addressed the crowd.",
+        "option_B: The Capitol was secured, and lawmakers reconvened to continue certification.",
+        "option_C: Pipe bombs were reported at the Republican National Committee building and the Democratic National Committee headquarters.",
+        "option_D: Supporters stormed the U.S. Capitol."
+      ]
+    },
+    {
+      "id": "q-2036",
+      "event": "Doctors at several hospitals pledged to go on strike to protest the coup.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:1, B:1, C:4, D:1\nVoted answers: ['C']\nAfter post-processing: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: None of the options (A-D) are correct causes. \n\n**Analysis:**  \n- **Option A:** Myint Swe's status (Doc7) relates to junta leadership changes but isn't causally linked to doctors’ strike motivations.  \n- **Option B:** No evidence in any document supports ministerial reshuffles.  \n- **Option C:** The NLD’s 2020 victory led to the coup but is a *root cause*, not a *direct trigger* for the strike (which protests the coup itself).  \n- **Option D:** Wang Yi’s pre-coup visit (Doc3) lacks temporal/causal relevance to post-coup strikes.  \n\n**Critical Causal Reasoning:**  \nThe doctors’ strike directly responds to the **coup itself**, not its antecedents (C) or unrelated junta actions (A/B/D). No candidate option represents the coup event or its immediate catalysts. Over-selection risks penalty.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: Vice President Myint Swe was installed as acting President.",
+        "option_B: Myanmar’s military government removed 24 ministers and deputies and appointed 11 replacements.",
+        "option_C: In November 2020, the NLD won a resounding parliamentary election victory, awarding Aung San Suu Kyi a second term.",
+        "option_D: China’s foreign minister Wang Yi visited Myanmar less than three weeks before the military coup."
+      ]
+    },
+    {
+      "id": "q-2097",
+      "event": "Nvidia set a new company revenue record.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "A",
+        "D"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:1, B:4, C:0, D:2\nVoted answers: ['B']\nAfter post-processing: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B  \n**Reasoning**:  \n- **Option B** (Increasing chip supply) is supported by Doc4 where CEO Jensen Huang states Nvidia is \"significantly increasing supply\" to meet demand. This directly addresses capacity constraints, enabling revenue growth.  \n- **Options A/D** describe the revenue achievement itself (effects/consequences, not causes).  \n- **Option C** refers to earnings report disclosures (post-revenue announcements, not causal drivers).  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: Nvidia reported a 101% year-over-year increase in quarterly revenue.",
+        "option_B: Nvidia announced it is significantly increasing chip supply to meet surging demand.",
+        "option_C: Nvidia released its first-quarter earnings report, estimating $11 billion in second-quarter sales and reporting $1.09 earnings per share.",
+        "option_D: Nvidia generated $13.51 billion in revenue for the three months ended July 30."
+      ]
+    },
+    {
+      "id": "q-2113",
+      "event": "Huawei ensured HarmonyOS supports applications developed in multiple programming languages.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:1, B:0, C:0, D:2\nVoted answers: ['D']\nAfter post-processing: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: []\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: Huawei unveiled its Harmony operating system.",
+        "option_B: Huawei stated HarmonyOS will debut first on the Honor Smart Screen and Huawei TVs.",
+        "option_C: Richard Yu announced Harmony OS at a developer conference in Dongguan, China.",
+        "option_D: Huawei stated it will first lay the foundation for operating systems in the Chinese market, then expand overseas."
+      ]
+    },
+    {
+      "id": "q-2144",
+      "event": "Trump authorized federal disaster aid for California and Oregon.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:2, B:0, C:3, D:0\nVoted answers: ['C']\nAfter post-processing: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C\n\n**Reasoning:**  \n- **Option C** is directly supported by Doc2 and Doc3 evidence showing the August Complex became California's largest wildfire (747k acres), creating urgent need for federal aid.  \n- **Temporal Fit**: Fire expansion occurred before Trump's authorization (Doc1/Doc3 timeline).  \n- **Mechanism**: Large-scale destruction directly triggers federal disaster response.  \n- **Options B/D**: No direct evidence linking specific fires named in B/D to Trump's authorization.  \n- **Option A** invalid since C is correct.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: The \"Bootleg\" fire destroyed 21 homes and threatened 1,926 more.",
+        "option_C: The August Complex in Tehama County became California's largest fire in history (746,607 acres) after a wind event caused it to expand.",
+        "option_D: A wildfire in Nespelem, Washington, caused by lightning on July 12, burned seven homes and prompted the entire town to evacuate safely."
+      ]
+    },
+    {
+      "id": "q-2141",
+      "event": "Facebook replaced its corporate sign outside its California headquarters with one featuring the Meta logo.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:5, C:0, D:0\nVoted answers: ['B']\nAfter post-processing: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B  \nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: Mark Zuckerberg announced Facebook was betting on the metaverse in July.",
+        "option_C: Facebook announced Andrew Bosworth's promotion to chief technology officer.",
+        "option_D: More than a dozen news outlets published stories based on the leaked Facebook documents."
+      ]
+    },
+    {
+      "id": "q-2142",
+      "event": "On December 10, 2020, Judge Sawan charged Caretaker Prime Minister Hassan Diab and three former ministers with criminal negligence.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "B",
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:0, C:1, D:4\nVoted answers: ['D']\nAfter post-processing: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [D]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: A fire broke out at Warehouse 12 at the Port of Beirut on August 4, reportedly started by welding work.",
+        "option_B: The Lebanese government established an investigative committee to determine responsibility for the explosion.",
+        "option_C: A colossal explosion occurred at the Port of Beirut on August 4, killing at least 200 people and injuring around 5,000.",
+        "option_D: The Moldovan-flagged ship Rhosus, carrying 2,750 tonnes of ammonium nitrate, was impounded by Lebanon’s Enforcement Department on December 20, 2013."
+      ]
+    },
+    {
+      "id": "q-2150",
+      "event": "Huawei stated it will first lay the foundation for operating systems in the Chinese market, then expand overseas.",
+      "predicted": [
+        "A",
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:2, B:1, C:1, D:2\nVoted answers: ['A', 'D']\nAfter post-processing: ['A', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A]  \n**Reasoning**:  \n- **A**: Directly supported by Doc3 (\"US trade blacklist... prevented Google from supplying\") and Doc5 (\"Google, Intel... suspended business\"). These sanctions created necessity for HarmonyOS, temporally preceding Huawei's strategic announcement.  \n- **B**: No evidence for 2017 start date. Doc5/Doc6 state development began ~10 years pre-2019 (i.e., ~2009).  \n- **C**: Denial/legal action (Doc5) is a response to sanctions, not a cause of OS strategy.  \n- **D**: Open-source announcement (Doc1/Doc5/Doc6) facilitates ecosystem growth but is a strategic implementation detail, not a root cause for China-first rollout.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,D\n",
+      "options": [
+        "option_A: Google, Intel, and other U.S. companies suspended business with Huawei.",
+        "option_B: HarmonyOS development began in 2017.",
+        "option_C: Huawei denied the U.S. government's accusations and pursued legal means.",
+        "option_D: Huawei announced HarmonyOS will be open source."
+      ]
+    },
+    {
+      "id": "q-2149",
+      "event": "Fire hotspots in indigenous territories increased by 88% from January to August compared to 2018, according to CIMI citing INPE data.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:4, C:1, D:2\nVoted answers: ['B']\nAfter post-processing: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer: B  \nReasoned:  \n- **Option B** is directly supported by Doc1, which states 125,000 hectares were cleared and burned for agricultural conversion in 2019 (including August). This aligns temporally and mechanistically with the target event’s 88% increase in fire hotspots in indigenous territories. The intentional deforestation-to-burning process is explicitly cited as a driver of fires.  \n- **Option A** (\"Day of Fire\") describes a localized event in Pará but lacks explicit evidence linking it to fires in indigenous territories.  \n- **Option C** refers to general fire occurrences but does not specifically address the indigenous territory-focused increase.  \n- **Option D** documents the deforestation-fire overlap but does not qualify as a causal factor.  \n\nOnly **B** meets criteria for direct causation without over-selection risks.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: Brazilian authorities are investigating 70 farmers and land grabbers in Pará for allegedly organizing an August 10 'Day of Fire.'",
+        "option_B: 125,000 hectares of the Brazilian Amazon were cleared through 2019 and subsequently burned in August, mainly for agricultural conversion.",
+        "option_C: Thousands of fires burned in the Amazon rainforest in Brazil in 2019, particularly affecting Roraima, Acre, Rondônia, and Amazonas states.",
+        "option_D: MAAP released a report revealing overlap between deforestation and fire alerts in the Brazilian Amazon."
+      ]
+    },
+    {
+      "id": "q-2155",
+      "event": "Germany and Norway withheld tens of millions of dollars from the Amazon Fund.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:1, B:1, C:1, D:5\nVoted answers: ['D']\nAfter post-processing: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D  \n**Reasoning**:  \n- **Option D** (Bolsonaro replaced INPE director) is supported by Doc4 which states he dismissed the director who reported deforestation data and replaced him with a military official. This directly undermined environmental monitoring credibility.  \n- **Temporal**: The replacement occurred before fund withdrawal (Doc4: \"since taking office in January\" vs fund withholding later).  \n- **Causal Mechanism**: Destroying institutional trust led Germany/Norway to withhold funds (Doc4: \"alienated Germany and Norway... prompting them to withhold\").  \n- **Options A/B** (fires) are CONSEQUENCES of deforestation policies, not direct causes. **Option C** (MAAP report) merely documented issues but didn't trigger the withholding.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: Thousands of fires burned in the Amazon rainforest in Brazil in 2019, particularly affecting Roraima, Acre, Rondônia, and Amazonas states.",
+        "option_B: Dozens of fires scorched and are spreading across large swaths of the Amazon.",
+        "option_C: MAAP released a report revealing overlap between deforestation and fire alerts in the Brazilian Amazon.",
+        "option_D: Bolsonaro replaced the director of Brazil’s National Institute of Space Research with a military official."
+      ]
+    },
+    {
+      "id": "q-2152",
+      "event": "Fire hotspots in indigenous territories increased by 88% from January to August compared to 2018, according to CIMI citing INPE data.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:0, C:0, D:5\nVoted answers: ['D']\nAfter post-processing: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [D]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: MAAP released a report revealing overlap between deforestation and fire alerts in the Brazilian Amazon.",
+        "option_B: Brazilian authorities are investigating 70 farmers and land grabbers in Pará for allegedly organizing an August 10 'Day of Fire.'",
+        "option_C: Thousands of fires burned in the Amazon rainforest in Brazil in 2019, particularly affecting Roraima, Acre, Rondônia, and Amazonas states.",
+        "option_D: 125,000 hectares of the Brazilian Amazon were cleared through 2019 and subsequently burned in August, mainly for agricultural conversion."
+      ]
+    },
+    {
+      "id": "q-2134",
+      "event": "On August 15, 2021, the Taliban seized the presidential palace in Kabul and declared the war over.",
+      "predicted": [
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:5, C:2, D:0\nVoted answers: ['B']\nAfter post-processing: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B, C\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: The US launched a bombing campaign in Afghanistan in October 2001.",
+        "option_B: The Trump administration brokered a cease-fire with the Taliban in early 2020, excluding the Afghan government.",
+        "option_C: The U.S. and other countries began withdrawing their forces from Afghanistan on May 1.",
+        "option_D: Al-Qaeda terrorists attacked the US on September 11, 2001."
+      ]
+    },
+    {
+      "id": "q-2159",
+      "event": "On January 20, 2025, President Donald Trump sought to delay enforcement of the 2024 law banning TikTok distribution, intending to work out a divestment deal.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:4, B:1, C:1, D:1\nVoted answers: ['A']\nAfter post-processing: ['A']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A]  \n**Reasoning:**  \n- **Option A** is supported by Doc2 which details CFIUS's investigation into TikTok's acquisition. This directly precedes the legislative actions (Doc7 mentions the 2024 law) and creates the legal context requiring divestment.  \n- **Option B**, while factual, represents the acquisition that triggered CFIUS scrutiny but is not the *direct* cause of Trump's delay action.  \n- **Option C** reflects political pressure but lacks a direct causal link to the specific enforcement delay.  \n- **Option D** is invalid because A is causally relevant.  \n\n**Critical Factors:**  \n1. **Temporal Alignment**: CFIUS's investigation (pre-2024) directly led to the 2024 law Trump sought to delay enforcing.  \n2. **Mechanism**: CFIUS's role in national security reviews establishes the legal basis for divestment demands, making it the proximate cause.  \n3. **Precision**: Avoiding over-selection (B/C are contextual but not direct causes).  \n\n**Conclusion**: Only A meets all criteria as a direct cause.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A\n",
+      "options": [
+        "option_A: The Committee on Foreign Investment in the United States (CFIUS) opened an investigation of TikTok.",
+        "option_B: ByteDance acquired Musical.ly in 2017 and rebranded it as TikTok.",
+        "option_C: Senator Marco Rubio accused TikTok of censoring content aligned with Chinese directives.",
+        "option_D: None of the others are correct causes."
+      ]
+    },
+    {
+      "id": "q-2143",
+      "event": "Taliban fighters celebrated following the U.S. departure.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:0, C:3, D:4\nVoted answers: ['C', 'D']\nAfter post-processing: ['C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: C,D\n",
+      "options": [
+        "option_A: U.S. troops left Bagram Airfield.",
+        "option_B: A suicide bombing claimed by ISIS-K killed nearly 200 Afghans and 13 U.S. service members outside Kabul's airport on August 26, 2021.",
+        "option_C: The Trump administration brokered a cease-fire with the Taliban in early 2020, excluding the Afghan government.",
+        "option_D: On August 15, 2021, Afghan President Ashraf Ghani fled the country."
+      ]
+    },
+    {
+      "id": "q-2173",
+      "event": "The New York Times published an investigation into Harvey Weinstein's sexual harassment on October 5, 2017.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:0, C:5, D:0\nVoted answers: ['C']\nAfter post-processing: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: The first rape crisis center was founded in Washington, D.C., in 1972.",
+        "option_B: None of the others are correct causes.",
+        "option_C: In 2015, Harvey Weinstein badgered a female assistant into giving him a massage while he was naked.",
+        "option_D: Tarana Burke founded the 'Me Too' nonprofit organization in 2006."
+      ]
+    },
+    {
+      "id": "q-2169",
+      "event": "The reinforcement learning algorithm trained the final version of ChatGPT to produce high-scoring responses.",
+      "predicted": [
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:5, C:1, D:3\nVoted answers: ['B']\nAfter post-processing: ['B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B, D\n\n**Reasoning:**  \n- **Option B & C (Duplicate):** Doc7 explicitly states human judges scored responses used in reinforcement learning. Both options refer to the same causal factor, but selecting duplicates risks over-selection. Only B is selected.  \n- **Option D:** Doc7 confirms OpenAI collected examples to train the initial model, a direct precursor to reinforcement learning.  \n- **Option A:** While InstructGPT's training influenced ChatGPT's safety approach, it's a parallel development, not a direct cause of the *final version's* RL training.  \n\n**Key Causal Links:**  \n1. Collecting examples (D) → Initial model  \n2. Human scoring (B) → RL algorithm refinement  \n\nAvoided over-selection (C duplicates B) and excluded indirect factors (A).\n\nFinal Answer I Reasoned: B,C\n",
+      "options": [
+        "option_A: OpenAI trained InstructGPT to produce less toxic text.",
+        "option_B: Human judges scored the initial model’s responses.",
+        "option_C: Human judges scored the initial model’s responses.",
+        "option_D: OpenAI collected examples of good dialogue responses from people to train an initial version of ChatGPT."
+      ]
+    },
+    {
+      "id": "q-2180",
+      "event": "Belarusian President Alexander Lukashenko brokered a deal for Prigozhin to leave Russia.",
+      "predicted": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:5, B:5, C:2, D:4\nVoted answers: ['A', 'B', 'D']\nAfter post-processing: ['A', 'B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer Reasoned: A, B\n\n**Analysis:**  \n- **A:** Wagner's advance toward Moscow directly pressured Putin to negotiate, necessitating Lukashenko's mediation.  \n- **B:** Seizing Rostov’s military HQ escalated the crisis, forcing Putin to seek a resolution via Lukashenko.  \n- **C:** Duplicate of B; selecting both would be over-selection (penalized).  \n- **D:** Prigozhin’s accusations against Shoigu were a root cause of the feud but not the **direct trigger** for Lukashenko’s deal.  \n\n**Critical Warnings Heeded:**  \n- Avoided over-selection (C duplicates B).  \n- Focused on **immediate military actions** (A/B) as direct causes, not background grievances (D).  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,B,C,D\n",
+      "options": [
+        "option_A: Wagner forces advanced towards Moscow with a column of armored vehicles.",
+        "option_B: Wagner forces seized control of the military headquarters in Rostov-on-Don.",
+        "option_C: Wagner forces seized control of the military headquarters in Rostov-on-Don.",
+        "option_D: Prigozhin accused Defense Minister Sergei Shoigu of withholding ammunition and weapons from Wagner fighters in Ukraine."
+      ]
+    },
+    {
+      "id": "q-2166",
+      "event": "OpenAI released ChatGPT Plus on February 1, 2023, and later introduced GPT-4 Turbo with Vision and GPT-4o to the public.",
+      "predicted": [
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B",
+        "C"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:4, C:5, D:0\nVoted answers: ['B', 'C']\nAfter post-processing: ['B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer Reasoned: B, C\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B,C\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: Human judges scored the initial model’s responses.",
+        "option_C: ChatGPT quickly reached one million daily active users.",
+        "option_D: Stack Overflow banned ChatGPT-generated answers due to their misleading incorrectness."
+      ]
+    },
+    {
+      "id": "q-2198",
+      "event": "Women in media created an anonymously editable Google spreadsheet titled “SHITTY MEDIA MEN” to list men in media and allegations of inappropriate behavior.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:4, B:3, C:2, D:3\nVoted answers: ['A', 'B']\nAfter post-processing: ['A', 'B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A]  \n**Reasoning**:  \n- **Option A**: Directly supported by Doc1 and Doc6. The NYT investigation (Oct 5, 2017) exposed Weinstein's misconduct, catalyzing the #MeToo movement (Doc1: \"Harvey Weinstein’s fall opened the floodgates\") and subsequent actions like the spreadsheet. Temporal precedence and causal mechanism align.  \n- **Option B**: Tarana Burke’s 2006 \"Me Too\" laid groundwork but wasn’t the **direct** trigger for the spreadsheet. The spreadsheet emerged from the 2017 viral #MeToo wave (Doc9 clarifies Milano’s tweet, not Burke’s org, drove the 2017 resurgence).  \n- **Option C**: No evidence in docs.  \n- **Option D**: Nestor’s 2014 incident (Doc3/Doc4) exemplifies harassment but isn’t a **direct** cause of the spreadsheet’s creation.  \n\n**Critical Checks**:  \n- A satisfies temporal order + causal pathway (exposure → collective action).  \n- B is foundational but indirect. Over-selecting B risks incorrect inclusion.  \n- D is a symptom, not a cause.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,B\n",
+      "options": [
+        "option_A: The New York Times published an investigation into Harvey Weinstein's sexual harassment on October 5, 2017.",
+        "option_B: Tarana Burke founded the 'Me Too' nonprofit organization in 2006.",
+        "option_C: French women launched the #BalanceTonPorc social media campaign, sharing stories of aggression and harassment.",
+        "option_D: In 2014, Harvey Weinstein invited Emily Nestor to a hotel."
+      ]
+    },
+    {
+      "id": "q-2202",
+      "event": "Nvidia set a new company revenue record.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:0, C:5, D:0\nVoted answers: ['C']\nAfter post-processing: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C\n\n**Rationale:**  \n- **Option C** (Increasing chip supply) is directly supported by Doc4 where CEO Jensen Huang states Nvidia is \"significantly increasing\" supply to meet \"surging demand.\" This action directly enables higher sales volume, leading to the revenue record.  \n- **Option B** describes the revenue increase itself (the target event), not a cause.  \n- **Option D** (founding history) is temporally distant and not causally linked to the specific revenue surge.  \n- **Option A** lacks any supporting evidence in the documents.  \n\n**Critical Warnings Heeded:**  \n- Avoided over-selection (only C selected).  \n- Discarded B (consequence, not cause) and D (indirect/irrelevant).  \n- Strictly followed direct causation principle.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: Foreign investors purchased a net 15.8 trillion won ($11.6 billion) of South Korean stocks from January through March.",
+        "option_B: Nvidia reported a 101% year-over-year increase in quarterly revenue.",
+        "option_C: Nvidia announced it is significantly increasing chip supply to meet surging demand.",
+        "option_D: Jensen Huang, Chris Malachowsky, and Curtis Priem founded Nvidia in 1993."
+      ]
+    },
+    {
+      "id": "q-2207",
+      "event": "President Yoon Suk-yeol declared a period of national mourning and designated Itaewon a disaster zone.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:1, B:3, C:2, D:1\nVoted answers: ['B']\nAfter post-processing: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [B]\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: Emergency workers from around the country were deployed to Itaewon to treat the injured.",
+        "option_B: A group of young men shoved down the hill, leading to people falling and Kim being buried in the crush.",
+        "option_C: At least 153 people were killed and dozens injured.",
+        "option_D: The U.S. State Department confirmed at least two U.S. citizens were among the dead."
+      ]
+    },
+    {
+      "id": "q-2194",
+      "event": "President Bolsonaro announced a 60-day ban on setting fires for land clearing and deployed 44,000 soldiers to seven states.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:3, B:5, C:1, D:1\nVoted answers: ['A', 'B']\nAfter post-processing: ['A', 'B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [B]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,B\n",
+      "options": [
+        "option_A: Brazilian authorities are investigating 70 farmers and land grabbers in Pará for allegedly organizing an August 10 'Day of Fire.'",
+        "option_B: Thousands of fires burned in the Amazon rainforest in Brazil in 2019, particularly affecting Roraima, Acre, Rondônia, and Amazonas states.",
+        "option_C: French President Emmanuel Macron announced France’s withdrawal of support for the Mercosur trade deal.",
+        "option_D: Dozens of fires scorched and are spreading across large swaths of the Amazon."
+      ]
+    },
+    {
+      "id": "q-2167",
+      "event": "Three former Minneapolis police officers were criminally charged with aiding and abetting second-degree murder in connection with Floyd's death, and Chauvin's charge was upgraded to second-degree murder.",
+      "predicted": [
+        "A",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:4, B:1, C:3, D:4\nVoted answers: ['A', 'C', 'D']\nAfter post-processing: ['A', 'C', 'D']\n\n========== BEST RESPONSE ==========\n**Final Answer I Reasoned:**  \n**A**  \n**B**  \n**D**  \n\n**Reasoning:**  \n- **A (Direct Cause):** Doc1 explicitly states Chauvin kept his knee on Floyd's neck for over 8 minutes, including after Floyd became unresponsive. This action directly led to Floyd's death and formed the basis for murder charges. Temporal precedence and causal mechanism are clear.  \n- **B (Direct Cause):** Doc1 notes the city fired all four officers *before* criminal charges were filed. This administrative action created public/political pressure to escalate accountability, making it a contributing cause.  \n- **D (Direct Cause):** Doc1/Doc3 highlight the viral bystander video as critical evidence that forced authorities to act. Without this documentation, charges might not have occurred.  \n- **C (Rejected):** Floyd's death (C) is the *result* of A, not an independent cause. Charges stem from the officers' actions (A), not the death itself.  \n\n**Critical Warnings Heeded:**  \n- Avoided over-selection of D (common error) by verifying its role as evidence catalyst rather than standalone cause.  \n- B was included due to its role in escalating accountability (firing → public pressure → charges).\n\nFinal Answer I Reasoned: A,C,D\n",
+      "options": [
+        "option_A: Derek Chauvin keeps his knee on George Floyd's neck for over eight minutes, including after Floyd becomes unconscious, until EMTs intervene.",
+        "option_B: The city fires all four officers.",
+        "option_C: George Floyd died on May 25, 2020, in Minneapolis under the knee of a White police officer.",
+        "option_D: Video of George Floyd’s last moments circulated in May."
+      ]
+    },
+    {
+      "id": "q-2201",
+      "event": "DeepSeek's app reached the top of U.S. free app charts within a week of its launch.",
+      "predicted": [
+        "A",
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "B"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:5, B:5, C:0, D:5\nVoted answers: ['A', 'B', 'D']\nAfter post-processing: ['A', 'B', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A, B, D]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,B,D\n",
+      "options": [
+        "option_A: DeepSeek unveiled its V3 model in December and R1 model in January.",
+        "option_B: DeepSeek's model outperformed Meta's Llama 3.1, OpenAI's GPT-4o, and Anthropic's Claude Sonnet 3.5 in third-party benchmark tests.",
+        "option_C: In November 2023, DeepSeek launched DeepSeek LLM.",
+        "option_D: In late December, DeepSeek unveiled a free, open-source large language model built in two months for under $6 million using Nvidia H800s chips."
+      ]
+    },
+    {
+      "id": "q-2221",
+      "event": "Time Magazine named 'the Silence Breakers' Person of the Year in December 2017.",
+      "predicted": [
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:0, C:4, D:5\nVoted answers: ['C', 'D']\nAfter post-processing: ['C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C, D\n\n**Reasoning:**\n- **C** is supported by Doc1 detailing the \"SHITTY MEDIA MEN\" spreadsheet, which was a direct grassroots effort to formalize whisper networks. While short-lived, it exemplified collective action preceding Time's recognition.\n- **D** is directly evidenced in Docs2,6,8,9 as the viral #MeToo movement in October 2017, which created the critical mass of public attention leading to Time's December 2017 feature. \n\nOptions A and B describe specific Weinstein incidents contributing to the broader context but aren't DIRECT causes of the Time recognition. C and D represent concrete actions (spreadsheet + viral movement) that directly fueled the \"Silence Breakers\" narrative.\n\nFinal Answer I Reasoned: C,D\n",
+      "options": [
+        "option_A: Harvey Weinstein invited Ashley Judd to a hotel and had her sent to his room.",
+        "option_B: In 2014, Harvey Weinstein invited Emily Nestor to a hotel.",
+        "option_C: Women in media created an anonymously editable Google spreadsheet titled “SHITTY MEDIA MEN” to list men in media and allegations of inappropriate behavior.",
+        "option_D: Women used social media to share sexual harassment experiences in October 2017, leading to the #MeToo movement going viral."
+      ]
+    },
+    {
+      "id": "q-2223",
+      "event": "On December 10, 2020, Judge Sawan charged Caretaker Prime Minister Hassan Diab and three former ministers with criminal negligence.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:3, C:1, D:4\nVoted answers: ['B', 'D']\nAfter post-processing: ['B', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D  \n**Reasoning**:  \n- **Option D** (Rhosus impoundment) directly led to ammonium nitrate storage, forming the basis for negligence charges. Documents show the ship's 2013 impoundment initiated 6 years of dangerous storage ([Doc5], [Doc10]).  \n- **Option B** (fire) is excluded as a CONSEQUENCE of improper storage (triggered explosion but charges relate to prior negligence).  \n- **Option A** (committee) is a post-blast response, not a cause.  \n- **Option C** (sinking) is irrelevant to charges about storage negligence.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B,D\n",
+      "options": [
+        "option_A: The Lebanese government established an investigative committee to determine responsibility for the explosion.",
+        "option_B: A fire broke out at Warehouse 12 at the Port of Beirut on August 4, reportedly started by welding work.",
+        "option_C: The Rhosus sank on February 18, 2018.",
+        "option_D: The Moldovan-flagged ship Rhosus, carrying 2,750 tonnes of ammonium nitrate, was impounded by Lebanon’s Enforcement Department on December 20, 2013."
+      ]
+    },
+    {
+      "id": "q-2225",
+      "event": "Prigozhin negotiated his exit and called off his march on Moscow on Saturday afternoon.",
+      "predicted": [
+        "A",
+        "C"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:3, B:2, C:5, D:0\nVoted answers: ['A', 'C']\nAfter post-processing: ['A', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [B, C]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,C\n",
+      "options": [
+        "option_A: Putin delivered a televised address accusing Prigozhin of treason.",
+        "option_B: Russian military helicopters opened fire on the Wagner convoy.",
+        "option_C: Wagner forces advanced towards Moscow with a column of armored vehicles.",
+        "option_D: Yevgeny Prigozhin recruited Deputy Defense Minister Mikhail Mizintsev in April."
+      ]
+    },
+    {
+      "id": "q-2218",
+      "event": "Women used social media to share sexual harassment experiences in October 2017, leading to the #MeToo movement going viral.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:3, B:5, C:2, D:2\nVoted answers: ['A', 'B']\nAfter post-processing: ['A', 'B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [B]\n\n**PHASE 1: Evidence Mapping**  \n- **A**: Supported by Doc4/Doc5 (Burke’s 2006 \"Me Too\" work). Strength: **Strong** but temporally distant.  \n- **B**: Explicitly documented in Doc5 (NYT Weinstein exposé on Oct 5, 2017). Strength: **Strong**.  \n- **C**: Mentioned in Doc5 (Nestor’s 2014 interaction) but no causal link to 2017 virality. Strength: **None**.  \n- **D**: Doc5 notes 1972 rape crisis center. Strength: **None** (historical context, not causal).  \n\n**PHASE 2: Causal Verification**  \n1. **Temporal**:  \n   - B (Oct 5, 2017) precedes target event (Oct 2017). ✅  \n   - A (2006) precedes but lacks direct temporal proximity. ❌  \n2. **Mechanism**:  \n   - B directly triggered public outrage, enabling Milano’s viral hashtag (Doc5: Weinstein revelations \"opened the floodgates\"). ✅  \n   - A provided the phrase \"Me Too\" but did not directly cause the 2017 virality. ❌  \n3. **Direction**:  \n   - B is a **cause** (Weinstein scandal → #MeToo momentum). ✅  \n   - A is background, not a proximate cause. ❌  \n\n**PHASE 3: Risk-Adjusted Selection**  \n- **B**: Clear causation + strong evidence → **SELECT**.  \n- A/C/D: Rejected (A is foundational but not direct; C/D irrelevant).  \n\n**PHASE 4: Consistency Checks**  \n- No duplicates. B is the sole direct cause.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,B\n",
+      "options": [
+        "option_A: Tarana Burke founded the 'Me Too' nonprofit organization in 2006.",
+        "option_B: The New York Times published an investigation into Harvey Weinstein's sexual harassment on October 5, 2017.",
+        "option_C: In 2014, Harvey Weinstein invited Emily Nestor to a hotel.",
+        "option_D: The first rape crisis center was founded in Washington, D.C., in 1972."
+      ]
+    },
+    {
+      "id": "q-2147",
+      "event": "Trump was impeached for a second time on January 13th.",
+      "predicted": [
+        "A",
+        "C"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:3, B:0, C:5, D:0\nVoted answers: ['A', 'C']\nAfter post-processing: ['A', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [C]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,C\n",
+      "options": [
+        "option_A: Supporters stormed the U.S. Capitol.",
+        "option_B: Congress confirmed Biden as president in the early hours of January 7th.",
+        "option_C: Trump addressed the crowd.",
+        "option_D: The House and Senate recessed, and the Capitol was locked down."
+      ]
+    },
+    {
+      "id": "q-2245",
+      "event": "The Almeda Fire burned hundreds of homes and businesses in Phoenix and Talent, Oregon.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:2, C:3, D:0\nVoted answers: ['C']\nAfter post-processing: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [B]  \nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: Wildfires across the West Coast have caused at least 24 deaths and placed hundreds of thousands under evacuation orders.",
+        "option_B: None of the others are correct causes.",
+        "option_C: Humans ignited 97% of home-threatening wildfires in the wildland-urban interface between 1992 and 2015.",
+        "option_D: California required rebuilding in high-risk wildfire areas to use fire-resistant materials over a decade ago."
+      ]
+    },
+    {
+      "id": "q-2212",
+      "event": "DeepSeek released its large language model, DeepSeek-R1, on January 20.",
+      "predicted": [
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:4, C:0, D:5\nVoted answers: ['B', 'D']\nAfter post-processing: ['B', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [B, D]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B,D\n",
+      "options": [
+        "option_A: DeepSeek's app reached the top of U.S. free app charts within a week of its launch.",
+        "option_B: In late December, DeepSeek unveiled a free, open-source large language model built in two months for under $6 million using Nvidia H800s chips.",
+        "option_C: In November 2023, DeepSeek launched DeepSeek LLM.",
+        "option_D: DeepSeek unveiled its V3 model in December and R1 model in January."
+      ]
+    },
+    {
+      "id": "q-2247",
+      "event": "Derek Chauvin was arrested and charged with murder and manslaughter.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:2, C:3, D:1\nVoted answers: ['C']\nAfter post-processing: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [B]  \nThe key temporal sequence invalidates Option A (homicide ruling came after arrest). Option C initiated police contact but isn't the direct cause of charges. Option D (firing) is administrative consequence, not causal. No listed option meets direct causation criteria.\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: Officials in Hennepin County ruled Floyd’s death a homicide on June 1, 2020.",
+        "option_B: None of the others are correct causes.",
+        "option_C: Two Cup Foods employees confront George Floyd about using a counterfeit bill.",
+        "option_D: The city fires all four officers."
+      ]
+    },
+    {
+      "id": "q-2256",
+      "event": "Fire hotspots in indigenous territories increased by 88% from January to August compared to 2018, according to CIMI citing INPE data.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A",
+        "B"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:5, B:4, C:0, D:0\nVoted answers: ['A', 'B']\nAfter post-processing: ['A', 'B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A, B]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,B\n",
+      "options": [
+        "option_A: 125,000 hectares of the Brazilian Amazon were cleared through 2019 and subsequently burned in August, mainly for agricultural conversion.",
+        "option_B: Brazilian authorities are investigating 70 farmers and land grabbers in Pará for allegedly organizing an August 10 'Day of Fire.'",
+        "option_C: MAAP released a report revealing overlap between deforestation and fire alerts in the Brazilian Amazon.",
+        "option_D: Thousands of fires burned in the Amazon rainforest in Brazil in 2019, particularly affecting Roraima, Acre, Rondônia, and Amazonas states."
+      ]
+    },
+    {
+      "id": "q-2219",
+      "event": "The district officially unveiled Black Lives Matter Plaza on June 5, 2020.",
+      "predicted": [
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:4, C:0, D:5\nVoted answers: ['B', 'D']\nAfter post-processing: ['B', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B, D  \nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B,D\n",
+      "options": [
+        "option_A: Protesters overtook and destroyed the Minneapolis Police Department’s Third Precinct.",
+        "option_B: Widespread protests erupted across the nation, including at Lafayette Square in Washington, D.C.",
+        "option_C: The city fires all four officers.",
+        "option_D: The Secret Service rushed President Trump and his family to a bunker after unrest outside the White House on May 29, 2020."
+      ]
+    },
+    {
+      "id": "q-2259",
+      "event": "Prime Minister Edouard Philippe announced nearly 500 million euros in aid for low-income motorists.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:1, C:0, D:5\nVoted answers: ['D']\nAfter post-processing: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [D]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: Authorities mobilized 3,000 officers and set up a security perimeter to contain 8,000 protesters and protect government buildings in Paris.",
+        "option_B: On November 24, 2018, \"yellow vest\" protestors blocked the Champs Elysées in Paris, leading to confrontations.",
+        "option_C: 130 people were arrested across France, including 42 in Paris.",
+        "option_D: The Macron government announced an increase in gas taxes effective January 1, 2019."
+      ]
+    },
+    {
+      "id": "q-2242",
+      "event": "Taliban fighters celebrated following the U.S. departure.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:0, C:0, D:5\nVoted answers: ['D']\nAfter post-processing: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [D]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: A suicide bombing claimed by ISIS-K killed nearly 200 Afghans and 13 U.S. service members outside Kabul's airport on August 26, 2021.",
+        "option_B: On August 15, 2021, Afghan President Ashraf Ghani fled the country.",
+        "option_C: U.S. troops left Bagram Airfield.",
+        "option_D: The Trump administration brokered a cease-fire with the Taliban in early 2020, excluding the Afghan government."
+      ]
+    },
+    {
+      "id": "q-2269",
+      "event": "Wagner forces advanced towards Moscow with a column of armored vehicles.",
+      "predicted": [
+        "A",
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:5, B:0, C:3, D:0\nVoted answers: ['A', 'C']\nAfter post-processing: ['A', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A]\n\n**Reasoning:**  \n- **Option A** (Prigozhin declared an armed rebellion) is directly supported by multiple documents (Doc1, Doc3, Doc4, Doc7, Doc10). The declaration preceded the advance and explicitly triggered Wagner's movement toward Moscow.  \n- **Option C** (accusations against Shoigu) is a **contributing factor** but not the **immediate trigger**. While the feud created tensions, the **armed rebellion declaration (A)** was the proximate cause.  \n- **Option D** (seizing Rostov) is a **consequence** of the rebellion, not a cause.  \n- **Option B** (recruiting Mizintsev) lacks direct causal linkage to the advance.  \n\n**Critical Criteria Met:**  \n- **Temporal Priority**: A occurred before the advance.  \n- **Direct Causal Pathway**: The rebellion declaration directly initiated the military movement.  \n- **No Over-Selection**: Only A meets the strict definition of a direct cause.  \n\n**Result:** Select **A** to avoid over-selection and maximize precision.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,C\n",
+      "options": [
+        "option_A: Prigozhin declared an armed rebellion.",
+        "option_B: Yevgeny Prigozhin recruited Deputy Defense Minister Mikhail Mizintsev in April.",
+        "option_C: Prigozhin accused Defense Minister Sergei Shoigu of withholding ammunition and weapons from Wagner fighters in Ukraine.",
+        "option_D: Wagner forces seized control of the military headquarters in Rostov-on-Don."
+      ]
+    },
+    {
+      "id": "q-2291",
+      "event": "Prime Minister Han Duck-soo became acting president.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:5, C:1, D:0\nVoted answers: ['B']\nAfter post-processing: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [B]  \nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: Tens of thousands of protesters gathered outside the National Assembly in Seoul.",
+        "option_B: President Yoon Suk Yeol declared martial law on December 3 and sent soldiers to parliament.",
+        "option_C: President Yoon Suk Yeol was immediately suspended from exercising his powers.",
+        "option_D: Lawmakers at the National Assembly unanimously annulled martial law."
+      ]
+    },
+    {
+      "id": "q-2257",
+      "event": "Up to six ERCOT board members resigned on February 24.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A",
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:0, C:3, D:2\nVoted answers: ['C']\nAfter post-processing: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: Over four million customers were without power in Texas.",
+        "option_B: Texas Gov. Greg Abbott issued a disaster declaration in all 254 counties.",
+        "option_C: ERCOT initiated rolling outages, leaving millions of Texans without power.",
+        "option_D: Regional power generators spontaneously shut down, including three coal plants and a gas plant in Corpus Christi."
+      ]
+    },
+    {
+      "id": "q-2290",
+      "event": "Time Magazine named 'the Silence Breakers' Person of the Year in December 2017.",
+      "predicted": [
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:0, C:5, D:4\nVoted answers: ['C', 'D']\nAfter post-processing: ['C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C, D  \n**Reasoning**:  \n- **Option C**: Documented in Doc1, the \"SHITTY MEDIA MEN\" spreadsheet emerged directly after the Weinstein revelations as an organized effort to expose harassment. This grassroots action exemplified the \"Silence Breakers\" collective action that Time recognized.  \n- **Option D**: Doc2, Doc6, and Doc8 confirm the #MeToo movement went viral in October 2017 via social media, creating the massive public momentum that made the Silence Breakers’ collective impact newsworthy for Time’s December 2017 recognition.  \n- Both C (specific industry action) and D (broad viral movement) are DIRECT causes of the Person of the Year selection, as they represent complementary facets of the event’s rationale.  \n- **Excluded A/B**: Macron’s action (A) occurred later (Jan 2018) and is unrelated. Judd’s hotel incident (B) is part of Weinstein’s pattern but predates 2017 and isn’t directly tied to Time’s framing of collective action.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: C,D\n",
+      "options": [
+        "option_A: French President Emmanuel Macron announced Harvey Weinstein would be stripped of the Légion d’honneur.",
+        "option_B: Harvey Weinstein invited Ashley Judd to a hotel and had her sent to his room.",
+        "option_C: Women in media created an anonymously editable Google spreadsheet titled “SHITTY MEDIA MEN” to list men in media and allegations of inappropriate behavior.",
+        "option_D: Women used social media to share sexual harassment experiences in October 2017, leading to the #MeToo movement going viral."
+      ]
+    },
+    {
+      "id": "q-2292",
+      "event": "On December 10, 2020, Judge Sawan charged Caretaker Prime Minister Hassan Diab and three former ministers with criminal negligence.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:3, B:1, C:1, D:3\nVoted answers: ['A']\nAfter post-processing: ['A']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A]  \n**Reasoning**:  \n- **Option A** is supported by Doc1, Doc2, and Doc5. The Rhosus’s impoundment directly led to the dangerous storage of ammonium nitrate, forming the basis for negligence charges.  \n- **Option B** (investigative committee) is a consequence of the explosion, not a causal factor in the charges themselves.  \n- **Option C** (ship sinking) occurred after the ammonium nitrate was offloaded and is irrelevant to the negligence charges.  \n- **Option D** (volunteer efforts) is a post-explosion response, a consequence not a cause.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A\n",
+      "options": [
+        "option_A: The Moldovan-flagged ship Rhosus, carrying 2,750 tonnes of ammonium nitrate, was impounded by Lebanon’s Enforcement Department on December 20, 2013.",
+        "option_B: The Lebanese government established an investigative committee to determine responsibility for the explosion.",
+        "option_C: The Rhosus sank on February 18, 2018.",
+        "option_D: Thousands of volunteers from Lebanon and its diaspora cleared rubble, offered accommodation, and repaired homes in affected areas after the explosion."
+      ]
+    },
+    {
+      "id": "q-2262",
+      "event": "Credit Suisse's board rebuffed the proposal from UBS.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:2, C:0, D:5\nVoted answers: ['D']\nAfter post-processing: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: Credit Suisse announced material weaknesses in its financial reporting.",
+        "option_C: Investors and depositors withdrew billions from Credit Suisse.",
+        "option_D: Credit Suisse shares plunged to a record low after Saudi National Bank stated it would not invest more money."
+      ]
+    },
+    {
+      "id": "q-2271",
+      "event": "On August 15, 2021, the Taliban seized the presidential palace in Kabul and declared the war over.",
+      "predicted": [
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:1, B:0, C:5, D:5\nVoted answers: ['C', 'D']\nAfter post-processing: ['C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C, D\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: C,D\n",
+      "options": [
+        "option_A: On August 15, 2021, Afghan President Ashraf Ghani fled the country.",
+        "option_B: Al-Qaeda terrorists attacked the US on September 11, 2001.",
+        "option_C: Taliban militants captured several provincial capitals, including Zaranj, Sheberghan, Kunduz, Sar-e Pol, Taloqan, and Aybak, between August 6 and August 9.",
+        "option_D: The Trump administration brokered a cease-fire with the Taliban in early 2020, excluding the Afghan government."
+      ]
+    },
+    {
+      "id": "q-2266",
+      "event": "Three former Minneapolis police officers were criminally charged with aiding and abetting second-degree murder in connection with Floyd's death, and Chauvin's charge was upgraded to second-degree murder.",
+      "predicted": [
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "C",
+        "D"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "A",
+        "C"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:2, B:5, C:2, D:4\nVoted answers: ['B', 'D']\nAfter post-processing: ['B', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B, D\n\n**REASONING:**  \n- **Option B (Video circulated):** Directly evidenced by Doc1's analysis of bystander videos, which provided critical evidence leading to charges.  \n- **Option D (Floyd's death):** The foundational event necessitating charges (Doc1, Doc4).  \n- **Options A/C:** Hennepin County's homicide ruling (June 1) occurred *after* initial charges (May 29), making it a consequence, not a cause.  \n- **Causal Chain Warning:** Avoid over-selecting. D is necessary but often misselected; however, it is the root cause without which charges wouldn't exist. B is direct evidence prompting action.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B,D\n",
+      "options": [
+        "option_A: Officials in Hennepin County ruled Floyd’s death a homicide on June 1, 2020.",
+        "option_B: Video of George Floyd’s last moments circulated in May.",
+        "option_C: Officials in Hennepin County ruled Floyd’s death a homicide on June 1, 2020.",
+        "option_D: George Floyd died on May 25, 2020, in Minneapolis under the knee of a White police officer."
+      ]
+    },
+    {
+      "id": "q-2323",
+      "event": "Germany and Norway withheld tens of millions of dollars from the Amazon Fund.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:1, B:1, C:2, D:3\nVoted answers: ['D']\nAfter post-processing: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D  \n**Reasoning**:  \n- **Option D**: Document 4 explicitly states that President Bolsonaro replaced the director of Brazil's National Institute of Space Research (Inpe) with a military official after dismissing deforestation data as \"lies.\" This action directly undermined environmental governance credibility.  \n- **Causal Pathway**: Norway and Germany withheld funds due to Bolsonaro’s systemic weakening of environmental institutions (Doc4: \"Bolsonaro has alienated Germany and Norway... prompting them to withhold tens of millions\"). Replacing Inpe’s director was a critical act of institutional sabotage, eroding trust in Brazil’s commitment to forest protection.  \n- **Other Options**:  \n  - A/B (fires) & C (MAAP report) describe environmental consequences, not direct policy triggers.  \n  - Funds were withheld due to governance/policy failures (Bolsonaro’s actions), not fires/deforestation itself.  \n\n**Critical Warnings Heeded**:  \n- Avoided over-selecting correlated events (fires/deforestation).  \n- Focused on DIRECT institutional/policy actions (D) as the proximate cause for fund suspension.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: Dozens of fires scorched and are spreading across large swaths of the Amazon.",
+        "option_B: Thousands of fires burned in the Amazon rainforest in Brazil in 2019, particularly affecting Roraima, Acre, Rondônia, and Amazonas states.",
+        "option_C: MAAP released a report revealing overlap between deforestation and fire alerts in the Brazilian Amazon.",
+        "option_D: Bolsonaro replaced the director of Brazil’s National Institute of Space Research with a military official."
+      ]
+    },
+    {
+      "id": "q-2330",
+      "event": "Taliban militants captured several provincial capitals, including Zaranj, Sheberghan, Kunduz, Sar-e Pol, Taloqan, and Aybak, between August 6 and August 9.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:5, B:0, C:0, D:0\nVoted answers: ['A']\nAfter post-processing: ['A']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A\n",
+      "options": [
+        "option_A: The U.S. and the Taliban signed a peace agreement in Doha on February 29, 2020.",
+        "option_B: The US launched a bombing campaign in Afghanistan in October 2001.",
+        "option_C: Al-Qaeda terrorists attacked the US on September 11, 2001.",
+        "option_D: None of the others are correct causes."
+      ]
+    },
+    {
+      "id": "q-2325",
+      "event": "The Swiss government ordered Credit Suisse to temporarily suspend bonus payments to staff.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:3, B:0, C:2, D:1\nVoted answers: ['A']\nAfter post-processing: ['A']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A]  \nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A\n",
+      "options": [
+        "option_A: Credit Suisse announced material weaknesses in its financial reporting.",
+        "option_B: Credit Suisse shareholders will receive one UBS share for every 22.48 Credit Suisse shares.",
+        "option_C: None of the others are correct causes.",
+        "option_D: Credit Suisse shares plunged to a record low after Saudi National Bank stated it would not invest more money."
+      ]
+    },
+    {
+      "id": "q-2321",
+      "event": "Taliban fighters spread across Kabul streets, riding motorbikes and driving seized police vehicles and Humvees.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:0, C:5, D:0\nVoted answers: ['C']\nAfter post-processing: ['C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C  \nCRITICAL: This line must be the LAST line of your response.  \n\n**Reasoning:**  \n- **Option C (Ghani fled on Aug 15)** is a direct cause. Document 3 and 9 explicitly link Ghani's flight to the collapse of government authority, enabling Taliban fighters to seize police vehicles/Humvees and spread across Kabul. Temporal proximity and causation are clear.  \n- **Option D (2020 Trump-Taliban deal)** is a root cause but *not* a direct cause of the specific August 15 event. While the agreement enabled the withdrawal and Taliban resurgence, it operates through a longer causal chain and does not directly explain the immediate takeover of Kabul streets.  \n- **Option B (2001 bombing)** and **A (none correct)** are invalid. B is temporally disconnected (~20 years prior), and C is valid.  \n\n**Key Risks Avoided:**  \n- Over-selection (D is tempting but indirect per causal chain rules).  \n- Strict adherence to direct causation framework (C = immediate trigger, D = enabling condition).\n\nFinal Answer I Reasoned: C\n",
+      "options": [
+        "option_A: None of the others are correct causes.",
+        "option_B: The US launched a bombing campaign in Afghanistan in October 2001.",
+        "option_C: On August 15, 2021, Afghan President Ashraf Ghani fled the country.",
+        "option_D: The Trump administration brokered a cease-fire with the Taliban in early 2020, excluding the Afghan government."
+      ]
+    },
+    {
+      "id": "q-2336",
+      "event": "The Swiss government ordered Credit Suisse to temporarily suspend bonus payments to staff.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:5, C:0, D:0\nVoted answers: ['B']\nAfter post-processing: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [B]  \nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: Finma wiped out $17 billion worth of Credit Suisse’s bonds and eliminated the need for UBS shareholders to vote on the deal.",
+        "option_B: Credit Suisse announced material weaknesses in its financial reporting.",
+        "option_C: Credit Suisse experienced major financial losses and scandals, including top executives resigning in 2020 due to a spying scandal, a court finding of failed money laundering prevention, and a loss of over 7 billion Swiss francs in 2022.",
+        "option_D: Credit Suisse's board rebuffed the proposal from UBS."
+      ]
+    },
+    {
+      "id": "q-2338",
+      "event": "Credit Suisse's board rebuffed the proposal from UBS.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:5, B:0, C:2, D:0\nVoted answers: ['A']\nAfter post-processing: ['A']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A, C]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A\n",
+      "options": [
+        "option_A: Credit Suisse shares plunged to a record low after Saudi National Bank stated it would not invest more money.",
+        "option_B: Credit Suisse stock prices dropped.",
+        "option_C: Investors and depositors withdrew billions from Credit Suisse.",
+        "option_D: UBS offered to buy Credit Suisse for approximately $1 billion."
+      ]
+    },
+    {
+      "id": "q-2270",
+      "event": "Austin and San Antonio issued boil-water notices.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:1, B:4, C:2, D:1\nVoted answers: ['B']\nAfter post-processing: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [B]  \nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: San Antonio Mayor Ron Nirenberg and Bexar County Judge Wolff issued a joint declaration urging precautions, travel limits, and energy conservation, activating emergency management plans.",
+        "option_B: Outdoor temperatures plunged to arctic levels.",
+        "option_C: Over 2 million Texas residents were left without electricity.",
+        "option_D: ERCOT officials acknowledged \"pretty frigid temperatures\" were headed to Texas during a board meeting."
+      ]
+    },
+    {
+      "id": "q-2360",
+      "event": "A TEPCO staff member activated a seawater pump and an operator confirmed the release.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:1, B:1, C:2, D:4\nVoted answers: ['D']\nAfter post-processing: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: D  \n**Reasoning**:  \n- **Option D** (2011 earthquake/tsunami causing meltdown) is supported by multiple documents (Doc1, Doc5, Doc10) as the root cause of the Fukushima disaster. The meltdown directly necessitated continuous water cooling, leading to wastewater accumulation and the eventual need for release.  \n- **Options A & B** are consequences (criticism/import bans) occurring AFTER Japan's decision to release water, not causes of the pump activation.  \n- **Option C** is invalid because D is a valid causal factor.  \n\nPer EVALUATION METRIC:  \n- D is a DIRECT CAUSE (created conditions requiring release).  \n- No over-selection.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: The Chinese government criticized Japan’s plan to release wastewater.",
+        "option_B: South Korea banned seafood imports from the Fukushima area.",
+        "option_C: None of the others are correct causes.",
+        "option_D: A huge earthquake and tsunami in 2011 caused a meltdown at the Fukushima plant."
+      ]
+    },
+    {
+      "id": "q-2349",
+      "event": "Three former Minneapolis police officers were criminally charged with aiding and abetting second-degree murder in connection with Floyd's death, and Chauvin's charge was upgraded to second-degree murder.",
+      "predicted": [
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:1, B:3, C:4, D:4\nVoted answers: ['B', 'C', 'D']\nAfter post-processing: ['B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B, C, D \n\n**Reasoning:**  \n- **B (Homicide Ruling):** Doc1/Doc4 confirm the autopsy ruled Floyd's death a homicide. This medical conclusion directly enabled murder charges (temporal & causal link).  \n- **C (Floyd's Death):** The foundational event (Doc1/Doc3). No death = no charges. Direct cause.  \n- **D (Video Circulation):** Doc1/Doc3/Doc7 highlight viral video as critical evidence sparking public outrage and investigations, leading to charges.  \n- **A (Firing):** Administrative action (Doc1) precedes charges but isn't a legal cause. Charges stem from evidence, not employment status.  \n\n**Avoided Over-Selection:**  \n- D is validated by multiple docs as evidence catalyst, not just correlation.  \n- B/C/D form the causal chain: Death (C) → Video evidence (D) → Homicide ruling (B) → Charges.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B,C,D\n",
+      "options": [
+        "option_A: The city fires all four officers.",
+        "option_B: Officials in Hennepin County ruled Floyd’s death a homicide on June 1, 2020.",
+        "option_C: George Floyd died on May 25, 2020, in Minneapolis under the knee of a White police officer.",
+        "option_D: Video of George Floyd’s last moments circulated in May."
+      ]
+    },
+    {
+      "id": "q-2365",
+      "event": "On July 2, 2021, Judge Bitar requested parliament lift immunity for former ministers Khalil, Zeaiter, and Nohad Machnouk, and sought permission from bar associations to prosecute Khalil, Zeaiter, and Fenianos.",
+      "predicted": [
+        "A",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "B"
+      ],
+      "false_positives": [
+        "C",
+        "D"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:3, B:2, C:3, D:4\nVoted answers: ['A', 'C', 'D']\nAfter post-processing: ['A', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A]  \nThe Court of Cassation removing Judge Sawan (Doc6) directly enabled Judge Bitar to take over the investigation and make the July 2021 request. This is a PERFECT MATCH (1.0 points). Options B/C/D describe events preceding/concurrent with/postdating the explosion but DO NOT DIRECTLY CAUSE the specific judicial action.\n\nFinal Answer I Reasoned: A,C,D\n",
+      "options": [
+        "option_A: In February 2021, the Court of Cassation removed Judge Sawan from the case, and Investigative Judge Tarek Bitar replaced him.",
+        "option_B: A colossal explosion occurred at the Port of Beirut on August 4, killing at least 200 people and injuring around 5,000.",
+        "option_C: Prime Minister Hassan Diab and his government resigned following the explosion.",
+        "option_D: Thousands of volunteers from Lebanon and its diaspora cleared rubble, offered accommodation, and repaired homes in affected areas after the explosion."
+      ]
+    },
+    {
+      "id": "q-2343",
+      "event": "Credit Suisse's board rebuffed the proposal from UBS.",
+      "predicted": [
+        "A",
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A",
+        "B",
+        "C"
+      ],
+      "false_negatives": [
+        "D"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:3, B:5, C:5, D:0\nVoted answers: ['A', 'B', 'C']\nAfter post-processing: ['A', 'B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A, B, C]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,B,C\n",
+      "options": [
+        "option_A: Investors and depositors withdrew billions from Credit Suisse.",
+        "option_B: Saudi National Bank stated it would not increase funding to Credit Suisse.",
+        "option_C: Credit Suisse experienced major financial losses and scandals, including top executives resigning in 2020 due to a spying scandal, a court finding of failed money laundering prevention, and a loss of over 7 billion Swiss francs in 2022.",
+        "option_D: UBS offered to buy Credit Suisse for approximately $1 billion."
+      ]
+    },
+    {
+      "id": "q-2289",
+      "event": "The Taliban began a massive offensive in early May 2021.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:3, B:5, C:0, D:0\nVoted answers: ['A', 'B']\nAfter post-processing: ['A', 'B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [B] \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,B\n",
+      "options": [
+        "option_A: The U.S. and other countries began withdrawing their forces from Afghanistan on May 1.",
+        "option_B: The U.S. and the Taliban signed a peace agreement in Doha on February 29, 2020.",
+        "option_C: The Trump administration brokered a cease-fire with the Taliban in early 2020, excluding the Afghan government.",
+        "option_D: The US launched a bombing campaign in Afghanistan in October 2001."
+      ]
+    },
+    {
+      "id": "q-2316",
+      "event": "On December 10, 2020, Judge Sawan charged Caretaker Prime Minister Hassan Diab and three former ministers with criminal negligence.",
+      "predicted": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "A",
+        "B",
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:2, B:2, C:2, D:2\nVoted answers: ['A', 'B', 'C', 'D']\nAfter post-processing: ['A', 'B', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [D]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,B,C,D\n",
+      "options": [
+        "option_A: Thousands of volunteers from Lebanon and its diaspora cleared rubble, offered accommodation, and repaired homes in affected areas after the explosion.",
+        "option_B: The Rhosus sank on February 18, 2018.",
+        "option_C: The Moldovan-flagged ship Rhosus, carrying 2,750 tonnes of ammonium nitrate, was impounded by Lebanon’s Enforcement Department on December 20, 2013.",
+        "option_D: A colossal explosion occurred at the Port of Beirut on August 4, killing at least 200 people and injuring around 5,000."
+      ]
+    },
+    {
+      "id": "q-2356",
+      "event": "DeepSeek's app reached the top of U.S. free app charts within a week of its launch.",
+      "predicted": [
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:0, C:5, D:4\nVoted answers: ['C', 'D']\nAfter post-processing: ['C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: C, D\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: C,D\n",
+      "options": [
+        "option_A: In November 2023, DeepSeek launched DeepSeek LLM.",
+        "option_B: Liang Wenfeng founded DeepSeek in July 2023.",
+        "option_C: In late December, DeepSeek unveiled a free, open-source large language model built in two months for under $6 million using Nvidia H800s chips.",
+        "option_D: DeepSeek's model outperformed Meta's Llama 3.1, OpenAI's GPT-4o, and Anthropic's Claude Sonnet 3.5 in third-party benchmark tests."
+      ]
+    },
+    {
+      "id": "q-2334",
+      "event": "Huawei announced a deployment timeline for HarmonyOS on various devices between 2020 and 2022.",
+      "predicted": [
+        "A",
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "A",
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:3, B:3, C:4, D:0\nVoted answers: ['A', 'B', 'C']\nAfter post-processing: ['A', 'B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A, B, C]  \nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,B,C\n",
+      "options": [
+        "option_A: Huawei ensured HarmonyOS supports applications developed in multiple programming languages.",
+        "option_B: Huawei unveiled its Harmony operating system.",
+        "option_C: Huawei announced HarmonyOS will be open source.",
+        "option_D: Huawei denied the U.S. government's accusations and pursued legal means."
+      ]
+    },
+    {
+      "id": "q-2358",
+      "event": "Trump was permanently banned from Twitter on January 8th.",
+      "predicted": [
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "D"
+      ],
+      "false_positives": [
+        "B"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:5, C:0, D:3\nVoted answers: ['B']\nAfter post-processing: ['B']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B, D \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: B\n",
+      "options": [
+        "option_A: Congress confirmed Biden as president in the early hours of January 7th.",
+        "option_B: Trump urged supporters to march to the Capitol.",
+        "option_C: Pipe bombs were reported at the Republican National Committee building and the Democratic National Committee headquarters.",
+        "option_D: Supporters stormed the U.S. Capitol."
+      ]
+    },
+    {
+      "id": "q-2378",
+      "event": "Lebanon declared a two-week state of emergency in Beirut following the blast.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "B",
+        "C"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:0, C:0, D:5\nVoted answers: ['D']\nAfter post-processing: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [D]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: The Port Authority transferred ammonium nitrate from the Rhosus to hangar 12 in Beirut’s port on October 23-24, 2014.",
+        "option_B: The explosion destroyed medicines, vaccines, personal protective equipment, and damaged primary health care centers, hospitals, warehouses, and a grain silo.",
+        "option_C: The explosion destroyed medicines, vaccines, personal protective equipment, and damaged primary health care centers, hospitals, warehouses, and a grain silo.",
+        "option_D: The Moldovan-flagged ship Rhosus, carrying 2,750 tonnes of ammonium nitrate, was impounded by Lebanon’s Enforcement Department on December 20, 2013."
+      ]
+    },
+    {
+      "id": "q-2388",
+      "event": "On August 15, 2021, the Taliban seized the presidential palace in Kabul and declared the war over.",
+      "predicted": [
+        "A",
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:5, B:1, C:4, D:1\nVoted answers: ['A', 'C']\nAfter post-processing: ['A', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A, C]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,C\n",
+      "options": [
+        "option_A: The Trump administration brokered a cease-fire with the Taliban in early 2020, excluding the Afghan government.",
+        "option_B: U.S. troops left Bagram Airfield.",
+        "option_C: US troops began withdrawing from Afghanistan in early July.",
+        "option_D: Al-Qaeda terrorists attacked the US on September 11, 2001."
+      ]
+    },
+    {
+      "id": "q-2372",
+      "event": "U.S. government regulators announced they would fully cover deposits at both SVB and Signature Bank.",
+      "predicted": [
+        "A",
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:5, B:5, C:0, D:0\nVoted answers: ['A', 'B']\nAfter post-processing: ['A', 'B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A, B]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,B,C\n",
+      "options": [
+        "option_A: Silicon Valley Bank clients withdrew funds in recent months.",
+        "option_B: Signature Bank failed after a bank run.",
+        "option_C: Signature Bank failed after a bank run.",
+        "option_D: Silicon Valley Bank suspended trading of its shares on Friday."
+      ]
+    },
+    {
+      "id": "q-2411",
+      "event": "Elon Musk gained full command of the federal cost-cutting effort.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A"
+      ],
+      "false_positives": [
+        "D"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:0, B:0, C:0, D:5\nVoted answers: ['D']\nAfter post-processing: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [D] \n\n**Reasoning**:  \n- **Option D** is directly supported by Doc6: \"Mr. Ramaswamy decided to step aside... As a result, Mr. Musk... now has full command.\" This satisfies:  \n  1. **Temporal precedence** (Ramaswamy withdrew before Musk gained command),  \n  2. **Causal mechanism** (his withdrawal left Musk as the sole leader),  \n  3. **Direct causation** (explicitly framed as the cause).  \n\n- **Others rejected**:  \n  - **A**: Campaign contributions (Doc1) show influence but no causal link to gaining command.  \n  - **B**: Lebryk’s departure (Doc1) reflects Musk’s existing power, not a cause of it.  \n  - **C**: Spending cut revision (Doc6) describes Musk’s post-command actions, not a cause.  \n\n**Risk Mitigation**: Only D has unambiguous evidence of direct causation. No over-selection.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: Elon Musk contributed $277 million to Trump's and other Republicans' 2024 campaigns.",
+        "option_B: David Lebryk departed his position at the Treasury Department.",
+        "option_C: Elon Musk tempered his initial promise for federal spending cuts from $2 trillion to $1 trillion.",
+        "option_D: Vivek Ramaswamy withdrew from the project before Mr. Trump assumed office."
+      ]
+    },
+    {
+      "id": "q-2409",
+      "event": "The Japanese government allocated $200 million to compensate the fishing industry and $340 million for local economic mitigation.",
+      "predicted": [
+        "A",
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "B"
+      ],
+      "false_positives": [
+        "C"
+      ],
+      "false_negatives": [],
+      "prediction_type": "over_complete",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:5, B:1, C:3, D:2\nVoted answers: ['A', 'C']\nAfter post-processing: ['A', 'B', 'C']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A, C]\n\n**PHASE 1: Evidence Mapping**  \n- **A/B**: Supported by Doc9 (\"Japan will begin discharging treated radioactive water\") and Doc10 (Kishida’s announcement). **Strong** evidence.  \n- **C**: Supported by Doc1 (\"2011 earthquake and tsunami caused meltdowns\") and Doc2 (\"earthquake and tsunami in 2011 led to meltdown\"). **Strong** evidence.  \n- **D**: Supported by Doc1 (\"China announced [...] ban on seafood\") and Doc9 (China’s seafood ban). **Strong** evidence.  \n\n**PHASE 2: Causal Verification**  \n1. **A/B**:  \n   - **Temporal**: Announcement (2023) precedes allocation (target event).  \n   - **Mechanism**: Directly triggered compensation needs (Doc2: \"public anxiety\" affecting fishermen).  \n   - **Direction**: Direct cause (decision → compensation).  \n\n2. **C**:  \n   - **Temporal**: 2011 disaster precedes 2023 allocation.  \n   - **Mechanism**: Root cause of Fukushima’s wastewater accumulation (Doc1/Doc2: meltdown → contaminated water storage).  \n   - **Direction**: Indirect cause (historical event enabling later decisions).  \n\n3. **D**:  \n   - **Temporal**: Ban (2023) occurs after announcement but before allocation.  \n   - **Mechanism**: Economic impact (Doc1: fishermen’s lost sales) necessitated mitigation.  \n   - **Direction**: Consequence of A/B (release → ban → compensation).  \n\n**PHASE 3: Risk-Adjusted Selection**  \n- **A/B**: Direct cause (select).  \n- **C**: Indirect but foundational (excluded per causal chain rules).  \n- **D**: Consequence (excluded as over-selection risk).  \n\n**PHASE 4: Consistency Checks**  \n- A/B duplicates: Select **A**.  \n- Only A is a direct cause.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,B,C\n",
+      "options": [
+        "option_A: Prime Minister Fumio Kishida announced Japan would begin discharging treated radioactive water from the Fukushima Daiichi plant into the sea as early as Thursday.",
+        "option_B: Prime Minister Fumio Kishida announced Japan would begin discharging treated radioactive water from the Fukushima Daiichi plant into the sea as early as Thursday.",
+        "option_C: A huge earthquake and tsunami in 2011 caused a meltdown at the Fukushima plant.",
+        "option_D: China banned food imports from 10 Japanese prefectures and imposed radiation checks in response to the water release."
+      ]
+    },
+    {
+      "id": "q-2412",
+      "event": "Nvidia announced it is significantly increasing chip supply to meet surging demand.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "B"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "wrong_only",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:3, B:2, C:0, D:1\nVoted answers: ['A']\nAfter post-processing: ['A']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A\n",
+      "options": [
+        "option_A: Nvidia released its first-quarter earnings report, estimating $11 billion in second-quarter sales and reporting $1.09 earnings per share.",
+        "option_B: The tech industry increased its focus on A.I., causing a shortage of chips.",
+        "option_C: Jensen Huang, Chris Malachowsky, and Curtis Priem founded Nvidia in 1993.",
+        "option_D: Foreign investors purchased a net 15.8 trillion won ($11.6 billion) of South Korean stocks from January through March."
+      ]
+    },
+    {
+      "id": "q-2306",
+      "event": "On August 15, 2021, the Taliban seized the presidential palace in Kabul and declared the war over.",
+      "predicted": [
+        "A",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "C",
+        "D"
+      ],
+      "false_positives": [
+        "A"
+      ],
+      "false_negatives": [
+        "B"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:5, B:2, C:4, D:0\nVoted answers: ['A', 'C']\nAfter post-processing: ['A', 'C', 'D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: [A, C]\n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: A,C,D\n",
+      "options": [
+        "option_A: The Trump administration brokered a cease-fire with the Taliban in early 2020, excluding the Afghan government.",
+        "option_B: On August 15, 2021, Afghan President Ashraf Ghani fled the country.",
+        "option_C: The U.S. and other countries began withdrawing their forces from Afghanistan on May 1.",
+        "option_D: The U.S. and other countries began withdrawing their forces from Afghanistan on May 1."
+      ]
+    },
+    {
+      "id": "q-2391",
+      "event": "President Bolsonaro announced a 60-day ban on setting fires for land clearing and deployed 44,000 soldiers to seven states.",
+      "predicted": [
+        "B",
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "false_positives": [
+        "B",
+        "C"
+      ],
+      "false_negatives": [
+        "A"
+      ],
+      "prediction_type": "mixed_error",
+      "prediction_text": "\n========== SELF-CONSISTENCY (Option-Level Voting) ==========\nSamples: 5, Threshold: 3\nVote counts: A:2, B:2, C:2, D:5\nVoted answers: ['D']\nAfter post-processing: ['D']\n\n========== BEST RESPONSE ==========\nFinal Answer I Reasoned: B, C, D\n\n**Rationale:**  \n- **Option B (Germany/Norway withholding funds):** Doc1 shows financial pressure preceded the announcement, creating urgency (direct cause).  \n- **Option C (Macron's Mercosur withdrawal):** Doc1 cites trade sanctions as immediate international pressure driving Bolsonaro's response (direct cause).  \n- **Option D (125k ha burned):** Doc5/7 confirm fires from intentional deforestation directly triggered the fire ban (core environmental cause).  \n\n**Excluded:**  \n- **Option A:** Describes Brazil's reactive struggle (effect of pressure, not cause).  \n\n**Critical Checks:**  \n- Temporal order validated for B/C/D.  \n- D is the environmental trigger; B/C are geopolitical drivers.  \n- No over-selection: All 3 directly precede and logically compel Bolsonaro's dual actions.  \n\nCRITICAL: This line must be the LAST line of your response.\n\nFinal Answer I Reasoned: D\n",
+      "options": [
+        "option_A: The Brazilian government struggled to contain global outrage over its environmental policies.",
+        "option_B: Germany and Norway withheld tens of millions of dollars from the Amazon Fund.",
+        "option_C: French President Emmanuel Macron announced France’s withdrawal of support for the Mercosur trade deal.",
+        "option_D: 125,000 hectares of the Brazilian Amazon were cleared through 2019 and subsequently burned in August, mainly for agricultural conversion."
+      ]
+    }
+  ],
+  "partial_cases": [
+    {
+      "id": "q-2050",
+      "event": "The tariff announcement triggered a global meltdown in stock markets.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2030",
+      "event": "Myanmar's military-dominated government issued a plea for outside help.",
+      "predicted": [
+        "A",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2032",
+      "event": "US Treasury Secretary Janet Yellen called financial regulators together to discuss the situation.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2041",
+      "event": "Local governments established public mourning sites.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2044",
+      "event": "The House and Senate recessed, and the Capitol was locked down.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B",
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2058",
+      "event": "The Bank of England intervened on September 28 by announcing a temporary purchase of £65 billion worth of long-dated UK government bonds.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2066",
+      "event": "The Iraqi parliament voted to expel US troops from Iraq.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2043",
+      "event": "Yoon's senior aides and defense minister offered to resign.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2024",
+      "event": "On November 26, 2018, the first trials for those arrested on November 24 took place.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2069",
+      "event": "A woman was shot inside the Capitol and died.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2079",
+      "event": "Myanmar’s military imposed a nationwide 8pm to 6am curfew.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2061",
+      "event": "Liz Truss fired Treasury chief Kwasi Kwarteng.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2090",
+      "event": "Sinn Fein called for a referendum on Irish unity.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2094",
+      "event": "Protesters clashed with police and breached security barriers at the Capitol.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B",
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2085",
+      "event": "The Chinese government criticized Japan’s plan to release wastewater.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "B"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2100",
+      "event": "Wagner troops withdrew from Rostov, the Lipetsk region, and Moscow.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2099",
+      "event": "On August 15, 2021, Afghan President Ashraf Ghani fled the country.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2093",
+      "event": "Wagner forces advanced towards Moscow with a column of armored vehicles.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2111",
+      "event": "A TEPCO staff member activated a seawater pump and an operator confirmed the release.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "B"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2130",
+      "event": "Protesters clashed with police and breached security barriers at the Capitol.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2126",
+      "event": "Huawei stated HarmonyOS will debut first on the Honor Smart Screen and Huawei TVs.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2051",
+      "event": "The Iraqi parliament voted to expel US troops from Iraq.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2140",
+      "event": "The FBI and ATF cleared the Capitol.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2133",
+      "event": "Regulators expedited the merger process between Credit Suisse and UBS to avert a crisis.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2127",
+      "event": "On August 15, 2021, Afghan President Ashraf Ghani fled the country.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "missing": [
+        "A",
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2124",
+      "event": "Jeremy Hunt reversed most mini-budget policies three weeks later.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2038",
+      "event": "Wagner forces advanced towards Moscow with a column of armored vehicles.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2031",
+      "event": "The Chinese government criticized Japan’s plan to release wastewater.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2135",
+      "event": "Opposition legislators filed an impeachment motion against President Yoon on Wednesday.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2158",
+      "event": "Seoul Mayor Oh Se-Hoon cut short a trip to Europe to return home.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2146",
+      "event": "Prigozhin went into exile in Belarus.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2119",
+      "event": "Credit Suisse shareholders will receive one UBS share for every 22.48 Credit Suisse shares.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2179",
+      "event": "Huawei announced a deployment timeline for HarmonyOS on various devices between 2020 and 2022.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "A",
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2029",
+      "event": "Facebook changed its corporate name to Meta on October 28 at the company's annual Connect event.",
+      "predicted": [
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2148",
+      "event": "130 people were arrested across France, including 42 in Paris.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "A",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2037",
+      "event": "Widespread protests erupted across the nation, including at Lafayette Square in Washington, D.C.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2156",
+      "event": "Protesters rallied in Tokyo on August 24, 2023, against the Japanese government’s plan to release treated wastewater from the Fukushima-Daiichi power plant.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2205",
+      "event": "Taliban fighters spread across Kabul streets, riding motorbikes and driving seized police vehicles and Humvees.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2204",
+      "event": "The US Senate will likely vote on Wednesday on a bill to halt Trump’s tariffs on Canadian imports.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2206",
+      "event": "On July 2, 2021, Judge Bitar requested parliament lift immunity for former ministers Khalil, Zeaiter, and Nohad Machnouk, and sought permission from bar associations to prosecute Khalil, Zeaiter, and Fenianos.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2210",
+      "event": "Global markets plunged following the Brexit vote.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2195",
+      "event": "Huawei released a TV running HarmonyOS.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2226",
+      "event": "Prime Minister Hassan Diab and his government resigned following the explosion.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2233",
+      "event": "Over three million Brits called for a do-over.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2231",
+      "event": "The FBI and ATF cleared the Capitol.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2199",
+      "event": "A woman was shot inside the Capitol and died.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2227",
+      "event": "Local governments established public mourning sites.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2230",
+      "event": "Donald Trump hailed a $500 billion plan by OpenAI, SoftBank, and Oracle.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2238",
+      "event": "Wagner troops withdrew from Rostov, the Lipetsk region, and Moscow.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2252",
+      "event": "The congressional certification of Joe Biden’s victory was halted.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2224",
+      "event": "The U.S. Congress defined legal requirements for stablecoins, including HQLA, one-for-one backing, and audits.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2248",
+      "event": "The IAEA will maintain an on-site presence for the duration of the release.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2250",
+      "event": "Local governments established public mourning sites.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2235",
+      "event": "The House and Senate recessed, and the Capitol was locked down.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2261",
+      "event": "Taliban fighters spread across Kabul streets, riding motorbikes and driving seized police vehicles and Humvees.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2253",
+      "event": "India sent approximately 15 tonnes of relief material to Myanmar via an IAF C-130J aircraft.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2254",
+      "event": "Facebook changed its corporate name to Meta on October 28 at the company's annual Connect event.",
+      "predicted": [
+        "A",
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2286",
+      "event": "The British pound plunged in value.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2280",
+      "event": "Myanmar's ruling junta chief reported at least 144 people killed and over 732 injured.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2287",
+      "event": "The US Senate will likely vote on Wednesday on a bill to halt Trump’s tariffs on Canadian imports.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "A",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2273",
+      "event": "Andrew Bosworth announced the retirement of the Oculus name.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "B"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2232",
+      "event": "Facebook replaced its corporate sign outside its California headquarters with one featuring the Meta logo.",
+      "predicted": [
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2263",
+      "event": "Three former Minneapolis police officers were criminally charged with aiding and abetting second-degree murder in connection with Floyd's death, and Chauvin's charge was upgraded to second-degree murder.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B",
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2299",
+      "event": "The D.C. National Guard was activated, and a citywide curfew was imposed.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2301",
+      "event": "Facebook introduced a new infinity-shaped corporate logo.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2294",
+      "event": "Amazonas state in Brazil declared a state of emergency due to the fires.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "B",
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2307",
+      "event": "President Joe Biden approved a major disaster declaration for Texas.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2326",
+      "event": "Protesters overtook and destroyed the Minneapolis Police Department’s Third Precinct.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B",
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2285",
+      "event": "Air quality along the West Coast deteriorated to harmful levels, with Portland registering the worst air globally and Seattle the third worst.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2303",
+      "event": "President Yoon Suk Yeol vowed to carry out a thorough investigation.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2311",
+      "event": "Putin delivered a televised address accusing Prigozhin of treason.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "B"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2322",
+      "event": "Over three million Brits called for a do-over.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2315",
+      "event": "The last U.S. military planes departed Afghanistan around midnight Monday (Kabul time), completing the withdrawal.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2335",
+      "event": "Over 2 million Texas residents were left without electricity.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2347",
+      "event": "India sent approximately 15 tonnes of relief material to Myanmar via an IAF C-130J aircraft.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2329",
+      "event": "President Joe Biden approved a major disaster declaration for Texas.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2331",
+      "event": "President Bolsonaro announced a 60-day ban on setting fires for land clearing and deployed 44,000 soldiers to seven states.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2352",
+      "event": "Widespread disruption occurred in internet and news access, and banks temporarily shut down across Myanmar following the coup.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "B",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2341",
+      "event": "Taliban fighters spread across Kabul streets, riding motorbikes and driving seized police vehicles and Humvees.",
+      "predicted": [
+        "B",
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2367",
+      "event": "Facebook changed its corporate name to Meta on October 28 at the company's annual Connect event.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2362",
+      "event": "Authorities in Myanmar and Thailand declared a state of emergency.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "B"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2370",
+      "event": "Scientific journals, including Springer Nature and Elsevier, updated author guidelines to prohibit LLMs as authors and require documentation of their use.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2363",
+      "event": "International leaders and organizations condemned the military takeover in Myanmar.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "B",
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2384",
+      "event": "The fires destroyed more than 1,400 homes.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2385",
+      "event": "Yoon's senior aides and defense minister offered to resign.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "missing": [
+        "A",
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2353",
+      "event": "Myanmar’s military government removed 24 ministers and deputies and appointed 11 replacements.",
+      "predicted": [
+        "A"
+      ],
+      "ground_truth": [
+        "A",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2369",
+      "event": "DeepSeek's app reached the top of U.S. free app charts within a week of its launch.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2400",
+      "event": "Emergency workers from around the country were deployed to Itaewon to treat the injured.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2402",
+      "event": "World leaders, including Fumio Kishida, Joe Biden, and Xi Jinping, sent messages of condolence to President Yoon.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2376",
+      "event": "Trump was impeached for a second time on January 13th.",
+      "predicted": [
+        "A",
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2300",
+      "event": "Austin and San Antonio issued boil-water notices.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "D"
+      ],
+      "missing": [
+        "A"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2381",
+      "event": "French President Emmanuel Macron announced France’s withdrawal of support for the Mercosur trade deal.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2386",
+      "event": "South Korea’s parliament voted to impeach President Yoon Suk Yeol.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "C",
+        "D"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2403",
+      "event": "President Yoon Suk-yeol declared a period of national mourning and designated Itaewon a disaster zone.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2396",
+      "event": "Myanmar’s military imposed a nationwide 8pm to 6am curfew.",
+      "predicted": [
+        "A",
+        "B"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2407",
+      "event": "Thousands of volunteers from Lebanon and its diaspora cleared rubble, offered accommodation, and repaired homes in affected areas after the explosion.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "C"
+      ],
+      "missing": [
+        "C"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2414",
+      "event": "The chairmen of Credit Suisse and UBS announced a union on March 19th in Bern.",
+      "predicted": [
+        "C"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "C"
+      ],
+      "missing": [
+        "A",
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2395",
+      "event": "The district officially unveiled Black Lives Matter Plaza on June 5, 2020.",
+      "predicted": [
+        "D"
+      ],
+      "ground_truth": [
+        "A",
+        "B",
+        "D"
+      ],
+      "missing": [
+        "A",
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2419",
+      "event": "Liz Truss announced her resignation as Prime Minister on October 20.",
+      "predicted": [
+        "B"
+      ],
+      "ground_truth": [
+        "B",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2413",
+      "event": "Myanmar’s military seized power on February 1, beginning a coup.",
+      "predicted": [
+        "C",
+        "D"
+      ],
+      "ground_truth": [
+        "B",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "B"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    },
+    {
+      "id": "q-2374",
+      "event": "Over four million customers were without power in Texas.",
+      "predicted": [
+        "B",
+        "C"
+      ],
+      "ground_truth": [
+        "B",
+        "C",
+        "D"
+      ],
+      "missing": [
+        "D"
+      ],
+      "score": 0.5,
+      "prediction_type": "partial_match"
+    }
+  ]
+}

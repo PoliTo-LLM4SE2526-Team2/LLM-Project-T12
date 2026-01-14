@@ -148,8 +148,26 @@ EVALUATION METRIC:
 - Correct subset (no errors) = 0.5 points  
 - Any wrong selection = 0.0 points
 
-Your goal: Maximize expected score. Since wrong selections are catastrophic (0 points), 
-prioritize precision while still capturing high-confidence correct answers.""",
+⚠️ CRITICAL WARNING: Over-selection is the #1 cause of failure!
+- 53% of errors come from selecting too many options
+- Option D is especially problematic - be EXTRA cautious
+- When in doubt, DO NOT select
+- Better to get 0.5 points (partial) than 0 points (wrong)
+
+⚠️ CAUSAL CHAIN WARNING:
+When multiple options seem related, ask yourself:
+- Is option X a DIRECT cause of the target event?
+- Or is option X a CONSEQUENCE of another option?
+- Or is option X just CORRELATED but not causal?
+
+Example: If the event is "Biden declared disaster for Texas"
+- ✅ "Winter storm hit Texas" = DIRECT CAUSE
+- ❌ "Power plants shut down" = CONSEQUENCE of the storm, not cause of declaration
+- ❌ "ERCOT acknowledged cold weather" = Just correlated
+
+Only select DIRECT causes, not intermediate effects!
+
+Your goal: Maximize expected score with HIGH PRECISION.""",
 
         "user_prompt": """
 TARGET EVENT:

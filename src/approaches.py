@@ -10,6 +10,9 @@ Key insight: Conservative strategy is optimal.
 """
 
 from abc import ABC, abstractmethod
+from itertools import count
+
+from torch import threshold
 from src.llm import BaseLLM
 from src.retriever import DocumentRetriever
 from src.dataloader import AERItem
@@ -463,6 +466,7 @@ class SelfConsistencyRefinementApproach(BaseApproach):
         self.num_samples = 5
         self.temperature = 0.5  # 降低温度
         self.vote_threshold = 3  # 至少 3/5 才选
+        self.d_option_threshold = 4  # D选项更严格
     
     def _get_prompt(self, item: AERItem, prompt_name: str) -> tuple:
         """Get the system and user prompts."""
@@ -515,12 +519,23 @@ class SelfConsistencyRefinementApproach(BaseApproach):
             print(f"  Sample {i+1}: {sorted(answers) if answers else 'No answer'}")
         
         # 基于阈值选择
-        voted_answers = {opt for opt, count in option_votes.items() 
-                        if count >= self.vote_threshold}
+        # 投票逻辑改成
+        voted_answers = set()
+        for opt, count in option_votes.items():
+            threshold = self.d_option_threshold if opt == 'D' else self.vote_threshold
+            if count >= threshold:
+                voted_answers.add(opt)
+        # 限制逻辑改成：只有选了4个时才移除
+        if len(voted_answers) >= 4:
+            min_vote = min(option_votes[opt] for opt in voted_answers)
+            min_opts = [opt for opt in voted_answers if option_votes[opt] == min_vote]
+            if len(min_opts) == 1:
+                voted_answers.discard(min_opts[0])
         
         vote_summary = ", ".join(f"{opt}:{count}" for opt, count in sorted(option_votes.items()))
         print(f"\n[Vote counts] {vote_summary}")
-        print(f"[Threshold {self.vote_threshold}] Selected: {sorted(voted_answers)}")
+        #print(f"[Threshold {self.vote_threshold}] Selected: {sorted(voted_answers)}")
+        print(f"[Threshold: general={self.vote_threshold}, D={self.d_option_threshold}] Selected: {sorted(voted_answers)}")
         
         # 如果没有超过阈值的，选最高票的
         if not voted_answers:
