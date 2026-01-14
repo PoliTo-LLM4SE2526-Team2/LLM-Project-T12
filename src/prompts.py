@@ -148,28 +148,30 @@ EVALUATION METRIC:
 - Correct subset (no errors) = 0.5 points  
 - Any wrong selection = 0.0 points
 
-⚠️ CRITICAL WARNING: Over-selection is the #1 cause of failure!
-- 53% of errors come from selecting too many options
-- Option D is especially problematic - be EXTRA cautious
-- When in doubt, DO NOT select
-- Better to get 0.5 points (partial) than 0 points (wrong)
+⚠️ CRITICAL RULES:
+1. Over-selection is the #1 cause of failure (53% of errors)
+2. Option D is especially problematic - be EXTRA cautious
+3. When in doubt, DO NOT select
+4. Better to get 0.5 points (partial) than 0 points (wrong)
 
 ⚠️ CAUSAL CHAIN WARNING:
-When multiple options seem related, ask yourself:
 - Is option X a DIRECT cause of the target event?
 - Or is option X a CONSEQUENCE of another option?
 - Or is option X just CORRELATED but not causal?
 
 Example: If the event is "Biden declared disaster for Texas"
 - ✅ "Winter storm hit Texas" = DIRECT CAUSE
-- ❌ "Power plants shut down" = CONSEQUENCE of the storm, not cause of declaration
+- ❌ "Power plants shut down" = CONSEQUENCE of the storm
 - ❌ "ERCOT acknowledged cold weather" = Just correlated
 
-Only select DIRECT causes, not intermediate effects!
+⚠️ COMMON MISTAKES TO AVOID:
+1. Selecting background/historical events that are NOT direct causes
+2. Selecting multiple options when only one is the TRUE cause
+3. Confusing "happened before" with "caused"
 
-Your goal: Maximize expected score with HIGH PRECISION.""",
+Only select DIRECT causes with STRONG documentary evidence!""",
 
-        "user_prompt": """
+    "user_prompt": """
 TARGET EVENT:
 {event}
 
@@ -179,32 +181,27 @@ EVIDENCE DOCUMENTS:
 CANDIDATE CAUSES:
 {options_text}
 
-=== ANALYSIS FRAMEWORK ===
+=== STRICT ANALYSIS FRAMEWORK ===
 
-**PHASE 1: Evidence Mapping**
-For each option, identify supporting evidence:
-| Option | Documentary Evidence | Strength |
-|--------|---------------------|----------|
-| A      | [Doc X]: "..." or NONE | Strong/Weak/None |
-| B      | [Doc X]: "..." or NONE | Strong/Weak/None |
-| C      | [Doc X]: "..." or NONE | Strong/Weak/None |
-| D      | [Doc X]: "..." or NONE | Strong/Weak/None |
+**STEP 1: Evidence Check**
+For each option, quote DIRECT evidence from documents:
+| Option | Evidence Quote | Found? |
+|--------|---------------|--------|
+| A      | "..." or NONE | Yes/No |
+| B      | "..." or NONE | Yes/No |
+| C      | "..." or NONE | Yes/No |
+| D      | "..." or NONE | Yes/No |
 
-**PHASE 2: Causal Verification**
-For options with evidence, verify:
-1. TEMPORAL: Did this happen BEFORE the target event?
-2. MECHANISM: Is there a logical causal pathway?
-3. DIRECTION: Is this a CAUSE (leads to event) or CONSEQUENCE (results from event)?
+**STEP 2: Causation Test (Only for options with evidence)**
+For each option with evidence, answer:
+1. Did this happen BEFORE the target event? (Yes/No)
+2. Did this DIRECTLY CAUSE the target event? (Yes/No)
+3. Is this a consequence or just correlated? (Cause/Consequence/Correlated)
 
-**PHASE 3: Risk-Adjusted Selection**
-Given scoring (wrong=0, partial=0.5):
-- Strong evidence + Clear causation → SELECT
-- Moderate evidence + Probable causation → SELECT only if very confident
-- Weak evidence or unclear → DO NOT SELECT
-
-**PHASE 4: Consistency Checks**
-- Duplicate options: Same decision for identical text
-- "None correct": Only if ALL others rejected
+**STEP 3: Final Selection**
+- Select ONLY options where: Evidence=Yes AND Before=Yes AND DirectCause=Yes
+- If unsure about ANY option, DO NOT select it
+- Prefer selecting fewer options over risking wrong selection
 
 === OUTPUT ===
 Final Answer I Reasoned: [Your selections]

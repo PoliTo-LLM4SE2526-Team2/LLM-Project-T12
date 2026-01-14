@@ -37,7 +37,7 @@ PROMPT_NAME = [
     "balanced",
 ]
 
-
+'''
 def parse_answer(prediction: str) -> set:
     if not prediction:
         return set()
@@ -62,7 +62,32 @@ def parse_answer(prediction: str) -> set:
         return {m.upper() for m in matches if m.upper() in ["A", "B", "C", "D"]}
 
     return set()
+'''
 
+def parse_answer(prediction: str) -> set:
+    if not prediction:
+        return set()
+
+    # Try to find "Final Answer I Reasoned: ..." pattern
+    pattern = r"Final Answer I Reasoned:\s*([A-D](?:\s*,\s*[A-D])*)"
+    
+    # 改用 findall 获取所有匹配，然后取最后一个
+    matches = re.findall(pattern, prediction, re.IGNORECASE)
+    
+    if matches:
+        # 取最后一个匹配
+        answer_str = matches[-1].strip()
+        answers = [a.strip().upper() for a in answer_str.split(",") if a.strip()]
+        valid_answers = {a for a in answers if a in ["A", "B", "C", "D"]}
+        return valid_answers
+
+    # Fallback: try to find any single letter A-D at the end
+    pattern2 = r"\b([A-D])\b"
+    matches = re.findall(pattern2, prediction[-200:])
+    if matches:
+        return {m.upper() for m in matches if m.upper() in ["A", "B", "C", "D"]}
+
+    return set()
 
 def parse_ground_truth(answer_str: str) -> set:
     if not answer_str:
