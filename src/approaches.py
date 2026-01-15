@@ -98,14 +98,19 @@ def find_none_correct_option(options: list) -> str:
     return None
 
 
-def post_process_answers(answers: set, options: list) -> set:
+def post_process_answers(answers: set, options: list, option_votes: dict = None) -> set:
     """
     后处理答案，强制执行逻辑规则
     
     Rules:
     1. 重复选项必须同时选中或同时不选
-    2. "None correct" 不能与其他选项同时选中
+    2. "None correct" 不能与其他选项同时选中（基于投票数决定保留谁）
     3. 答案不能为空
+    
+    Args:
+        answers: 投票选出的答案集合
+        options: 选项列表
+        option_votes: 各选项的投票数 (可选)
     """
     if not answers:
         return answers
@@ -122,11 +127,21 @@ def post_process_answers(answers: set, options: list) -> set:
     
     # Rule 2: 处理 "None correct" 互斥性
     none_label = find_none_correct_option(options)
-    if none_label and none_label in processed:
-        # 如果选了 "None correct"，检查是否还选了其他选项
-        other_answers = processed - {none_label}
-        if other_answers:
-            # 矛盾！根据保守策略，移除 "None correct"（保留实质性答案）
+    if none_label and none_label in processed and len(processed) > 1:
+        # 如果选了 "None correct" 同时又选了其他选项
+        if option_votes:
+            # 基于投票数决定：谁票多保留谁
+            none_votes = option_votes.get(none_label, 0)
+            other_votes = max(option_votes.get(opt, 0) for opt in processed if opt != none_label)
+            
+            if none_votes >= other_votes:
+                # None correct票数更多，只保留它
+                processed = {none_label}
+            else:
+                # 其他选项票数更多，删除None correct
+                processed.discard(none_label)
+        else:
+            # 没有投票数据时，保守策略：保留实质性答案
             processed.discard(none_label)
     
     return processed
@@ -256,7 +271,7 @@ class LightweightConsistencyApproach(BaseApproach):
                                if count == max_votes}
         
         # ============ 后处理 ============
-        final_answers = post_process_answers(voted_answers, item.options)
+        final_answers = post_process_answers(voted_answers, item.options, option_votes)
         
         # 构建输出
         vote_summary = ", ".join(f"{opt}:{count}" for opt, count in sorted(option_votes.items()))
@@ -563,7 +578,7 @@ class SelfConsistencyRefinementApproach(BaseApproach):
             # 这里可以添加针对性验证逻辑
         
         # ============ 后处理 ============
-        final_answers = post_process_answers(voted_answers, item.options)
+        final_answers = post_process_answers(voted_answers, item.options, option_votes)
         
         # 保存投票详情到实例属性,供evaluator使用
         self.last_voting_details = {
