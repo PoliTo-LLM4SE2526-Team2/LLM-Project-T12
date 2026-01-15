@@ -148,7 +148,7 @@ class ConservativeApproach(BaseApproach):
     def solve(self, item: AERItem, prompt_name: str = "conservative") -> str:
         # 检索相关文档
         documents = (
-            self.retriever.retrieve(item.event, item.title_snippet, item.documents)
+            self.retriever.retrieve(item.event, item.title_snippet, item.documents, item.options)
             if self.retriever
             else item.documents
         )
@@ -208,7 +208,7 @@ class LightweightConsistencyApproach(BaseApproach):
     def solve(self, item: AERItem, prompt_name: str = "conservative") -> str:
         # 检索相关文档
         documents = (
-            self.retriever.retrieve(item.event, item.title_snippet, item.documents)
+            self.retriever.retrieve(item.event, item.title_snippet, item.documents, item.options)
             if self.retriever
             else item.documents
         )
@@ -290,7 +290,7 @@ class TwoPassApproach(BaseApproach):
     def solve(self, item: AERItem, prompt_name: str = "conservative") -> str:
         # 检索相关文档
         documents = (
-            self.retriever.retrieve(item.event, item.title_snippet, item.documents)
+            self.retriever.retrieve(item.event, item.title_snippet, item.documents, item.options)
             if self.retriever
             else item.documents
         )
@@ -420,7 +420,7 @@ class BaselineApproach(BaseApproach):
 
     def solve(self, item: AERItem, prompt_name: str = "cot") -> str:
         documents = (
-            self.retriever.retrieve(item.event, item.title_snippet, item.documents)
+            self.retriever.retrieve(item.event, item.title_snippet, item.documents, item.options)
             if self.retriever
             else item.documents
         )
@@ -471,7 +471,7 @@ class SelfConsistencyRefinementApproach(BaseApproach):
     def _get_prompt(self, item: AERItem, prompt_name: str) -> tuple:
         """Get the system and user prompts."""
         documents = (
-            self.retriever.retrieve_with_options(item.event, item.options, item.title_snippet, item.documents)
+            self.retriever.retrieve(item.event, item.title_snippet, item.documents, item.options)
             if self.retriever
             else item.documents
         )

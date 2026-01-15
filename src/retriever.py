@@ -13,12 +13,14 @@ class DocumentRetriever:
     def __init__(self, top_k: int = 10,
                  use_full_content: bool = False,
                  use_gpu: bool = False,
-                 rrf_k: int = 60):
+                 rrf_k: int = 60,
+                 use_per_option: bool = False):
 
         self.top_k = top_k
         self.use_full_content = use_full_content
         self.use_gpu = use_gpu
         self.rrf_k = rrf_k
+        self.use_per_option = use_per_option
         
         # Initialize the model
         try:
@@ -125,10 +127,15 @@ class DocumentRetriever:
         return merged_results[:self.top_k]
     
 
-    def retrieve(self, event: str, title_snippet: List[str], documents: List[str]) -> List[str]:
+    def retrieve(self, event: str, title_snippet: List[str], documents: List[str], options: List[str] = None) -> List[str]:
         """
         Retrieve top_k documents using combined BM25 and vector retrieval with RRF.
+        If use_per_option is True and options are provided, use per-option retrieval.
         """
+        # 如果启用 per-option 且提供了 options，使用新方法
+        if self.use_per_option and options:
+            return self.retrieve_with_options(event, options, title_snippet, documents)
+        
         if not documents:
             return []
         

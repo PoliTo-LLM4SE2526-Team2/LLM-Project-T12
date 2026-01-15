@@ -130,6 +130,11 @@ def main():
         action="store_true",
         help="Use GPU for semantic retrieval (if available)",
     )
+    parser.add_argument(
+        "--use_per_option",
+        action="store_true",
+        help="Use per-option retrieval (retrieve for event + each option)",
+    )
 
     # arguments for approach
     parser.add_argument(
@@ -163,6 +168,7 @@ def main():
             top_k=args.top_k if args.top_k > 0 else 10,
             use_full_content=args.use_full_content,
             use_gpu=args.use_gpu,
+            use_per_option=args.use_per_option,
         )
     )
 
