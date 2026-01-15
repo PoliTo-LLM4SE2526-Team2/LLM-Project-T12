@@ -501,6 +501,8 @@ class SelfConsistencyRefinementApproach(BaseApproach):
         
         option_votes = {"A": 0, "B": 0, "C": 0, "D": 0}
         all_responses = []
+        # 新增：记录每次采样的详细投票信息
+        voting_details = []
         
         for i in range(self.num_samples):
             messages = [
@@ -515,6 +517,13 @@ class SelfConsistencyRefinementApproach(BaseApproach):
             answers = self._parse_answer_from_response(response)
             for opt in answers:
                 option_votes[opt] += 1
+            
+            # 记录本次采样的详细信息
+            voting_details.append({
+                "sample_id": i + 1,
+                "selected_options": sorted(list(answers)),
+                "response": response
+            })
             
             print(f"  Sample {i+1}: {sorted(answers) if answers else 'No answer'}")
         
@@ -555,6 +564,18 @@ class SelfConsistencyRefinementApproach(BaseApproach):
         
         # ============ 后处理 ============
         final_answers = post_process_answers(voted_answers, item.options)
+        
+        # 保存投票详情到实例属性,供evaluator使用
+        self.last_voting_details = {
+            "question_id": item.id,
+            "num_samples": self.num_samples,
+            "vote_threshold": self.vote_threshold,
+            "d_option_threshold": self.d_option_threshold,
+            "voting_details": voting_details,
+            "option_votes": option_votes,
+            "voted_answers": sorted(list(voted_answers)),
+            "final_answers": sorted(list(final_answers))
+        }
         
         # 构建输出
         output = f"""

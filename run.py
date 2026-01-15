@@ -213,6 +213,11 @@ def main():
                 # parse answers
                 predicted = parse_answer(prediction)
                 ground_truth = parse_ground_truth(event.answer)
+                
+                # 获取投票详情（如果有）
+                voting_details = None
+                if hasattr(solver, 'last_voting_details'):
+                    voting_details = solver.last_voting_details
 
                 # update evaluator
                 evaluator.update(
@@ -222,6 +227,7 @@ def main():
                     prediction_text=prediction,
                     event=event.event,
                     options=event.options,
+                    voting_details=voting_details  # 传递投票详情
                 )
 
                 # save to submission

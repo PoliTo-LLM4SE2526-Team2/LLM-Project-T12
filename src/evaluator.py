@@ -34,6 +34,9 @@ class Evaluator:
         self.error_cases = []
         self.partial_cases = []  # 新增：partial match 的案例
         
+        # 新增：投票详情记录
+        self.voting_details = []
+        
         # Answer type statistics
         self.single_answer = defaultdict(int)
         self.multi_answer = defaultdict(int)
@@ -113,7 +116,8 @@ class Evaluator:
         return "mixed_error"
     
     def update(self, predicted: Set[str], ground_truth: Set[str], event_id: str = "", 
-               prediction_text: str = "", event: str = "", options: List[str] = None):
+               prediction_text: str = "", event: str = "", options: List[str] = None,
+               voting_details: Dict = None):  # 新增参数
         
         self.total += 1
         
@@ -141,6 +145,10 @@ class Evaluator:
                 })
         else:
             self.incorrect += 1
+        
+        # 保存投票详情
+        if voting_details:
+            self.voting_details.append(voting_details)
             
             # Store error case
             if event_id:
@@ -349,7 +357,8 @@ class Evaluator:
             "approach": approach_name,
             "summary": self.get_summary(),
             "error_cases": self.error_cases,
-            "partial_cases": self.partial_cases  # 新增
+            "partial_cases": self.partial_cases,  # 新增
+            "voting_details": self.voting_details  # 新增：保存投票详情
         }
         
         with open(filepath, "w", encoding="utf-8") as f:
