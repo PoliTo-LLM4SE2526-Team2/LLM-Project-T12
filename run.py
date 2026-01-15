@@ -37,45 +37,16 @@ PROMPT_NAME = [
     "balanced",
 ]
 
-
-# def parse_answer(prediction: str) -> set:
-#     if not prediction:
-#         return set()
-
-#     # Try to find "Final Answer I Reasoned: ..." pattern
-#     # Use a more precise pattern that stops at non-answer characters
-#     pattern = r"Final Answer I Reasoned:\s*([A-D](?:\s*,\s*[A-D])*)"
-#     match = re.search(pattern, prediction, re.IGNORECASE)
-
-#     if match:
-#         answer_str = match.group(1).strip()
-#         # Split by comma and clean up
-#         answers = [a.strip().upper() for a in answer_str.split(",") if a.strip()]
-#         # Filter valid options (A, B, C, D)
-#         valid_answers = {a for a in answers if a in ["A", "B", "C", "D"]}
-#         return valid_answers
-
-#     # Fallback: try to find any single letter A-D at the end
-#     pattern2 = r"\b([A-D])\b"
-#     matches = re.findall(pattern2, prediction[-200:])  # Check last 200 chars
-#     if matches:
-#         return {m.upper() for m in matches if m.upper() in ["A", "B", "C", "D"]}
-
-#     return set()
-
-
 def parse_answer(prediction: str) -> set:
     if not prediction:
         return set()
 
-    # Try to find "Final Answer I Reasoned: ..." pattern
-    pattern = r"Final Answer I Reasoned:\s*([A-D](?:\s*,\s*[A-D])*)"
+    # 匹配两种格式：有 "I" 和没有 "I"
+    pattern = r"Final Answer(?:\s+I)?\s+Reasoned:\s*\[?([A-D](?:\s*,\s*[A-D])*)\]?"
     
-    # 改用 findall 获取所有匹配，然后取最后一个
     matches = re.findall(pattern, prediction, re.IGNORECASE)
     
     if matches:
-        # 取最后一个匹配
         answer_str = matches[-1].strip()
         answers = [a.strip().upper() for a in answer_str.split(",") if a.strip()]
         valid_answers = {a for a in answers if a in ["A", "B", "C", "D"]}
@@ -83,9 +54,9 @@ def parse_answer(prediction: str) -> set:
 
     # Fallback: try to find any single letter A-D at the end
     pattern2 = r"\b([A-D])\b"
-    matches = re.findall(pattern2, prediction[-200:])
-    if matches:
-        return {m.upper() for m in matches if m.upper() in ["A", "B", "C", "D"]}
+    fallback_matches = re.findall(pattern2, prediction[-200:])
+    if fallback_matches:
+        return {m.upper() for m in fallback_matches if m.upper() in ["A", "B", "C", "D"]}
 
     return set()
 
