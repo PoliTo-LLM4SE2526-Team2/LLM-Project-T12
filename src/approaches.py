@@ -471,7 +471,7 @@ class SelfConsistencyRefinementApproach(BaseApproach):
     def _get_prompt(self, item: AERItem, prompt_name: str) -> tuple:
         """Get the system and user prompts."""
         documents = (
-            self.retriever.retrieve(item.event, item.title_snippet, item.documents)
+            self.retriever.retrieve_with_options(item.event, item.options, item.title_snippet, item.documents)
             if self.retriever
             else item.documents
         )
