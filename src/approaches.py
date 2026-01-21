@@ -525,12 +525,30 @@ class SelfConsistencyRefinementApproach(BaseApproach):
             threshold = self.d_option_threshold if opt == 'D' else self.vote_threshold
             if count >= threshold:
                 voted_answers.add(opt)
-        # 限制逻辑改成：只有选了4个时才移除
-        if len(voted_answers) >= 4:
-            min_vote = min(option_votes[opt] for opt in voted_answers)
-            min_opts = [opt for opt in voted_answers if option_votes[opt] == min_vote]
-            if len(min_opts) == 1:
-                voted_answers.discard(min_opts[0])
+        
+        # 改进的4选项限制逻辑：只在明显异常时移除
+        if len(voted_answers) == 4:
+            # 检查是否包含 "None of the others" 选项
+            none_option = find_none_correct_option(item.options)
+            if none_option and none_option in voted_answers:
+                # 如果4个都选了且包含"None"，这是矛盾的，移除"None"
+                voted_answers.discard(none_option)
+                print(f"[Logic Check] Removed '{none_option}' (conflicts with other selections)")
+            else:
+                # 检查是否有明显的弱项（票数远低于其他）
+                vote_counts = [option_votes[opt] for opt in voted_answers]
+                min_vote = min(vote_counts)
+                max_vote = max(vote_counts)
+                
+                # 只有当最弱项得票 <= 1 且最强项得票 >= 4 时才移除
+                # 例如：A=5, B=5, C=4, D=1 → 移除D
+                #       A=3, B=3, C=3, D=3 → 保留全部
+                if min_vote <= 1 and max_vote >= 4:
+                    weak_opts = [opt for opt in voted_answers if option_votes[opt] == min_vote]
+                    if len(weak_opts) == 1:
+                        voted_answers.discard(weak_opts[0])
+                        print(f"[Logic Check] Removed weak option '{weak_opts[0]}' (votes: {min_vote} vs max: {max_vote})")
+                # 否则保留所有4个选项（相信投票结果）
         
         vote_summary = ", ".join(f"{opt}:{count}" for opt, count in sorted(option_votes.items()))
         print(f"\n[Vote counts] {vote_summary}")
