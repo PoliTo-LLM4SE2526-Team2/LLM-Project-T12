@@ -463,10 +463,10 @@ class SelfConsistencyRefinementApproach(BaseApproach):
     
     def __init__(self, llm: BaseLLM, retriever: DocumentRetriever = None):
         super().__init__(llm, retriever)
-        self.num_samples = 5
+        self.num_samples = 7
         self.temperature = 0.5  # 降低温度
-        self.vote_threshold = 3  # 至少 3/5 才选
-        self.d_option_threshold = 4  # D选项更严格
+        self.vote_threshold = 4  # 至少 3/5 才选
+        self.d_option_threshold = 5  # D选项更严格
     
     def _get_prompt(self, item: AERItem, prompt_name: str) -> tuple:
         """Get the system and user prompts."""
