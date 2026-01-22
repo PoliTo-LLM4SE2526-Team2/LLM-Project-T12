@@ -135,23 +135,6 @@ def main():
         action="store_true",
         help="Use per-option retrieval (retrieve for event + each option)",
     )
-    parser.add_argument(
-        "--coarse_top_k",
-        type=int,
-        default=30,
-        help="Number of candidates for coarse retrieval (before reranking)",
-    )
-    parser.add_argument(
-        "--no_reranker",
-        action="store_true",
-        help="Disable reranker (use only BM25 + Semantic retrieval)",
-    )
-    parser.add_argument(
-        "--reranker_model",
-        type=str,
-        default="cross-encoder/ms-marco-MiniLM-L-6-v2",
-        help="Reranker model to use",
-    )
 
     # arguments for approach
     parser.add_argument(
@@ -183,12 +166,9 @@ def main():
         if args.no_retrieval
         else DocumentRetriever(
             top_k=args.top_k if args.top_k > 0 else 10,
-            coarse_top_k=args.coarse_top_k,
             use_full_content=args.use_full_content,
             use_gpu=args.use_gpu,
             use_per_option=args.use_per_option,
-            use_reranker=not args.no_reranker,
-            reranker_model=args.reranker_model,
         )
     )
 
