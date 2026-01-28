@@ -62,6 +62,6 @@ class DataLoader:
                     title_snippet = title_snippet,
                     documents = documents,
                     options = [line[f"option_{i}"] for i in ["A", "B", "C", "D"]],
-                    answer = line['golden_answer']
+                    answer = line['golden_answer'] if 'golden_answer' in line else None
                 )
                 yield aer_item

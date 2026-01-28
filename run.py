@@ -10,6 +10,9 @@ from src.llm import ChatLLM
 from src.approaches import (
     BaselineApproach,
     SelfConsistencyRefinementApproach,
+    ConservativeApproach,
+    LightweightConsistencyApproach,
+    TwoPassApproach,
 )
 from src.evaluator import Evaluator
 from src.retriever import DocumentRetriever
@@ -20,12 +23,18 @@ from tqdm import tqdm
 APPROACHES = {
     "baseline": BaselineApproach,
     "sc_refine": SelfConsistencyRefinementApproach,
+    "conservative": ConservativeApproach,
+    "lightweight_sc": LightweightConsistencyApproach,
+    "twopass_real": TwoPassApproach,
 }
 PROMPT_NAME = [
     "cot",
     "optimized",
     "twopass",
     "structured",
+    "conservative",
+    "evidence_anchored",
+    "balanced",
 ]
 
 
@@ -34,26 +43,23 @@ def parse_answer(prediction: str) -> set:
         return set()
 
     # Try to find "Final Answer I Reasoned: ..." pattern
-    # Use a more precise pattern that stops at non-answer characters
     pattern = r"Final Answer I Reasoned:\s*([A-D](?:\s*,\s*[A-D])*)"
-    match = re.search(pattern, prediction, re.IGNORECASE)
-
-    if match:
-        answer_str = match.group(1).strip()
-        # Split by comma and clean up
+    
+    matches = re.findall(pattern, prediction, re.IGNORECASE)
+    
+    if matches:
+        answer_str = matches[-1].strip()
         answers = [a.strip().upper() for a in answer_str.split(",") if a.strip()]
-        # Filter valid options (A, B, C, D)
         valid_answers = {a for a in answers if a in ["A", "B", "C", "D"]}
         return valid_answers
 
     # Fallback: try to find any single letter A-D at the end
     pattern2 = r"\b([A-D])\b"
-    matches = re.findall(pattern2, prediction[-200:])  # Check last 200 chars
+    matches = re.findall(pattern2, prediction[-200:])
     if matches:
         return {m.upper() for m in matches if m.upper() in ["A", "B", "C", "D"]}
 
     return set()
-
 
 def parse_ground_truth(answer_str: str) -> set:
     if not answer_str:
@@ -96,6 +102,11 @@ def main():
         action="store_true",
         help="Use GPU for semantic retrieval (if available)",
     )
+    parser.add_argument(
+        "--use_per_option",
+        action="store_true",
+        help="Use per-option retrieval (retrieve for event + each option)",
+    )
 
     # arguments for approach
     parser.add_argument(
@@ -129,6 +140,7 @@ def main():
             top_k=args.top_k if args.top_k > 0 else 10,
             use_full_content=args.use_full_content,
             use_gpu=args.use_gpu,
+            use_per_option=args.use_per_option,
         )
     )
 
@@ -189,18 +201,6 @@ def main():
                 submission_answer = {"id": event.event_id, "answer": predicted_str}
                 submission.append(submission_answer)
 
-                # # Print result with reasoning
-                # print("-" * 50)
-                # print("REASONING PROCESS:")
-                # print("-" * 50)
-                # print(prediction)
-                # print("-" * 50)
-                # print(f"Predicted Answer: {sorted(list(predicted))}")
-                # print(f"Ground Truth: {sorted(list(ground_truth))}")
-                # print(f"Correct: {predicted == ground_truth}")
-                # print("-" * 50)
-                # print()
-
             except Exception as e:
                 print(f"{event.id} generated an exception: {e}")
                 evaluator.update(
@@ -231,27 +231,30 @@ def main():
     if not args.no_retrieval:
         print(f"Use Full Content: {args.use_full_content}")
     print(f"Total Time: {total_time:.2f} seconds")
-    summary = evaluator.get_summary()
-    print(f"\nTotal: {summary['total']}")
-    print(f"Correct: {summary['correct']}")
-    print(f"Incorrect: {summary['incorrect']}")
-    print(f"Accuracy: {summary['accuracy']:.4f} ({summary['accuracy'] * 100:.2f}%)")
-    print(f"Macro F1 Score: {summary['macro_f1']:.4f}")
-    print(
-        f"\nSingle Answer Accuracy: {summary['single_answer_accuracy']:.4f} ({summary['single_answer_count']} cases)"
-    )
-    print(
-        f"Multi Answer Accuracy: {summary['multi_answer_accuracy']:.4f} ({summary['multi_answer_count']} cases)"
-    )
-    print(
-        f"Insufficient Info Accuracy: {summary['insufficient_info_accuracy']:.4f} ({summary['insufficient_info_count']} cases)"
-    )
-    print(f"\nOption Level Matrix:")
-    print("\tPrecision\tRecall\t\tF1")
-    for option, matrix in sorted(summary["option_matrix"].items()):
+    if 'test' not in args.docs_path:
+        summary = evaluator.get_summary()
+        print(f"\nTotal: {summary['total']}")
+        print(f"Full Match: {summary['full_match']}")
+        print(f"Partial Match: {summary['partial_match']}")
+        print(f"Incorrect: {summary['incorrect']}")
+        print(f"Official Score: {summary['official_score']:.4f}")
+        print(f"Strict Accuracy: {summary['strict_accuracy']:.4f} ({summary['strict_accuracy'] * 100:.2f}%)")
+        print(f"Macro F1 Score: {summary['macro_f1']:.4f}")
         print(
-            f"{option}\t{matrix['precision']:.4f}\t\t{matrix['recall']:.4f}\t\t{matrix['f1']:.4f}"
+            f"\nSingle Answer Accuracy: {summary['single_answer_accuracy']:.4f} ({summary['single_answer_count']} cases)"
         )
+        print(
+            f"Multi Answer Accuracy: {summary['multi_answer_accuracy']:.4f} ({summary['multi_answer_count']} cases)"
+        )
+        print(
+            f"Insufficient Info Accuracy: {summary['insufficient_info_accuracy']:.4f} ({summary['insufficient_info_count']} cases)"
+        )
+        print(f"\nOption Level Matrix:")
+        print("\tPrecision\tRecall\t\tF1")
+        for option, matrix in sorted(summary["option_matrix"].items()):
+            print(
+                f"{option}\t{matrix['precision']:.4f}\t\t{matrix['recall']:.4f}\t\t{matrix['f1']:.4f}"
+            )
     print("=" * 50)
 
     # Save results

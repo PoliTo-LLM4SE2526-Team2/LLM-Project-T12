@@ -8,13 +8,14 @@ AER-Project/
 │
 ├── data/               # Dataset files (SemEval 2026)
 ├── paper/              # Project report with ACL template
-├── results/            # Model training results
 ├── src/
 │   ├── approaches.py   # Reasoning logic (Baseline, CoT, etc.)
 │   ├── dataloader.py   # Data preprocessing and loading
 │   ├── evaluator.py    # Evaluate model performance
-│   ├── retriever.py    # Retrieves and ranks documents
-│   └── llm.py          # LLM API Wrapper (DeepSeek)
+│   ├── prompts.py      # different type of prompts
+│   ├── llm.py          # LLM API Wrapper (DeepSeek)
+│   └── retriever.py    # Retrieves and ranks documents
+├── requirements.txt    # python dependencies
 └── run.py              # Main entry point for experiments
 ```
 

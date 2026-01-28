@@ -8,7 +8,9 @@ class Evaluator:
     def __init__(self):
         self.total = 0
         self.correct = 0
+        self.partial_correct = 0
         self.incorrect = 0
+        self.total_scores = 0
         
         # For precision/recall calculation (treating as multi-label classification)
         self.true_positives = defaultdict(int)  # option -> count
@@ -33,11 +35,25 @@ class Evaluator:
         self.total += 1
         
         # Check if completely correct
-        is_correct = (predicted == ground_truth)
-        if is_correct:
+        if predicted == ground_truth:
             self.correct += 1
+            self.total_scores += 1
+        elif predicted < ground_truth:
+            self.partial_correct += 1
+            self.total_scores += 0.5
+            # Store error case
+            if event_id:
+                self.error_cases.append({
+                    "id": event_id,
+                    "event": event,
+                    "predicted": sorted(list(predicted)),
+                    "ground_truth": sorted(list(ground_truth)),
+                    "prediction_text": prediction_text,
+                    "options": [f"option_{label}: {opt}" for label, opt in zip(["A", "B", "C", "D"], options)]
+                })
         else:
             self.incorrect += 1
+            self.total_scores += 0
             # Store error case
             if event_id:
                 self.error_cases.append({
@@ -67,9 +83,13 @@ class Evaluator:
         
         # Answer type statistics
         is_single = (len(ground_truth) == 1)
-        stats = self.single_answer if is_single else self.multi_answer
-        stats["count"] += 1
-        stats["correct"] += is_correct
+        if is_single:
+            self.single_answer["count"] += 1
+            self.single_answer["correct"] += (predicted == ground_truth)
+        else:
+            self.multi_answer["count"] += 1
+            self.multi_answer["partial_correct"] += (predicted < ground_truth)
+            self.multi_answer["correct"] += (predicted == ground_truth)
         
         # Check for "insufficient information" (usually option C with specific text)
         if options:
@@ -120,11 +140,13 @@ class Evaluator:
             return 0.0
         return self.single_answer["correct"] / self.single_answer["count"]
     
-    def get_multi_answer_accuracy(self) -> float:
-        """Calculate accuracy for 'multi answer' cases."""
-        if self.multi_answer["count"] == 0:
-            return 0.0
-        return self.multi_answer["correct"] / self.multi_answer["count"]
+    def get_multi_answer_accuracy(self) -> Dict[str, float]:
+        count = self.multi_answer["count"]
+        if count == 0:
+            return {"partial_accuracy": 0.0, "correct_accuracy": 0.0}
+        partial = self.multi_answer["partial_correct"] / count
+        correct = self.multi_answer["correct"] / count
+        return {"partial_accuracy": partial, "correct_accuracy": correct}
     
     def get_option_matrix(self) -> Dict[str, Dict[str, float]]:
         """
@@ -158,7 +180,9 @@ class Evaluator:
         return {
             "total": self.total,
             "correct": self.correct,
+            "partial_correct": self.partial_correct,
             "incorrect": self.incorrect,
+            "score": self.total_scores / self.total,
             "accuracy": self.get_accuracy(),
             "macro_f1": self.get_macro_f1(),
             "insufficient_info_count": self.insufficient_info_count,
@@ -166,10 +190,11 @@ class Evaluator:
             "single_answer_count": self.single_answer["count"],
             "single_answer_accuracy": self.get_single_answer_accuracy(),
             "multi_answer_count": self.multi_answer["count"],
-            "multi_answer_accuracy": self.get_multi_answer_accuracy(),
+            "multi_answer_partial_accuracy": self.get_multi_answer_accuracy()['partial_accuracy'],
+            "multi_answer_correct_accuracy": self.get_multi_answer_accuracy()['correct_accuracy'],
             "option_stats": dict(self.option_stats),
             "option_matrix": self.get_option_matrix(),
-            "error_count": len(self.error_cases)
+            "error_count": len(self.error_cases),  
         }
     
     def save_results(self, filepath: str, approach_name: str = "BaselineApproach"):
