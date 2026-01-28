@@ -133,7 +133,7 @@ def post_process_answers(answers: set, options: list) -> set:
 
 
 # ============================================================
-# Conservative Approach (Recommended)
+# Conservative Approach
 # ============================================================
 
 class ConservativeApproach(BaseApproach):
@@ -326,7 +326,7 @@ class TwoPassApproach(BaseApproach):
         pass1_response = self.llm.generate([
             {"role": "system", "content": pass1_system},
             {"role": "user", "content": pass1_user}
-        ], temperature=0.3)
+        ], temperature=0.3, top_p=0.9)
         
         # Parse Pass 1 candidates
         candidates = set()
@@ -339,7 +339,6 @@ class TwoPassApproach(BaseApproach):
         
         # If no clear candidates found, try other parsing methods
         if not candidates:
-            # 查找 "candidates: A, B" 类似的模式
             match = re.search(r"candidates?[:\s]*([A-D](?:\s*,\s*[A-D])*)", pass1_response, re.IGNORECASE)
             if match:
                 candidates = {c.strip().upper() for c in match.group(1).split(",") if c.strip().upper() in ["A", "B", "C", "D"]}
@@ -382,7 +381,7 @@ class TwoPassApproach(BaseApproach):
         pass2_response = self.llm.generate([
             {"role": "system", "content": pass2_system},
             {"role": "user", "content": pass2_user}
-        ], temperature=0.1)
+        ], temperature=0.1, top_p=0)
         
         # Parse final answer
         raw_answers = self._parse_answer_from_response(pass2_response)
@@ -466,7 +465,8 @@ class SelfConsistencyRefinementApproach(BaseApproach):
     def __init__(self, llm: BaseLLM, retriever: DocumentRetriever = None):
         super().__init__(llm, retriever)
         self.num_samples = 7
-        self.temperature = 0.5  # Lower temperature
+        self.temperature = 0.7
+        self.top_p = 0.95
         self.vote_threshold = 4  # At least 3/5 to select
         self.d_option_threshold = 5  # Stricter for option D
     
@@ -510,7 +510,7 @@ class SelfConsistencyRefinementApproach(BaseApproach):
                 {"role": "user", "content": user_prompt}
             ]
             
-            response = self.llm.generate(messages, temperature=self.temperature)
+            response = self.llm.generate(messages, temperature=self.temperature, top_p=self.top_p)
             all_responses.append(response)
             
             # Option-level voting

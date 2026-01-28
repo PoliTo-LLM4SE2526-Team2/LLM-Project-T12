@@ -29,9 +29,6 @@ APPROACHES = {
 }
 PROMPT_NAME = [
     "cot",
-    "optimized",
-    "twopass",
-    "structured",
     "conservative",
     "evidence_anchored",
     "balanced",
