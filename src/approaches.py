@@ -465,7 +465,7 @@ class SelfConsistencyRefinementApproach(BaseApproach):
     def __init__(self, llm: BaseLLM, retriever: DocumentRetriever = None):
         super().__init__(llm, retriever)
         self.num_samples = 7
-        self.temperature = 0.7
+        self.temperature = 0.5
         self.top_p = 0.95
         self.vote_threshold = 4  # At least 3/5 to select
         self.d_option_threshold = 5  # Stricter for option D
