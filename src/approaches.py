@@ -381,7 +381,7 @@ class TwoPassApproach(BaseApproach):
         pass2_response = self.llm.generate([
             {"role": "system", "content": pass2_system},
             {"role": "user", "content": pass2_user}
-        ], temperature=0.1, top_p=0)
+        ], temperature=0.1, top_p=1)
         
         # Parse final answer
         raw_answers = self._parse_answer_from_response(pass2_response)

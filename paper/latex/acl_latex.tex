@@ -8,6 +8,8 @@
 \usepackage{times}
 \usepackage{lipsum}
 \usepackage{latexsym}
+\usepackage{booktabs}
+\usepackage{multirow}
 
 % For proper rendering and hyphenation of words containing Latin characters (including in bib files)
 \usepackage[T1]{fontenc}
@@ -59,12 +61,8 @@
 % \author{Yufei Chen \and Lan Deng \and Javokhirbek Parpikhodjaev \and Chunyi Li \and Xueyufei Zhang \\
 %         Politecnico di Torino}
 
-\author{Yufei Chen \\ s338116 \And
-        Lan Deng \\ s338219
-        \AND
-        Javokhirbek Parpikhodjaev \\ s345099 \And
-        Chunyi Li \\ s338968 \And
-        Xueyufei Zhang \\ s336472}
+\author{Author 1 \and ... \and Author n \\
+        Address line \\ ... \\ Address line}
 
 %\author{
 %  \textbf{First Author\textsuperscript{1}},
@@ -131,8 +129,32 @@ These instructions should be used both for papers submitted for review and for f
 
 \section{Experimental results}
 
-\textit{Describe all the results of your experimentation. Provide separate subparagraphs for each of the defined research questions.
-}
+\begin{table*}[t] % [t] 表示将表格放在页面顶部
+  \centering
+  \caption{Performance comparison of different approaches and prompts on the dev set.}
+  \label{tab:results}
+  \begin{tabular}{clccccc} % l=left, c=center
+    \toprule
+    \textbf{Approach} & \textbf{Prompt} & \textbf{Model} & \textbf{Official Score} & \textbf{Strict Acc.} & \textbf{Partial \%} & \textbf{Macro F1} \\
+    \midrule
+
+    \multirow{3}{*}{Baseline} & Zero-shot CoT & deepseek-v3.2 & 0.29 & 28.50\% & 2.50\% & 0.52 \\
+                              & Conservative  & deepseek-v3.2 & 0.42 & 39.25\% & 4.75\% & 0.69 \\
+                              & Balanced      & deepseek-v3.2 & 0.47 & 41.25\% & 11.00\% & 0.67 \\
+    \midrule
+    
+    \multirow{3}{*}{Two-Pass} & Zero-shot CoT & deepseek-v3.2 & 0.19 & 12.75\% & N/A & 0.43 \\
+                              & Conservative  & N/A & N/A & N/A & N/A & N/A \\
+                              & Balanced      & N/A & N/A & N/A & N/A & N/A \\
+    \midrule
+    \multirow{5}{*}{SC-Refine} & Zero-shot CoT & N/A & N/A & N/A & N/A & N/A \\
+                               & Conservative  & N/A & N/A & N/A & N/A & N/A \\
+                               & \multirow{3}{*}{Balanced} & deepseek-r1 & \textbf{0.74} & \textbf{60.25\%} & \textbf{27.00\%} & \textbf{0.79} \\
+                               &                           & deepseek-v3.2 & N/A & N/A & N/A & N/A \\
+                               &                           & qwen3-80b & N/A & N/A & N/A & N/A \\
+    \bottomrule
+  \end{tabular}
+\end{table*}
 
 \section{Conclusion}
 
