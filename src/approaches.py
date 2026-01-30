@@ -467,7 +467,7 @@ class SelfConsistencyRefinementApproach(BaseApproach):
         self.num_samples = 7
         self.temperature = 0.5
         self.top_p = 0.95
-        self.vote_threshold = 4  # At least 3/5 to select
+        self.vote_threshold = 4  # At least 4/7 to select
         self.d_option_threshold = 5  # Stricter for option D
     
     def _get_prompt(self, item: AERItem, prompt_name: str) -> tuple:
