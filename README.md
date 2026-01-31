@@ -9,10 +9,10 @@ AER-Project/
 ├── data/               # Dataset files (SemEval 2026)
 ├── paper/              # Project report with ACL template
 ├── src/
-│   ├── approaches.py   # Reasoning logic (Baseline, CoT, etc.)
+│   ├── approaches.py   # Reasoning logic (Baseline, SC_refine, etc.)
 │   ├── dataloader.py   # Data preprocessing and loading
 │   ├── evaluator.py    # Evaluate model performance
-│   ├── prompts.py      # different type of prompts
+│   ├── prompts.py      # different type of prompts(Balanced, Conservative, etc.)
 │   ├── llm.py          # LLM API Wrapper (DeepSeek)
 │   └── retriever.py    # Retrieves and ranks documents
 ├── requirements.txt    # python dependencies
