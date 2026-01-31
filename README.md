@@ -27,7 +27,7 @@ Clone the repository and install the required dependencies (Python 3.9+ recommen
 ```
 2. Configuration
 Create a `.env` file in the root directory to configure your LLM provider. The project supports any OpenAI-compatible API (e.g., DeepSeek, OpenAI, vLLM).
-```bash
+```
 MODEL_NAME='model_name_here'
 API_KEY='your_api_key_here'
 BASE_URL='vendor_url_here'
@@ -36,7 +36,7 @@ MAX_WORKERS=<positive integer>
 3. Running Experiments
 Run the main script to start the evaluation pipeline.
 ```bash
-python run.py
+> python run.py
 ```
 #### CLI Usage & Arguments
 You can customize the experiment using command-line arguments:
@@ -52,7 +52,7 @@ You can customize the experiment using command-line arguments:
 
 In order to reproduce our SOTA result, recommended command is:
 ```bash
-python run.py \
+> python run.py \
 --approach sc_refine \
 --prompt_name balanced \
 --top_k 10 \
