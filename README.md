@@ -42,6 +42,7 @@ python run.py
 You can customize the experiment using command-line arguments:
 |Argument|Default|Description|
 |`--approach`|`baseline`|Reasoning strategy. Options: `baseline`, `sc_refine`, `conservative`, `lightweight_sc`, `twopass_real`|
+| :--- | :----: | ---: |
 |`--prompt_name`|`cot`|Prompt template. Options: `cot`, `conservative`, `evidence_anchored`, `balanced`|
 |`--top_k`|`10`|Number of documents to retrieve per query (0 = use all docs).|
 |`--no_retrieval`|`False`|Disable retrieval and use the full document set context.|
