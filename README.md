@@ -48,7 +48,7 @@ You can customize the experiment using command-line arguments:
 |`--no_retrieval`|`False`|Disable retrieval and use the full document set context.|
 |`--use_full_content`|`False`|Use full document text for retrieval instead of title+snippet.|
 |`--use_gpu`|`False`|Enable GPU acceleration for semantic retrieval (Sentence-Transformers).|
-|`--use_per_option`|False|Use per-option retrieval (retrieve for event + each option).|
+|`--use_per_option`|`False`|Use per-option retrieval (retrieve for event + each option).|
 
 In order to reproduce our SOTA result, recommended command is:
 ```bash
